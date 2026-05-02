@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QA Job Application Tracker</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -24,10 +23,26 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
 
-  /* Header */
+  /* ── Loading overlay ── */
+  #loading {
+    position: fixed; inset: 0; background: var(--bg);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px; z-index: 200;
+    transition: opacity .4s;
+  }
+  #loading.hidden { opacity: 0; pointer-events: none; }
+  .spinner {
+    width: 36px; height: 36px; border: 3px solid var(--border);
+    border-top-color: var(--accent); border-radius: 50%;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #loading-msg { font-family: var(--mono); font-size: .82rem; color: var(--muted); }
+
+  /* ── Header ── */
   header {
-    padding: 24px 28px;
-    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+    padding: 22px 28px; display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 12px;
     border-bottom: 1px solid var(--border);
   }
   .logo { display: flex; align-items: center; gap: 10px; }
@@ -36,232 +51,225 @@
     background: var(--accent); box-shadow: 0 0 10px var(--accent);
     animation: pulse 2s ease-in-out infinite;
   }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
   h1 { font-size: 1.3rem; font-weight: 800; letter-spacing: -.02em; }
   h1 span { color: var(--accent); }
   .sub { font-family: var(--mono); font-size: .7rem; color: var(--muted); margin-top: 2px; }
-  .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .header-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 
-  /* Buttons */
+  /* ── Sync status ── */
+  .sync-info {
+    font-family: var(--mono); font-size: .72rem; color: var(--muted);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sync-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .sync-dot.stale { background: var(--warn); }
+  .sync-dot.error { background: var(--danger); }
+
+  /* ── Buttons ── */
   .btn {
-    font-family: var(--mono); font-size: .78rem; font-weight: 500;
-    padding: 7px 14px; border-radius: 6px; border: 1px solid var(--border);
-    background: var(--surface2); color: var(--text); cursor: pointer; transition: all .15s; white-space: nowrap;
+    font-family: var(--mono); font-size: .77rem; font-weight: 500;
+    padding: 7px 13px; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--surface2); color: var(--text); cursor: pointer;
+    transition: all .15s; white-space: nowrap; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 5px;
   }
   .btn:hover { border-color: var(--accent); color: var(--accent); }
   .btn-primary { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 700; }
   .btn-primary:hover { background: #00c988; color: #000; }
   .btn-danger { border-color: var(--danger); color: var(--danger); }
   .btn-danger:hover { background: var(--danger); color: #fff; }
-  .btn-warn { border-color: var(--warn); color: var(--warn); }
 
-  /* Import banner — shown after import with new job count */
-  #import-banner {
-    display: none;
-    background: linear-gradient(135deg, #0a2a1a, #0d1f2d);
+  /* ── New jobs banner ── */
+  #new-banner {
+    display: none; background: linear-gradient(135deg, #0a2a1a, #0d1f2d);
     border-bottom: 1px solid var(--accent);
-    padding: 12px 28px;
-    align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 11px 28px; align-items: center; gap: 14px; flex-wrap: wrap;
   }
-  #import-banner.show { display: flex; }
+  #new-banner.show { display: flex; }
   .banner-msg { font-size: .85rem; }
   .banner-msg strong { color: var(--accent); }
   .banner-actions { display: flex; gap: 8px; margin-left: auto; }
 
-  /* View tabs */
+  /* ── Tabs ── */
   .view-tabs {
-    display: flex; gap: 2px;
-    padding: 12px 28px 0;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
+    display: flex; gap: 2px; padding: 12px 28px 0;
+    border-bottom: 1px solid var(--border); background: var(--surface);
   }
   .tab {
-    font-family: var(--mono); font-size: .78rem; padding: 8px 18px;
-    border-radius: 6px 6px 0 0; cursor: pointer; border: 1px solid transparent;
-    border-bottom: none; color: var(--muted); transition: all .15s;
+    font-family: var(--mono); font-size: .77rem; padding: 8px 16px;
+    border-radius: 6px 6px 0 0; cursor: pointer; color: var(--muted);
+    border: 1px solid transparent; border-bottom: none; transition: all .15s;
     position: relative; bottom: -1px;
   }
   .tab:hover { color: var(--text); }
-  .tab.active {
-    background: var(--bg); color: var(--accent);
-    border-color: var(--border); border-bottom-color: var(--bg);
-  }
-  .tab .badge {
+  .tab.active { background: var(--bg); color: var(--accent); border-color: var(--border); border-bottom-color: var(--bg); }
+  .tab .cnt {
     display: inline-block; background: var(--accent); color: #000;
-    font-size: .65rem; font-weight: 700; padding: 1px 6px;
-    border-radius: 10px; margin-left: 6px; vertical-align: middle;
+    font-size: .63rem; font-weight: 700; padding: 1px 5px;
+    border-radius: 10px; margin-left: 5px; vertical-align: middle;
   }
-  .tab.active .badge { background: var(--accent); }
 
-  /* Stats */
-  .stats { display: flex; gap: 1px; background: var(--border); border-bottom: 1px solid var(--border); }
-  .stat { flex: 1; padding: 12px 18px; background: var(--surface); display: flex; flex-direction: column; gap: 2px; min-width: 80px; }
+  /* ── Stats ── */
+  .stats { display: flex; gap: 1px; background: var(--border); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+  .stat { flex: 1; padding: 12px 16px; background: var(--surface); display: flex; flex-direction: column; gap: 2px; min-width: 75px; }
   .stat-num { font-family: var(--mono); font-size: 1.5rem; font-weight: 500; line-height: 1; }
-  .stat-lbl { font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-  .green  { color: var(--accent); }
-  .blue   { color: var(--accent2); }
-  .amber  { color: var(--warn); }
-  .red    { color: var(--danger); }
-  .purple { color: #a78bfa; }
+  .stat-lbl { font-size: .67rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
 
-  /* Toolbar */
+  /* ── Toolbar ── */
   .toolbar {
-    padding: 12px 22px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    padding: 11px 22px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
     border-bottom: 1px solid var(--border); background: var(--surface);
   }
   .toolbar input, .toolbar select {
     background: var(--surface2); border: 1px solid var(--border); color: var(--text);
-    font-family: var(--mono); font-size: .78rem; padding: 6px 10px; border-radius: 6px; outline: none; transition: border-color .15s;
+    font-family: var(--mono); font-size: .77rem; padding: 6px 10px;
+    border-radius: 6px; outline: none; transition: border-color .15s;
   }
   .toolbar input { width: 200px; }
   .toolbar input:focus, .toolbar select:focus { border-color: var(--accent); }
   .toolbar select option { background: var(--surface2); }
 
-  /* Table */
+  /* ── Table ── */
   .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+  table { width: 100%; border-collapse: collapse; font-size: .81rem; }
   thead th {
     background: var(--surface); color: var(--muted); font-family: var(--mono);
-    font-size: .68rem; text-transform: uppercase; letter-spacing: .07em;
+    font-size: .67rem; text-transform: uppercase; letter-spacing: .07em;
     padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border);
     white-space: nowrap; cursor: pointer; user-select: none;
   }
   thead th:hover { color: var(--accent); }
   tbody tr { border-bottom: 1px solid var(--border); transition: background .1s; }
   tbody tr:hover { background: var(--surface); }
-  tbody tr.is-new { background: #0a1f14; }
+  tbody tr.is-new { background: #071a10; }
   tbody tr.is-new:hover { background: #0d2a1b; }
   td { padding: 10px 12px; vertical-align: middle; }
   td.title-cell { max-width: 260px; }
   td.title-cell a { color: var(--text); text-decoration: none; font-weight: 600; }
   td.title-cell a:hover { color: var(--accent); }
-  .company { color: var(--muted); font-size: .73rem; margin-top: 2px; }
+  .company { color: var(--muted); font-size: .72rem; margin-top: 2px; }
   .new-pill {
     display: inline-block; background: var(--accent); color: #000;
     font-family: var(--mono); font-size: .6rem; font-weight: 700;
-    padding: 1px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle;
-    animation: fadeIn .4s ease;
+    padding: 1px 5px; border-radius: 4px; margin-left: 5px;
+    vertical-align: middle; animation: pop .3s ease;
   }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(-3px)} to{opacity:1;transform:none} }
-  .location-cell { font-family: var(--mono); font-size: .73rem; color: var(--muted); max-width: 150px; }
-  .commute-cell  { font-family: var(--mono); font-size: .7rem; white-space: nowrap; }
-  .date-cell     { font-family: var(--mono); font-size: .7rem; color: var(--muted); }
-  .notes-preview {
-    max-width: 160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    color: var(--muted); font-size: .73rem; cursor: pointer;
-  }
-  .notes-preview:hover { color: var(--text); }
-  .actions { display: flex; gap: 5px; }
+  @keyframes pop { from{transform:scale(0);opacity:0} to{transform:none;opacity:1} }
+  .loc-cell    { font-family: var(--mono); font-size: .72rem; color: var(--muted); max-width: 140px; }
+  .commute-cell{ font-family: var(--mono); font-size: .69rem; white-space: nowrap; }
+  .date-cell   { font-family: var(--mono); font-size: .69rem; color: var(--muted); white-space: nowrap; }
+  .notes-prev  { max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--muted); font-size: .72rem; cursor: pointer; }
+  .notes-prev:hover { color: var(--text); }
+  .actions { display: flex; gap: 4px; }
   .icon-btn {
     background: none; border: 1px solid var(--border); color: var(--muted);
-    width: 26px; height: 26px; border-radius: 5px; cursor: pointer; font-size: .8rem;
+    width: 26px; height: 26px; border-radius: 5px; cursor: pointer; font-size: .78rem;
     display: flex; align-items: center; justify-content: center; transition: all .15s;
   }
   .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
   .icon-btn.del:hover { border-color: var(--danger); color: var(--danger); }
 
-  /* Status badge */
-  .status-badge {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 3px 9px; border-radius: 20px; font-family: var(--mono); font-size: .68rem;
-    font-weight: 500; white-space: nowrap; cursor: pointer; border: 1px solid transparent; transition: all .15s;
+  /* ── Status badge ── */
+  .sbadge {
+    display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px;
+    border-radius: 20px; font-family: var(--mono); font-size: .67rem;
+    font-weight: 500; white-space: nowrap; cursor: pointer;
+    border: 1px solid transparent; transition: all .15s;
   }
-  .status-badge:hover { filter: brightness(1.25); }
-  .s-new       { background: #1e2a3a; color: #60a5fa; border-color: #1e40af44; }
-  .s-applied   { background: #1a2e26; color: var(--accent); border-color: #05966944; }
-  .s-interview { background: #2d2200; color: var(--warn); border-color: #b4530044; }
-  .s-offer     { background: #1a1a2e; color: #a78bfa; border-color: #7c3aed44; }
-  .s-rejected  { background: #2a1a1a; color: var(--danger); border-color: #b91c1c44; }
-  .s-withdrawn { background: #1e1e1e; color: var(--muted); border-color: #33333344; }
+  .sbadge:hover { filter: brightness(1.25); }
+  .s-new       { background:#1e2a3a; color:#60a5fa; border-color:#1e40af44; }
+  .s-applied   { background:#1a2e26; color:var(--accent); border-color:#05966944; }
+  .s-interview { background:#2d2200; color:var(--warn); border-color:#b4530044; }
+  .s-offer     { background:#1a1a2e; color:#a78bfa; border-color:#7c3aed44; }
+  .s-rejected  { background:#2a1a1a; color:var(--danger); border-color:#b91c1c44; }
+  .s-withdrawn { background:#1e1e1e; color:var(--muted); border-color:#33333344; }
 
-  /* Empty / no-results */
+  /* ── Empty / no results ── */
   .empty { text-align: center; padding: 70px 20px; color: var(--muted); }
   .empty h2 { font-size: 1rem; margin-bottom: 8px; color: var(--text); }
-  .empty p  { font-size: .82rem; line-height: 1.6; max-width: 380px; margin: 0 auto 18px; }
-  #no-results { display: none; text-align: center; padding: 36px; color: var(--muted); font-size: .85rem; }
+  .empty p  { font-size: .82rem; line-height: 1.6; max-width: 380px; margin: 0 auto; }
+  #no-results { display: none; text-align: center; padding: 36px; color: var(--muted); font-size: .84rem; }
 
-  /* Modals */
+  /* ── Modals ── */
   .overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,.75); backdrop-filter: blur(4px);
-    z-index: 100; align-items: center; justify-content: center;
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.75);
+    backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center;
   }
   .overlay.open { display: flex; }
   .modal {
     background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-    padding: 26px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto;
+    padding: 24px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto;
     position: relative; animation: slideUp .2s ease;
   }
-  @keyframes slideUp { from{transform:translateY(14px);opacity:0} to{transform:none;opacity:1} }
-  .modal h2 { font-size: 1rem; font-weight: 700; margin-bottom: 18px; }
-  .modal-close {
-    position: absolute; top: 14px; right: 14px;
-    background: none; border: none; color: var(--muted); font-size: 1.1rem; cursor: pointer;
-  }
+  @keyframes slideUp { from{transform:translateY(14px);opacity:0} }
+  .modal h2 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; }
+  .modal-close { position: absolute; top: 14px; right: 14px; background: none; border: none; color: var(--muted); font-size: 1.1rem; cursor: pointer; }
   .modal-close:hover { color: var(--text); }
-  .field { margin-bottom: 14px; }
-  .field label { display: block; font-size: .7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 5px; }
+  .field { margin-bottom: 13px; }
+  .field label { display: block; font-size: .69rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 4px; }
   .field input, .field select, .field textarea {
     width: 100%; background: var(--surface2); border: 1px solid var(--border); color: var(--text);
-    font-family: var(--mono); font-size: .8rem; padding: 8px 11px; border-radius: 6px; outline: none; transition: border-color .15s;
+    font-family: var(--mono); font-size: .79rem; padding: 8px 10px;
+    border-radius: 6px; outline: none; transition: border-color .15s;
   }
   .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); }
-  .field textarea { resize: vertical; min-height: 80px; }
+  .field textarea { resize: vertical; min-height: 78px; }
   .field select option { background: var(--surface2); }
-  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
 
-  /* Import drop zone */
-  .drop-zone {
-    border: 2px dashed var(--border); border-radius: 8px; padding: 28px;
-    text-align: center; cursor: pointer; transition: all .15s; color: var(--muted); font-size: .83rem;
+  /* ── Scrape history modal ── */
+  .scrape-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .scrape-item {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
   }
-  .drop-zone:hover, .drop-zone.drag-over { border-color: var(--accent); background: #00e5a009; color: var(--accent); }
-  .drop-zone input { display: none; }
-  .drop-zone .icon { font-size: 1.8rem; margin-bottom: 8px; }
-  .import-preview {
-    margin-top: 12px; background: var(--surface2); border-radius: 6px; padding: 11px;
-    font-family: var(--mono); font-size: .73rem; color: var(--muted); max-height: 170px; overflow-y: auto; display: none;
-  }
-  .import-preview .ok  { color: var(--accent); }
-  .import-preview .dup { color: var(--warn); }
-  .import-preview .err { color: var(--danger); }
+  .scrape-date { font-family: var(--mono); font-size: .8rem; color: var(--text); font-weight: 500; }
+  .scrape-count { font-family: var(--mono); font-size: .75rem; color: var(--muted); }
+  .scrape-imported { font-family: var(--mono); font-size: .72rem; color: var(--accent); }
+  .scrape-imported.none { color: var(--muted); }
 </style>
 </head>
 <body>
 
+<!-- Loading overlay -->
+<div id="loading">
+  <div class="spinner"></div>
+  <div id="loading-msg">Loading scraper index…</div>
+</div>
+
 <header>
   <div class="logo">
-    <div class="logo-dot"></div>
+    <div class="logo-dot" id="sync-dot"></div>
     <div>
       <h1>QA Jobs <span>Tracker</span></h1>
-      <div class="sub">application pipeline — <span id="last-import-label">never imported</span></div>
+      <div class="sub" id="sync-label">Syncing…</div>
     </div>
   </div>
   <div class="header-actions">
-    <button class="btn" onclick="openImport()">⬆ Import CSV</button>
+    <div class="sync-info">
+      <button class="btn" onclick="syncNow()">⟳ Sync</button>
+    </div>
+    <button class="btn" onclick="openHistory()">📋 History</button>
     <button class="btn" onclick="exportCSV()">⬇ Export</button>
     <button class="btn btn-primary" onclick="openAdd()">+ Add Job</button>
   </div>
 </header>
 
-<!-- Import banner — appears after a successful import -->
-<div id="import-banner">
+<!-- New jobs banner -->
+<div id="new-banner">
   <div class="banner-msg" id="banner-msg"></div>
   <div class="banner-actions">
-    <button class="btn btn-primary" onclick="setTab('new')">Show new jobs only</button>
-    <button class="btn" onclick="setTab('needs-action')">Show needs action</button>
-    <button class="btn" onclick="dismissBanner()">✕ Dismiss</button>
+    <button class="btn btn-primary" onclick="setTab('new')">Show new jobs</button>
+    <button class="btn" onclick="setTab('needs-action')">Needs action</button>
+    <button class="btn" onclick="document.getElementById('new-banner').classList.remove('show')">✕</button>
   </div>
 </div>
 
-<!-- View tabs -->
+<!-- Tabs -->
 <div class="view-tabs">
-  <div class="tab active" id="tab-needs-action" onclick="setTab('needs-action')">
-    Needs Action <span class="badge" id="badge-needs-action">0</span>
-  </div>
-  <div class="tab" id="tab-new" onclick="setTab('new')">
-    New Today <span class="badge" id="badge-new" style="display:none">0</span>
-  </div>
+  <div class="tab active" id="tab-needs-action" onclick="setTab('needs-action')">Needs Action <span class="cnt" id="cnt-needs-action">0</span></div>
+  <div class="tab" id="tab-new" onclick="setTab('new')">New Today <span class="cnt" id="cnt-new" style="display:none">0</span></div>
   <div class="tab" id="tab-all" onclick="setTab('all')">All Jobs</div>
   <div class="tab" id="tab-applied" onclick="setTab('applied')">Applied</div>
   <div class="tab" id="tab-interview" onclick="setTab('interview')">Interviews</div>
@@ -270,11 +278,11 @@
 <!-- Stats -->
 <div class="stats">
   <div class="stat"><div class="stat-num" id="s-total">0</div><div class="stat-lbl">Total</div></div>
-  <div class="stat"><div class="stat-num blue" id="s-new">0</div><div class="stat-lbl">New</div></div>
-  <div class="stat"><div class="stat-num green" id="s-applied">0</div><div class="stat-lbl">Applied</div></div>
-  <div class="stat"><div class="stat-num amber" id="s-interview">0</div><div class="stat-lbl">Interview</div></div>
-  <div class="stat"><div class="stat-num purple" id="s-offer">0</div><div class="stat-lbl">Offer</div></div>
-  <div class="stat"><div class="stat-num red" id="s-rejected">0</div><div class="stat-lbl">Rejected</div></div>
+  <div class="stat"><div class="stat-num" style="color:var(--accent2)" id="s-new">0</div><div class="stat-lbl">New</div></div>
+  <div class="stat"><div class="stat-num" style="color:var(--accent)" id="s-applied">0</div><div class="stat-lbl">Applied</div></div>
+  <div class="stat"><div class="stat-num" style="color:var(--warn)" id="s-interview">0</div><div class="stat-lbl">Interview</div></div>
+  <div class="stat"><div class="stat-num" style="color:#a78bfa" id="s-offer">0</div><div class="stat-lbl">Offer</div></div>
+  <div class="stat"><div class="stat-num" style="color:var(--danger)" id="s-rejected">0</div><div class="stat-lbl">Rejected</div></div>
 </div>
 
 <!-- Toolbar -->
@@ -312,12 +320,11 @@
 </div>
 
 <div id="empty-state" class="empty" style="display:none">
-  <h2>No applications tracked yet</h2>
-  <p>Import today's scraper CSV to get started. Your applied/rejected jobs will be remembered across every future import.</p>
-  <button class="btn btn-primary" onclick="openImport()">⬆ Import CSV</button>
+  <h2>No jobs tracked yet</h2>
+  <p>Run the scraper and push to GitHub — jobs will appear here automatically on next page load.</p>
 </div>
 
-<!-- Edit / Add Modal -->
+<!-- Edit Modal -->
 <div class="overlay" id="edit-overlay" onclick="if(event.target===this)closeEdit()">
   <div class="modal">
     <button class="modal-close" onclick="closeEdit()">✕</button>
@@ -348,76 +355,126 @@
   </div>
 </div>
 
-<!-- Import Modal -->
-<div class="overlay" id="import-overlay" onclick="if(event.target===this)closeImport()">
-  <div class="modal">
-    <button class="modal-close" onclick="closeImport()">✕</button>
-    <h2>Import Scraper CSV</h2>
-    <p style="font-size:.8rem;color:var(--muted);margin-bottom:14px;line-height:1.6">
-      Drop any <code style="color:var(--accent)">jobs-YYYY-MM-DD.csv</code> from your scraper output.<br>
-      <strong style="color:var(--text)">Jobs you've already actioned (applied, interview, etc.) will never be overwritten.</strong>
-      Duplicates are matched by URL and skipped.
-    </p>
-    <div class="drop-zone" id="drop-zone"
-         onclick="document.getElementById('csv-file').click()"
-         ondragover="event.preventDefault();this.classList.add('drag-over')"
-         ondragleave="this.classList.remove('drag-over')"
-         ondrop="handleDrop(event)">
-      <div class="icon">📂</div>
-      <div>Click to browse or drag & drop CSV here</div>
-      <input type="file" id="csv-file" accept=".csv" onchange="handleFile(this.files[0])">
-    </div>
-    <div id="import-preview" class="import-preview"></div>
-    <div class="modal-actions">
-      <button class="btn" onclick="closeImport()">Cancel</button>
-      <button class="btn btn-primary" id="import-confirm-btn" style="display:none" onclick="confirmImport()">Import</button>
-    </div>
+<!-- Scrape History Modal -->
+<div class="overlay" id="history-overlay" onclick="if(event.target===this)closeHistory()">
+  <div class="modal" style="max-width:560px">
+    <button class="modal-close" onclick="closeHistory()">✕</button>
+    <h2>Scrape History</h2>
+    <div class="scrape-list" id="scrape-list"></div>
   </div>
 </div>
 
 <script>
-// ── Storage ───────────────────────────────────────────────────────────────────
-const STORE_KEY = 'qa_tracker_v3';
-const META_KEY  = 'qa_tracker_meta_v3';
-
-function load()     { try { return JSON.parse(localStorage.getItem(STORE_KEY) || '[]'); } catch { return []; } }
-function loadMeta() { try { return JSON.parse(localStorage.getItem(META_KEY)  || '{}'); } catch { return {}; } }
-function save(j)    { localStorage.setItem(STORE_KEY, JSON.stringify(j)); }
-function saveMeta(m){ localStorage.setItem(META_KEY,  JSON.stringify(m)); }
+// ── Constants ─────────────────────────────────────────────────────────────────
+const STORE_KEY    = 'qa_tracker_v4';
+const META_KEY     = 'qa_tracker_meta_v4';
+const INDEX_PATH   = 'output/index.json';
 
 // ── State ─────────────────────────────────────────────────────────────────────
-let jobs      = load();
-let meta      = loadMeta();   // { lastImportDate, lastImportCount, lastImportIds[] }
-let editIndex = null;
+let jobs       = load();
+let meta       = loadMeta();
+// meta shape: { lastSyncDate, importedFiles: {filename: true}, lastNewIds: [id,...] }
+let editIndex  = null;
 let currentTab = 'needs-action';
-let sortKey   = 'addedAt';
-let sortAsc   = false;
-let pendingImport = [];
+let sortKey    = 'addedAt';
+let sortAsc    = false;
 
 const STATUS_CYCLE = ['new','applied','interview','offer','rejected','withdrawn'];
 
-// ── Tab logic ─────────────────────────────────────────────────────────────────
-// "Needs action" = new status only (not yet applied/rejected/withdrawn)
-// "New today"    = imported in the last import batch
-// "Applied"      = applied + interview + offer
-// "All"          = everything
+// ── Storage ───────────────────────────────────────────────────────────────────
+function load()     { try { return JSON.parse(localStorage.getItem(STORE_KEY) || '[]'); } catch { return []; } }
+function loadMeta() { try { return JSON.parse(localStorage.getItem(META_KEY)  || '{}'); } catch { return {}; } }
+function save()     { localStorage.setItem(STORE_KEY, JSON.stringify(jobs)); }
+function saveMeta() { localStorage.setItem(META_KEY,  JSON.stringify(meta)); }
 
-function setTab(tab) {
-  currentTab = tab;
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + tab)?.classList.add('active');
-  render();
-}
+// ── Auto-sync on load ─────────────────────────────────────────────────────────
+async function syncNow() {
+  setLoading(true, 'Fetching scrape index…');
+  setSyncStatus('syncing');
 
-function jobPassesTab(j) {
-  switch (currentTab) {
-    case 'needs-action': return j.status === 'new';
-    case 'new':          return (meta.lastImportIds || []).includes(j.id);
-    case 'applied':      return ['applied','interview','offer'].includes(j.status);
-    case 'interview':    return j.status === 'interview';
-    case 'all':          return true;
-    default:             return true;
+  let index;
+  try {
+    const res = await fetch(`${INDEX_PATH}?_=${Date.now()}`); // cache-bust
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    index = await res.json();
+  } catch (err) {
+    setSyncStatus('error', `Cannot reach output/index.json — ${err.message}`);
+    setLoading(false);
+    render();
+    return;
   }
+
+  const importedFiles = meta.importedFiles || {};
+  const newFiles      = (index.files || []).filter(f => !importedFiles[f.filename]);
+
+  if (newFiles.length === 0) {
+    const latest = index.files?.[0];
+    setSyncStatus('ok', `Up to date · last scrape ${latest?.date || '—'} (${latest?.jobCount || 0} jobs)`);
+    setLoading(false);
+    render();
+    return;
+  }
+
+  // Import each new CSV file that hasn't been imported yet
+  const existingUrls = new Set(jobs.map(j => j.url));
+  let totalNew = 0;
+  const newIds = [];
+
+  for (const fileEntry of newFiles) {
+    setLoading(true, `Loading ${fileEntry.filename}…`);
+    try {
+      const res = await fetch(`output/${fileEntry.filename}?_=${Date.now()}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const text = await res.text();
+      const parsed = parseCSV(text);
+
+      for (const job of parsed) {
+        if (!job.url || existingUrls.has(job.url)) continue;
+        job.id        = uid();
+        job.status    = 'new';
+        job.appliedDate = '';
+        job.nextStep  = '';
+        job.notes     = '';
+        job.addedAt   = new Date().toISOString();
+        job.sourceFile = fileEntry.filename;
+        jobs.unshift(job);
+        existingUrls.add(job.url);
+        newIds.push(job.id);
+        totalNew++;
+      }
+
+      importedFiles[fileEntry.filename] = true;
+    } catch (err) {
+      console.warn(`Failed to load ${fileEntry.filename}: ${err.message}`);
+    }
+  }
+
+  // Update meta
+  meta.importedFiles  = importedFiles;
+  meta.lastSyncDate   = new Date().toISOString();
+  meta.lastNewIds     = newIds;
+  save();
+  saveMeta();
+
+  // Update index metadata on files for history view
+  meta.scrapeIndex = index.files;
+  saveMeta();
+
+  const latest = index.files?.[0];
+  setSyncStatus('ok', `Synced · last scrape ${latest?.date || '—'} (${latest?.jobCount || 0} jobs)`);
+
+  if (totalNew > 0) {
+    const msg = document.getElementById('banner-msg');
+    msg.innerHTML = `<strong>${totalNew} new job${totalNew !== 1 ? 's' : ''} found</strong> from ${newFiles.length} new scrape${newFiles.length !== 1 ? 's' : ''} · ${jobs.filter(j => j.status === 'new').length} total needing action`;
+    document.getElementById('new-banner').classList.add('show');
+    // Auto-switch to new tab
+    currentTab = 'new';
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-new').classList.add('active');
+  }
+
+  setLoading(false);
+  render();
 }
 
 // ── Render ────────────────────────────────────────────────────────────────────
@@ -425,77 +482,81 @@ function render() {
   const q      = document.getElementById('q').value.toLowerCase();
   const fBoard = document.getElementById('f-board').value;
   const fType  = document.getElementById('f-type').value;
-  const newIds = new Set(meta.lastImportIds || []);
+  const newIds = new Set(meta.lastNewIds || []);
 
-  let filtered = jobs.filter(j => {
-    if (!jobPassesTab(j)) return false;
+  const tabFilter = j => {
+    switch (currentTab) {
+      case 'needs-action': return j.status === 'new';
+      case 'new':          return newIds.has(j.id);
+      case 'applied':      return ['applied','interview','offer'].includes(j.status);
+      case 'interview':    return j.status === 'interview';
+      default:             return true;
+    }
+  };
+
+  const filtered = jobs.filter(j => {
+    if (!tabFilter(j)) return false;
     const text = [j.title, j.company, j.location, j.notes].filter(Boolean).join(' ').toLowerCase();
     if (q && !text.includes(q)) return false;
     if (fBoard && j.board !== fBoard) return false;
     if (fType) {
       const note = (j.commuteNote || '').toLowerCase();
-      if (fType === 'remote' && !note.includes('remote'))  return false;
-      if (fType === 'hybrid' && !note.includes('hybrid'))  return false;
+      if (fType === 'remote' && !note.includes('remote')) return false;
+      if (fType === 'hybrid' && !note.includes('hybrid')) return false;
       if (fType === 'office' && (note.includes('remote') || note.includes('hybrid'))) return false;
     }
     return true;
-  });
-
-  filtered.sort((a, b) => {
+  }).sort((a, b) => {
     const av = (a[sortKey] || '').toString().toLowerCase();
     const bv = (b[sortKey] || '').toString().toLowerCase();
     return sortAsc ? av.localeCompare(bv) : bv.localeCompare(av);
   });
 
-  const tbody = document.getElementById('tbody');
-  tbody.innerHTML = filtered.map(j => {
-    const realIdx = jobs.indexOf(j);
-    const isNew   = newIds.has(j.id);
+  // Render rows
+  document.getElementById('tbody').innerHTML = filtered.map(j => {
+    const idx   = jobs.indexOf(j);
+    const isNew = newIds.has(j.id);
     return `
     <tr class="${isNew ? 'is-new' : ''}">
       <td class="title-cell">
         <a href="${esc(j.url)}" target="_blank">${esc(j.title)}</a>${isNew ? '<span class="new-pill">NEW</span>' : ''}
         <div class="company">${esc(j.company || '—')}</div>
       </td>
-      <td class="location-cell">${esc(j.location || '—')}</td>
+      <td class="loc-cell">${esc(j.location || '—')}</td>
       <td class="commute-cell">${esc(j.commuteNote || '—')}</td>
-      <td style="font-size:.73rem;color:var(--muted)">${esc(j.board || '—')}</td>
+      <td style="font-size:.72rem;color:var(--muted)">${esc(j.board || '—')}</td>
       <td>
-        <span class="status-badge s-${j.status}" onclick="cycleStatus(${realIdx})" title="Click to advance status">
-          ${statusIcon(j.status)} ${j.status}
+        <span class="sbadge s-${j.status}" onclick="cycleStatus(${idx})" title="Click to advance status">
+          ${sIcon(j.status)} ${j.status}
         </span>
       </td>
       <td class="date-cell">${j.appliedDate || '—'}</td>
-      <td>
-        <div class="notes-preview" onclick="openEdit(${realIdx})" title="${esc(j.notes || '')}">${esc(j.notes || '—')}</div>
-      </td>
+      <td><div class="notes-prev" onclick="openEdit(${idx})" title="${esc(j.notes || '')}">${esc(j.notes || '—')}</div></td>
       <td>
         <div class="actions">
-          <button class="icon-btn" onclick="openEdit(${realIdx})" title="Edit">✏️</button>
-          <button class="icon-btn del" onclick="deleteJob(${realIdx})" title="Remove">🗑</button>
+          <button class="icon-btn" onclick="openEdit(${idx})" title="Edit">✏️</button>
+          <button class="icon-btn del" onclick="deleteJob(${idx})" title="Remove">🗑</button>
         </div>
       </td>
     </tr>`;
   }).join('');
 
-  // Stats (always over full jobs list, not filtered)
-  const counts = { new:0, applied:0, interview:0, offer:0, rejected:0, withdrawn:0 };
-  jobs.forEach(j => { if (counts[j.status] !== undefined) counts[j.status]++; });
+  // Stats (full list, not filtered)
+  const c = { new:0, applied:0, interview:0, offer:0, rejected:0 };
+  jobs.forEach(j => { if (c[j.status] !== undefined) c[j.status]++; });
   document.getElementById('s-total').textContent    = jobs.length;
-  document.getElementById('s-new').textContent      = counts.new;
-  document.getElementById('s-applied').textContent  = counts.applied;
-  document.getElementById('s-interview').textContent= counts.interview;
-  document.getElementById('s-offer').textContent    = counts.offer;
-  document.getElementById('s-rejected').textContent = counts.rejected;
+  document.getElementById('s-new').textContent      = c.new;
+  document.getElementById('s-applied').textContent  = c.applied;
+  document.getElementById('s-interview').textContent= c.interview;
+  document.getElementById('s-offer').textContent    = c.offer;
+  document.getElementById('s-rejected').textContent = c.rejected;
 
-  // Tab badges
-  const needsAction = jobs.filter(j => j.status === 'new').length;
-  const newToday    = (meta.lastImportIds || []).length;
-  document.getElementById('badge-needs-action').textContent = needsAction;
-  if (newToday > 0) {
-    document.getElementById('badge-new').textContent    = newToday;
-    document.getElementById('badge-new').style.display  = 'inline-block';
-  }
+  // Tab counts
+  document.getElementById('cnt-needs-action').textContent = c.new;
+  const newCount = (meta.lastNewIds || []).length;
+  const cntNew   = document.getElementById('cnt-new');
+  cntNew.textContent    = newCount;
+  cntNew.style.display  = newCount > 0 ? 'inline-block' : 'none';
 
   // Board filter
   const boardSel = document.getElementById('f-board');
@@ -504,36 +565,38 @@ function render() {
   boardSel.innerHTML = '<option value="">All boards</option>'
     + boards.map(b => `<option value="${b}"${b===curBoard?' selected':''}>${b}</option>`).join('');
 
-  // Last import label
-  if (meta.lastImportDate) {
-    document.getElementById('last-import-label').textContent =
-      `last import ${meta.lastImportDate} · ${meta.lastImportCount} new jobs`;
-  }
-
-  // Show/hide table vs empty state
+  // Empty state
   const isEmpty = jobs.length === 0;
-  document.getElementById('table-wrap').style.display   = isEmpty ? 'none' : '';
-  document.getElementById('empty-state').style.display  = isEmpty ? 'block' : 'none';
-  document.getElementById('no-results').style.display   = !isEmpty && filtered.length === 0 ? 'block' : 'none';
+  document.getElementById('table-wrap').style.display  = isEmpty ? 'none' : '';
+  document.getElementById('empty-state').style.display = isEmpty ? 'block' : 'none';
+  document.getElementById('no-results').style.display  = !isEmpty && filtered.length === 0 ? 'block' : 'none';
 }
 
-function statusIcon(s) {
-  return { new:'🔵', applied:'✅', interview:'🟡', offer:'🟣', rejected:'❌', withdrawn:'⚫' }[s] || '⚪';
-}
-
+// ── Status cycle ──────────────────────────────────────────────────────────────
 function cycleStatus(idx) {
   const pos = STATUS_CYCLE.indexOf(jobs[idx].status);
   jobs[idx].status = STATUS_CYCLE[(pos + 1) % STATUS_CYCLE.length];
   if (jobs[idx].status === 'applied' && !jobs[idx].appliedDate) {
     jobs[idx].appliedDate = today();
   }
-  save(jobs);
+  save();
   render();
 }
 
-function sortBy(key) {
-  sortAsc = sortKey === key ? !sortAsc : true;
-  sortKey = key;
+function sIcon(s) {
+  return { new:'🔵', applied:'✅', interview:'🟡', offer:'🟣', rejected:'❌', withdrawn:'⚫' }[s] || '⚪';
+}
+
+function setTab(t) {
+  currentTab = t;
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + t)?.classList.add('active');
+  render();
+}
+
+function sortBy(k) {
+  sortAsc = sortKey === k ? !sortAsc : true;
+  sortKey = k;
   render();
 }
 
@@ -545,7 +608,6 @@ function openAdd() {
   document.getElementById('e-status').value = 'new';
   document.getElementById('edit-overlay').classList.add('open');
 }
-
 function openEdit(idx) {
   editIndex = idx;
   const j = jobs[idx];
@@ -561,161 +623,62 @@ function openEdit(idx) {
   document.getElementById('e-notes').value    = j.notes    || '';
   document.getElementById('edit-overlay').classList.add('open');
 }
-
 function closeEdit() { document.getElementById('edit-overlay').classList.remove('open'); }
-
 function saveEdit() {
+  const e = id => document.getElementById(id).value.trim();
+  if (!e('e-title')) { alert('Title is required'); return; }
   const entry = {
-    title:       document.getElementById('e-title').value.trim(),
-    company:     document.getElementById('e-company').value.trim(),
-    location:    document.getElementById('e-location').value.trim(),
-    url:         document.getElementById('e-url').value.trim(),
-    board:       document.getElementById('e-board').value.trim(),
-    status:      document.getElementById('e-status').value,
-    appliedDate: document.getElementById('e-applied').value,
-    nextStep:    document.getElementById('e-next').value,
-    notes:       document.getElementById('e-notes').value.trim(),
+    title: e('e-title'), company: e('e-company'), location: e('e-location'),
+    url: e('e-url'), board: e('e-board'),
+    status: document.getElementById('e-status').value,
+    appliedDate: e('e-applied'), nextStep: e('e-next'), notes: e('e-notes'),
   };
-  if (!entry.title) { alert('Title is required'); return; }
   if (editIndex === null) {
     entry.id = uid(); entry.addedAt = new Date().toISOString(); entry.commuteNote = '';
     jobs.unshift(entry);
   } else {
     jobs[editIndex] = { ...jobs[editIndex], ...entry };
   }
-  save(jobs);
-  closeEdit();
-  render();
+  save(); closeEdit(); render();
 }
 
-// ── Delete ────────────────────────────────────────────────────────────────────
+// ── History modal ─────────────────────────────────────────────────────────────
+function openHistory() {
+  const list   = document.getElementById('scrape-list');
+  const files  = meta.scrapeIndex || [];
+  const imp    = meta.importedFiles || {};
+
+  if (files.length === 0) {
+    list.innerHTML = '<div style="color:var(--muted);font-size:.82rem">No scrape history available yet.</div>';
+  } else {
+    list.innerHTML = files.map(f => {
+      const wasImported = imp[f.filename];
+      const jobsFromFile = jobs.filter(j => j.sourceFile === f.filename).length;
+      return `
+      <div class="scrape-item">
+        <div>
+          <div class="scrape-date">${f.date}</div>
+          <div class="scrape-count">${f.jobCount} jobs found by scraper</div>
+        </div>
+        <div class="${wasImported ? 'scrape-imported' : 'scrape-imported none'}">
+          ${wasImported ? `✅ ${jobsFromFile} imported` : '⏳ Not yet imported'}
+        </div>
+      </div>`;
+    }).join('');
+  }
+  document.getElementById('history-overlay').classList.add('open');
+}
+function closeHistory() { document.getElementById('history-overlay').classList.remove('open'); }
+
+// ── Delete / clear ────────────────────────────────────────────────────────────
 function deleteJob(idx) {
   if (!confirm(`Remove "${jobs[idx].title}"?`)) return;
-  jobs.splice(idx, 1);
-  save(jobs);
-  render();
+  jobs.splice(idx, 1); save(); render();
 }
-
 function clearAll() {
   if (!confirm('Delete ALL tracked applications? This cannot be undone.')) return;
-  jobs = []; meta = {};
-  save(jobs); saveMeta(meta);
-  render();
+  jobs = []; meta = {}; save(); saveMeta(); render();
 }
-
-// ── Import ────────────────────────────────────────────────────────────────────
-function openImport()  { document.getElementById('import-overlay').classList.add('open'); }
-function closeImport() {
-  document.getElementById('import-overlay').classList.remove('open');
-  document.getElementById('import-preview').style.display = 'none';
-  document.getElementById('import-confirm-btn').style.display = 'none';
-  document.getElementById('csv-file').value = '';
-  pendingImport = [];
-}
-
-function handleDrop(e) {
-  e.preventDefault();
-  document.getElementById('drop-zone').classList.remove('drag-over');
-  handleFile(e.dataTransfer.files[0]);
-}
-function handleFile(file) {
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => parseCSV(e.target.result);
-  reader.readAsText(file);
-}
-
-function parseCSV(text) {
-  const lines  = text.trim().split('\n');
-  const header = parseCSVLine(lines[0]).map(h => h.toLowerCase().trim());
-  const col    = name => header.indexOf(name);
-
-  // Build a set of all URLs already tracked — these are NEVER overwritten
-  const existingUrls = new Set(jobs.map(j => j.url));
-
-  const out = [];
-  pendingImport = [];
-
-  for (let i = 1; i < lines.length; i++) {
-    if (!lines[i].trim()) continue;
-    const cells = parseCSVLine(lines[i]);
-    const get   = name => (cells[col(name)] || '').trim();
-    const jobUrl = get('url');
-    const jobTitle = get('title');
-
-    if (!jobTitle || !jobUrl) {
-      out.push(`<div class="err">Line ${i+1}: skipped — missing title or URL</div>`);
-      continue;
-    }
-
-    if (existingUrls.has(jobUrl)) {
-      // Job already in tracker — show its current status so user knows it's remembered
-      const existing = jobs.find(j => j.url === jobUrl);
-      const badge    = existing ? `[${existing.status}]` : '[tracked]';
-      out.push(`<div class="dup">↩ Already tracked ${badge}: ${jobTitle}</div>`);
-      continue;
-    }
-
-    const newJob = {
-      id:          uid(),
-      title:       jobTitle,
-      company:     get('company'),
-      location:    get('location'),
-      board:       get('board'),
-      searchTerm:  get('search term'),
-      commuteNote: get('commute'),
-      url:         jobUrl,
-      posted:      get('posted'),
-      status:      'new',
-      appliedDate: '',
-      nextStep:    '',
-      notes:       '',
-      addedAt:     new Date().toISOString(),
-    };
-
-    pendingImport.push(newJob);
-    out.push(`<div class="ok">+ ${jobTitle} @ ${newJob.company || '?'} (${newJob.location || '?'})</div>`);
-  }
-
-  const preview = document.getElementById('import-preview');
-  const skipped = lines.length - 1 - pendingImport.length;
-  preview.innerHTML = `<div style="color:var(--text);margin-bottom:8px;font-weight:600">`
-    + `${pendingImport.length} new jobs to import · ${skipped} already tracked / skipped`
-    + `</div>` + out.join('');
-  preview.style.display = 'block';
-  document.getElementById('import-confirm-btn').style.display = pendingImport.length > 0 ? 'inline-flex' : 'none';
-}
-
-function confirmImport() {
-  const importedIds = pendingImport.map(j => j.id);
-
-  // Prepend new jobs (they appear at the top)
-  jobs = [...pendingImport, ...jobs];
-  save(jobs);
-
-  // Record import metadata so "New Today" tab and banner work
-  meta = {
-    lastImportDate:  today(),
-    lastImportCount: pendingImport.length,
-    lastImportIds:   importedIds,
-  };
-  saveMeta(meta);
-
-  closeImport();
-
-  // Show the import banner
-  document.getElementById('banner-msg').innerHTML =
-    `<strong>${pendingImport.length} new jobs imported</strong> · `
-    + `${jobs.filter(j => j.status === 'new').length} total needing action · `
-    + `your ${jobs.filter(j => j.status !== 'new').length} actioned jobs are unchanged`;
-  document.getElementById('import-banner').classList.add('show');
-
-  // Switch to "New Today" tab automatically
-  setTab('new');
-  render();
-}
-
-function dismissBanner() { document.getElementById('import-banner').classList.remove('show'); }
 
 // ── Export ────────────────────────────────────────────────────────────────────
 function exportCSV() {
@@ -725,33 +688,73 @@ function exportCSV() {
       .map(v => `"${(v||'').replace(/"/g,'""')}"`)
       .join(',')
   );
-  const blob = new Blob([[hdr, ...rows].join('\n')], { type: 'text/csv' });
-  const a = Object.assign(document.createElement('a'), {
+  const blob = new Blob([[hdr,...rows].join('\n')], { type: 'text/csv' });
+  Object.assign(document.createElement('a'), {
     href: URL.createObjectURL(blob),
     download: `qa-applications-${today()}.csv`
-  });
-  a.click();
+  }).click();
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-function uid()    { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
-function today()  { return new Date().toISOString().split('T')[0]; }
-function esc(str) { return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+// ── CSV parser ────────────────────────────────────────────────────────────────
+function parseCSV(text) {
+  const lines  = text.trim().split('\n');
+  const header = parseCSVLine(lines[0]).map(h => h.toLowerCase().trim());
+  const col    = name => header.indexOf(name);
+  const results = [];
+  for (let i = 1; i < lines.length; i++) {
+    if (!lines[i].trim()) continue;
+    const cells = parseCSVLine(lines[i]);
+    const get   = name => (cells[col(name)] || '').trim();
+    results.push({
+      title:       get('title'),
+      company:     get('company'),
+      location:    get('location'),
+      board:       get('board'),
+      searchTerm:  get('search term'),
+      commuteNote: get('commute'),
+      url:         get('url'),
+      posted:      get('posted'),
+    });
+  }
+  return results.filter(j => j.title && j.url);
+}
 
 function parseCSVLine(line) {
   const result = []; let cur = '', inQ = false;
   for (let i = 0; i < line.length; i++) {
     const c = line[i];
     if (c === '"') { if (inQ && line[i+1]==='"') { cur+='"'; i++; } else inQ=!inQ; }
-    else if (c === ',' && !inQ) { result.push(cur); cur = ''; }
+    else if (c === ',' && !inQ) { result.push(cur); cur=''; }
     else cur += c;
   }
   result.push(cur);
   return result;
 }
 
-// ── Init ──────────────────────────────────────────────────────────────────────
-render();
+// ── UI helpers ────────────────────────────────────────────────────────────────
+function setLoading(on, msg) {
+  const el = document.getElementById('loading');
+  if (on) {
+    el.classList.remove('hidden');
+    document.getElementById('loading-msg').textContent = msg || 'Loading…';
+  } else {
+    el.classList.add('hidden');
+  }
+}
+
+function setSyncStatus(state, label) {
+  const dot = document.getElementById('sync-dot');
+  const lbl = document.getElementById('sync-label');
+  dot.className = 'logo-dot' + (state === 'error' ? ' error' : state === 'syncing' ? ' stale' : '');
+  if (label) lbl.textContent = label;
+}
+
+function uid()    { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function today()  { return new Date().toISOString().split('T')[0]; }
+function esc(s)   { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+syncNow();
 </script>
 </body>
 </html>

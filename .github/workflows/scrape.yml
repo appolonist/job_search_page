@@ -1,0 +1,37 @@
+# .github/workflows/scrape.yml
+name: Daily Job Scrape
+
+on:
+  schedule:
+    - cron: '0 6 * * 1-5'   # 6am UTC, weekdays only
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+
+      - name: Run scraper
+        env:
+          REED_API_KEY:      ${{ secrets.REED_API_KEY }}
+          ADZUNA_APP_ID:     ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY:    ${{ secrets.ADZUNA_APP_KEY }}
+          TOMTOM_API_KEY:    ${{ secrets.TOMTOM_API_KEY }}
+          HOME_POSTCODE:     ${{ secrets.HOME_POSTCODE }}
+        run: node scraper.js
+
+      - name: Commit updated cache
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add cache/commute-cache.json
+          git diff --staged --quiet || git commit -m "chore: update commute cache $(date -u +%Y-%m-%d)"
+          git push
