@@ -1,141 +1,235 @@
 // helpers/commuteFilter.js
 //
-// Rules:
-//   🌐 Fully remote  → always include, no commute check needed
-//   🔀 Hybrid        → commute check required (still need to reach the office)
-//   🏢 Office-based  → commute check required
+// Filtruje oferty pracy według czasu dojazdu z HOME_POSTCODE.
 //
-// Commute passes if EITHER:
-//   - Drive time <= 1 hour (TomTom API, next weekday 8am departure)
-//   - Estimated transit time <= 2 hours (drive × multiplier, marked ~est)
-//     Multiplier: 1.8× for <80km straight line, 1.4× for longer (trains competitive)
+// CACHE: Wyniki TomTom API są zapisywane w cache/commute-cache.json
+// Klucz cache = URL oferty (unikalny identyfikator każdej oferty)
+// Przy kolejnych uruchomieniach scrapera oferty już sprawdzone nie generują
+// żadnych requestów do API — wartości są pobierane z pliku na dysku.
+//
+// Format wpisu w cache:
+// {
+//   "https://reed.co.uk/jobs/123": {
+//     "locationStr": "Manchester, Greater Manchester, UK",
+//     "driveSecs": 3847,
+//     "transitSecs": 6924,
+//     "cachedAt": "2025-04-27T08:00:00.000Z"
+//   }
+// }
+//
+// Reguły filtrowania:
+//   🌐 Fully remote  → zawsze przechodzi, bez sprawdzania
+//   🔀 Hybrid        → wymaga sprawdzenia dojazdu (trzeba dojeżdżać do biura)
+//   🏢 Office-based  → wymaga sprawdzenia dojazdu
+//
+// Oferta przechodzi jeśli KTÓRYKOLWIEK warunek jest spełniony:
+//   - Czas jazdy samochodem <= MAX_DRIVE_SECS  (domyślnie 1h)
+//   - Szacowany czas komunikacją <= MAX_TRANSIT_SECS (domyślnie 2h)
 
 const https = require('https');
+const fs    = require('fs');
+const path  = require('path');
 
 const API_KEY = process.env.TOMTOM_API_KEY;
 const HOME_PC = (process.env.HOME_POSTCODE || 'LL139AY').trim();
 
-const MAX_DRIVE_SECS   = 2 * 60 * 60;      // 1 hour by car
-const MAX_TRANSIT_SECS = 4 * 60 * 60;  // 2 hours by public transport
+const MAX_DRIVE_SECS   = 2 * 60 * 60;      // 1 godzina samochodem
+const MAX_TRANSIT_SECS = 4 * 60 * 60;  // 2 godziny komunikacją
 
-const geocodeCache = new Map();
+// Plik cache — tworzony automatycznie przy pierwszym uruchomieniu
+const CACHE_DIR  = path.join(__dirname, '..', 'cache');
+const CACHE_FILE = path.join(CACHE_DIR, 'commute-cache.json');
 
-// Keywords that mean the role is AT LEAST partly remote
-const HYBRID_KEYWORDS  = ['hybrid', 'work from home', 'wfh', 'home working', 'home-based', 'flexible working', 'home based'];
-// Keywords that mean the role is FULLY remote (no office trips expected)
-const REMOTE_KEYWORDS  = ['fully remote', 'fully-remote', '100% remote', 'remote only', 'remote first', 'remote-first'];
+const geocodeCache = new Map(); // geocode cache (tylko w pamięci, resetowany przy każdym uruchomieniu)
 
-// ─── Public API ───────────────────────────────────────────────────────────────
+// Słowa kluczowe
+const HYBRID_KEYWORDS = ['hybrid', 'work from home', 'wfh', 'home working', 'home-based', 'flexible working', 'home based'];
+const REMOTE_KEYWORDS = ['fully remote', 'fully-remote', '100% remote', 'remote only', 'remote first', 'remote-first'];
+
+// ─── Cache na dysku ───────────────────────────────────────────────────────────
+
+function loadCache() {
+  try {
+    if (!fs.existsSync(CACHE_FILE)) return {};
+    const raw = fs.readFileSync(CACHE_FILE, 'utf8');
+    return JSON.parse(raw);
+  } catch (err) {
+    console.warn(`  ⚠️  [Cache] Nie można wczytać cache: ${err.message} — zaczynam od nowa`);
+    return {};
+  }
+}
+
+function saveCache(cache) {
+  try {
+    if (!fs.existsSync(CACHE_DIR)) fs.mkdirSync(CACHE_DIR, { recursive: true });
+    fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2), 'utf8');
+  } catch (err) {
+    console.warn(`  ⚠️  [Cache] Nie można zapisać cache: ${err.message}`);
+  }
+}
+
+// ─── Główna funkcja ───────────────────────────────────────────────────────────
 
 async function filterByCommute(jobs) {
   if (!API_KEY) {
-    console.warn('\n  ⚠️  [Commute Filter] TOMTOM_API_KEY not set — skipping commute filter.');
-    console.warn('     Get a free key at https://developer.tomtom.com\n');
-    return jobs.map(j => ({ ...j, commuteNote: '⚠️ No API key' }));
+    console.warn('\n  ⚠️  [Commute Filter] Brak TOMTOM_API_KEY — pomijam filtrowanie.');
+    console.warn('     Zarejestruj się na https://developer.tomtom.com\n');
+    return jobs.map(j => ({ ...j, commuteNote: '⚠️ Brak klucza API' }));
   }
 
+  // Wczytaj cache z dysku
+  const cache = loadCache();
+  const cacheKeys = Object.keys(cache);
+  console.log(`\n  💾 [Cache] Wczytano ${cacheKeys.length} zapisanych wyników dojazdu`);
+
+  // Geocode domu (tylko raz)
   let homeCoords;
   try {
     homeCoords = await geocode(HOME_PC);
-    console.log(`\n  🏠 Home: ${HOME_PC} → ${homeCoords.lat.toFixed(4)}, ${homeCoords.lng.toFixed(4)}`);
+    console.log(`  🏠 Dom: ${HOME_PC} → ${homeCoords.lat.toFixed(4)}, ${homeCoords.lng.toFixed(4)}`);
   } catch (err) {
-    console.error(`  ❌ [Commute Filter] Cannot geocode "${HOME_PC}": ${err.message}`);
-    return jobs.map(j => ({ ...j, commuteNote: '⚠️ Home geocode failed' }));
+    console.error(`  ❌ [Commute Filter] Nie można geocodować "${HOME_PC}": ${err.message}`);
+    return jobs.map(j => ({ ...j, commuteNote: '⚠️ Błąd geocodowania domu' }));
   }
 
-  // Classify each job
-  const fullyRemote    = [];  // bypass commute check entirely
-  const needsChecking  = [];  // hybrid + office-based — must pass commute
+  // Podziel oferty na kategorie
+  const fullyRemote   = [];
+  const needsChecking = [];
 
   for (const job of jobs) {
     if (isFullyRemote(job)) {
       fullyRemote.push({ ...job, commuteNote: '🌐 Remote' });
     } else {
-      // Hybrid and office-based both need commute validation
       needsChecking.push(job);
     }
   }
 
-  console.log(`  📋 ${jobs.length} jobs: ${fullyRemote.length} fully remote (auto-pass) | ${needsChecking.length} need commute check`);
+  // Zlicz ile z nich jest już w cache
+  const cachedCount  = needsChecking.filter(j => j.url && cache[j.url]).length;
+  const freshCount   = needsChecking.length - cachedCount;
+
+  console.log(`  📋 ${jobs.length} ofert: ${fullyRemote.length} w pełni remote (auto-pass) | ${needsChecking.length} do sprawdzenia`);
+  console.log(`  💾 Z cache: ${cachedCount} | Nowe zapytania API: ${freshCount}`);
 
   const passing = [];
-  let checked = 0;
+  let apiCallsMade = 0;
+  let cacheHits    = 0;
 
   for (const job of needsChecking) {
-    checked++;
     const isHybrid = isHybridRole(job);
-    const result   = await checkCommute(job, homeCoords, isHybrid);
+    const result   = await checkCommute(job, homeCoords, isHybrid, cache);
+
+    if (result.fromCache) cacheHits++;
+    else                  apiCallsMade++;
 
     if (result.passes) {
       passing.push({ ...job, commuteNote: result.note });
     } else {
-      console.log(`    ✂️  [${checked}/${needsChecking.length}] EXCLUDED: "${job.title}" @ "${job.location}" — ${result.note}`);
+      console.log(`    ✂️  WYKLUCZONA: "${job.title}" @ "${job.location}" — ${result.note}`);
     }
 
-    await sleep(250);
+    // Małe opóźnienie tylko dla nowych requestów API
+    if (!result.fromCache) await sleep(250);
   }
 
+  // Zapisz zaktualizowany cache na dysk
+  saveCache(cache);
+
   const total = fullyRemote.length + passing.length;
-  console.log(`\n  ✅ ${passing.length}/${needsChecking.length} hybrid+office jobs within commute range`);
-  console.log(`  📊 Final: ${total} jobs (${fullyRemote.length} remote + ${passing.length} hybrid/office)\n`);
+  console.log(`\n  📊 Statystyki API: ${apiCallsMade} nowych requestów | ${cacheHits} z cache | zaoszczędzono ${cacheHits} requestów`);
+  console.log(`  ✅ ${passing.length}/${needsChecking.length} ofert biurowych/hybrid w zasięgu dojazdu`);
+  console.log(`  📊 Wynik końcowy: ${total} ofert (${fullyRemote.length} remote + ${passing.length} biurowych/hybrid)\n`);
 
   return [...fullyRemote, ...passing];
 }
 
-// ─── Commute check ────────────────────────────────────────────────────────────
+// ─── Sprawdzanie dojazdu (z cache) ───────────────────────────────────────────
 
-async function checkCommute(job, homeCoords, isHybrid) {
+async function checkCommute(job, homeCoords, isHybrid, cache) {
   const locationStr = extractLocation(job.location);
   const typeLabel   = isHybrid ? '🔀 Hybrid' : '🏢 Office';
 
   if (!locationStr) {
-    return { passes: true, note: `${typeLabel} | 📍 Location not provided` };
+    return { passes: true, fromCache: false, note: `${typeLabel} | 📍 Brak lokalizacji` };
   }
 
+  // ── Sprawdź cache ──────────────────────────────────────────────────────────
+  const cacheKey = job.url; // URL jest unikalnym identyfikatorem oferty
+
+  if (cacheKey && cache[cacheKey]) {
+    const cached = cache[cacheKey];
+
+    // Walidacja: czy lokalizacja się nie zmieniła (na wszelki wypadek)
+    if (cached.locationStr === locationStr) {
+      const driveOk   = cached.driveSecs   <= MAX_DRIVE_SECS;
+      const transitOk = cached.transitSecs <= MAX_TRANSIT_SECS;
+      const passes    = driveOk || transitOk;
+
+      const note = buildNote(typeLabel, cached.driveSecs, cached.transitSecs, driveOk, transitOk, true);
+      return { passes, fromCache: true, note };
+    }
+    // Lokalizacja się różni — usuń stary wpis i sprawdź od nowa
+    console.log(`    🔄 Zmiana lokalizacji dla "${job.title}" — pobieram nowe dane`);
+    delete cache[cacheKey];
+  }
+
+  // ── Nowe zapytanie API ─────────────────────────────────────────────────────
   let jobCoords;
   try {
     jobCoords = await geocode(locationStr);
   } catch (err) {
-    console.log(`    ⚠️  Cannot geocode "${locationStr}": ${err.message}`);
-    // Genuinely can't verify — include with warning rather than wrongly exclude
-    return { passes: true, note: `${typeLabel} | 📍 Location unverified (${locationStr})` };
+    console.log(`    ⚠️  Nie można geocodować "${locationStr}": ${err.message}`);
+    return { passes: true, fromCache: false, note: `${typeLabel} | 📍 Nie można zweryfikować (${locationStr})` };
   }
 
-  // Driving time from TomTom
   let driveSecs;
   try {
     driveSecs = await getDriveTime(homeCoords, jobCoords);
   } catch (err) {
-    console.log(`    ⚠️  Drive time failed for "${locationStr}": ${err.message}`);
-    return { passes: true, note: `${typeLabel} | 📍 Commute API error` };
+    console.log(`    ⚠️  Błąd API dojazdu dla "${locationStr}": ${err.message}`);
+    return { passes: true, fromCache: false, note: `${typeLabel} | 📍 Błąd API dojazdu` };
   }
 
-  // Transit estimate (TomTom publicTransport unreliable for rural UK/Wales)
+  // Szacowanie czasu komunikacją publiczną
   const distKm      = haversineKm(homeCoords, jobCoords);
-  const multiplier  = distKm > 80 ? 1.4 : 1.8;  // trains faster than drive ratio at long distance
+  const multiplier  = distKm > 80 ? 1.4 : 1.8;
   const transitSecs = Math.round(driveSecs * multiplier);
+
+  // Zapisz wynik w cache (obiekt cache jest mutowany in-place, zapisany na końcu)
+  if (cacheKey) {
+    cache[cacheKey] = {
+      locationStr,
+      driveSecs,
+      transitSecs,
+      distKm:   Math.round(distKm),
+      cachedAt: new Date().toISOString(),
+    };
+  }
 
   const driveOk   = driveSecs   <= MAX_DRIVE_SECS;
   const transitOk = transitSecs <= MAX_TRANSIT_SECS;
   const passes    = driveOk || transitOk;
 
-  const driveStr   = `🚗 ${formatMins(driveSecs)}${driveOk ? '' : ' ❌'}`;
-  const transitStr = `🚌 ~${formatMins(transitSecs)}${transitOk ? '' : ' ❌'}`;
-
-  return { passes, note: `${typeLabel} | ${driveStr} | ${transitStr}` };
+  const note = buildNote(typeLabel, driveSecs, transitSecs, driveOk, transitOk, false);
+  return { passes, fromCache: false, note };
 }
 
-// ─── Classification helpers ───────────────────────────────────────────────────
+// ─── Pomocnicze ──────────────────────────────────────────────────────────────
+
+function buildNote(typeLabel, driveSecs, transitSecs, driveOk, transitOk, fromCache) {
+  const cacheIndicator = fromCache ? ' 💾' : '';
+  const driveStr   = `🚗 ${formatMins(driveSecs)}${driveOk ? '' : ' ❌'}`;
+  const transitStr = `🚌 ~${formatMins(transitSecs)}${transitOk ? '' : ' ❌'}`;
+  return `${typeLabel} | ${driveStr} | ${transitStr}${cacheIndicator}`;
+}
 
 function isFullyRemote(job) {
-  const text = [job.title, job.location].filter(Boolean).join(' ').toLowerCase();
-  // Must match a "fully remote" keyword AND not also say "hybrid"
-  const hasRemote = REMOTE_KEYWORDS.some(kw => text.includes(kw));
-  // Also treat plain "remote" in the location field (not title) as fully remote
-  const locationIsRemote = (job.location || '').toLowerCase().trim() === 'remote'
-    || (job.location || '').toLowerCase().includes('remote, ');
-  const hasHybrid = HYBRID_KEYWORDS.some(kw => text.includes(kw));
-  return (hasRemote || locationIsRemote) && !hasHybrid;
+  const text       = [job.title, job.location].filter(Boolean).join(' ').toLowerCase();
+  const hasRemote  = REMOTE_KEYWORDS.some(kw => text.includes(kw));
+  const locRemote  = (job.location || '').toLowerCase().trim() === 'remote'
+                  || (job.location || '').toLowerCase().startsWith('remote,');
+  const hasHybrid  = HYBRID_KEYWORDS.some(kw => text.includes(kw));
+  return (hasRemote || locRemote) && !hasHybrid;
 }
 
 function isHybridRole(job) {
@@ -143,46 +237,32 @@ function isHybridRole(job) {
   return HYBRID_KEYWORDS.some(kw => text.includes(kw));
 }
 
-// ─── Location extraction ──────────────────────────────────────────────────────
-
 function extractLocation(raw) {
   if (!raw) return null;
-
-  const str = raw.trim();
-
-  // These are not geocodable locations
+  const str  = raw.trim();
   const skip = ['remote', 'united kingdom', 'uk', 'nationwide', 'home based', 'work from home', 'wfh', ''];
   if (skip.includes(str.toLowerCase())) return null;
 
   const cleaned = str
     .replace(/,?\s*(United Kingdom|UK|England|Scotland|Wales|Northern Ireland)$/i, '')
-    .replace(/,?\s*[A-Z]{1,2}\d{1,2}\s*\d[A-Z]{2}$/i, '') // strip trailing postcodes
+    .replace(/,?\s*[A-Z]{1,2}\d{1,2}\s*\d[A-Z]{2}$/i, '')
     .trim();
 
   if (!cleaned) return null;
-
   const parts = cleaned.split(',').map(p => p.trim()).filter(Boolean);
-  if (parts.length >= 2) {
-    return `${parts[0]}, ${parts[1]}, UK`;
-  }
-  return `${parts[0]}, UK`;
+  return parts.length >= 2 ? `${parts[0]}, ${parts[1]}, UK` : `${parts[0]}, UK`;
 }
-
-// ─── TomTom routing ───────────────────────────────────────────────────────────
 
 async function getDriveTime(origin, dest) {
   const departAt = nextWeekdayMorning();
   const url = `https://api.tomtom.com/routing/1/calculateRoute/`
     + `${origin.lat},${origin.lng}:${dest.lat},${dest.lng}/json`
-    + `?key=${API_KEY}`
-    + `&travelMode=car`
-    + `&routeType=fastest`
-    + `&traffic=true`
+    + `?key=${API_KEY}&travelMode=car&routeType=fastest&traffic=true`
     + `&departAt=${encodeURIComponent(departAt)}`;
 
   const data = await fetchJSON(url);
   const secs = data?.routes?.[0]?.summary?.travelTimeInSeconds;
-  if (secs == null) throw new Error('No travelTimeInSeconds in response');
+  if (secs == null) throw new Error('Brak travelTimeInSeconds w odpowiedzi TomTom');
   return secs;
 }
 
@@ -193,23 +273,20 @@ async function geocode(query) {
   const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(query)}.json`
     + `?key=${API_KEY}&countrySet=GB&limit=1`;
 
-  const data  = await fetchJSON(url);
+  const data   = await fetchJSON(url);
   const result = data?.results?.[0];
-  if (!result) throw new Error(`No geocode result for "${query}"`);
+  if (!result) throw new Error(`Brak wyniku geocodowania dla "${query}"`);
 
   const coords = { lat: result.position.lat, lng: result.position.lon };
   geocodeCache.set(key, coords);
   return coords;
 }
 
-// ─── Utilities ────────────────────────────────────────────────────────────────
-
 function haversineKm(a, b) {
   const R    = 6371;
   const dLat = toRad(b.lat - a.lat);
   const dLng = toRad(b.lng - a.lng);
-  const h    = Math.sin(dLat / 2) ** 2
-             + Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) ** 2;
+  const h    = Math.sin(dLat/2)**2 + Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng/2)**2;
   return R * 2 * Math.asin(Math.sqrt(h));
 }
 function toRad(d) { return d * Math.PI / 180; }
@@ -220,7 +297,7 @@ function nextWeekdayMorning() {
   while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1);
   d.setHours(8, 0, 0, 0);
   const pad = n => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T08:00:00`;
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T08:00:00`;
 }
 
 function formatMins(seconds) {
@@ -244,7 +321,7 @@ function fetchJSON(url) {
           return;
         }
         try { resolve(JSON.parse(raw)); }
-        catch { reject(new Error('JSON parse failed: ' + raw.substring(0, 100))); }
+        catch { reject(new Error('Błąd parsowania JSON: ' + raw.substring(0, 100))); }
       });
     }).on('error', reject);
   });
