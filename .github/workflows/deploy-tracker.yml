@@ -1,0 +1,65 @@
+name: Deploy Tracker to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_run:
+    # Also re-deploy automatically whenever the scraper adds new CSVs
+    workflows: ["Daily Job Scrape"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deploy at a time — cancel in-progress if a new one starts
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: job-tracker/package-lock.json
+
+      - name: Install dependencies
+        working-directory: job-tracker
+        run: npm ci
+
+      - name: Build React app
+        working-directory: job-tracker
+        run: npm run build
+        env:
+          # Makes the repo details available at build time if you ever
+          # want to bake defaults into the app via import.meta.env
+          VITE_GH_USER: appolonist
+          VITE_GH_REPO: job_search_page
+          VITE_GH_BRANCH: master
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Vite outputs to job-tracker/dist by default
+          path: job-tracker/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        id: deployment

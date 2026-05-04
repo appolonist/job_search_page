@@ -1,0 +1,94 @@
+/* src/index.css */
+@import "tailwindcss";
+
+/* ── Shared button variants ─────────────────────────────────────────────── */
+
+.btn-primary {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             0.375rem;
+  padding:         0.375rem 0.75rem;
+  border-radius:   0.5rem;
+  background:      #34d399;        /* emerald-400 */
+  color:           #000;
+  font-size:       0.75rem;
+  font-weight:     700;
+  font-family:     var(--font-mono, monospace);
+  border:          none;
+  cursor:          pointer;
+  white-space:     nowrap;
+  transition:      background 0.15s, transform 0.1s;
+}
+.btn-primary:hover  { background: #6ee7b7; }   /* emerald-300 */
+.btn-primary:active { transform: scale(0.95); }
+
+.btn-ghost {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             0.375rem;
+  padding:         0.375rem 0.75rem;
+  border-radius:   0.5rem;
+  background:      transparent;
+  color:           #94a3b8;        /* slate-400 */
+  font-size:       0.75rem;
+  font-family:     var(--font-mono, monospace);
+  border:          1px solid #334155;   /* slate-700 */
+  cursor:          pointer;
+  white-space:     nowrap;
+  transition:      border-color 0.15s, color 0.15s, transform 0.1s;
+}
+.btn-ghost:hover  { border-color: #10b981; color: #34d399; }  /* emerald */
+.btn-ghost:active { transform: scale(0.95); }
+
+/* ── Shared form input ───────────────────────────────────────────────────── */
+
+.form-input {
+  width:           100%;
+  background:      #1e293b;        /* slate-800 */
+  border:          1px solid #334155;   /* slate-700 */
+  color:           #e2e8f0;        /* slate-200 */
+  font-family:     var(--font-mono, monospace);
+  font-size:       0.875rem;
+  padding:         0.5rem 0.75rem;
+  border-radius:   0.5rem;
+  outline:         none;
+  transition:      border-color 0.15s;
+}
+.form-input::placeholder { color: #475569; }   /* slate-600 */
+.form-input:focus        { border-color: #10b981; }  /* emerald-500 */
+
+/* Select inside toolbar */
+.input-select {
+  background:      #1e293b;
+  border:          1px solid #334155;
+  color:           #e2e8f0;
+  font-family:     var(--font-mono, monospace);
+  font-size:       0.75rem;
+  padding:         0.5rem 0.625rem;
+  border-radius:   0.5rem;
+  outline:         none;
+  cursor:          pointer;
+  transition:      border-color 0.15s;
+}
+.input-select:focus { border-color: #10b981; }
+
+/* ── Animations ──────────────────────────────────────────────────────────── */
+
+@keyframes slideUp {
+  from { transform: translateY(14px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes pop {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* ── Hide scrollbar (tab bar on mobile) ─────────────────────────────────── */
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}

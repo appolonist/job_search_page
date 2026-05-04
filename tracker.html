@@ -1,812 +1,1665 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QA Job Application Tracker</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg:#0d0f12; --surface:#161a20; --surface2:#1e242c; --border:#2a323d;
-    --accent:#00e5a0; --accent2:#3b82f6; --warn:#f59e0b; --danger:#ef4444;
-    --text:#e2e8f0; --muted:#64748b;
-    --mono:'DM Mono',monospace; --sans:'Syne',sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QA Job Application Tracker</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0d0f12;
+        --surface: #161a20;
+        --surface2: #1e242c;
+        --border: #2a323d;
+        --accent: #00e5a0;
+        --accent2: #3b82f6;
+        --warn: #f59e0b;
+        --danger: #ef4444;
+        --text: #e2e8f0;
+        --muted: #64748b;
+        --mono: "DM Mono", monospace;
+        --sans: "Syne", sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+        min-height: 100vh;
+      }
 
-  /* Loading */
-  #loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;
-    align-items:center;justify-content:center;gap:14px;z-index:50;transition:opacity .3s;}
-  #loading.hidden{opacity:0;pointer-events:none;display:none;}
-  .spinner{width:34px;height:34px;border:3px solid var(--border);border-top-color:var(--accent);
-    border-radius:50%;animation:spin .8s linear infinite;}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  #loading-msg{font-family:var(--mono);font-size:.8rem;color:var(--muted);}
+      /* Loading */
+      #loading {
+        position: fixed;
+        inset: 0;
+        background: var(--bg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        z-index: 50;
+        transition: opacity 0.3s;
+      }
+      #loading.hidden {
+        opacity: 0;
+        pointer-events: none;
+        display: none;
+      }
+      .spinner {
+        width: 34px;
+        height: 34px;
+        border: 3px solid var(--border);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      #loading-msg {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
 
-  /* Header */
-  header{padding:20px 26px;display:flex;align-items:center;justify-content:space-between;
-    flex-wrap:wrap;gap:12px;border-bottom:1px solid var(--border);}
-  .logo{display:flex;align-items:center;gap:10px;}
-  .logo-dot{width:9px;height:9px;border-radius:50%;background:var(--accent);
-    box-shadow:0 0 10px var(--accent);animation:pulse 2s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-  .logo-dot.saving{background:var(--warn);box-shadow:0 0 10px var(--warn);}
-  .logo-dot.error{background:var(--danger);box-shadow:0 0 10px var(--danger);}
-  h1{font-size:1.25rem;font-weight:800;letter-spacing:-.02em;}
-  h1 span{color:var(--accent);}
-  .sub{font-family:var(--mono);font-size:.69rem;color:var(--muted);margin-top:2px;}
-  .header-actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center;}
+      /* Header */
+      header {
+        padding: 20px 26px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .logo-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 10px var(--accent);
+        animation: pulse 2s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+      .logo-dot.saving {
+        background: var(--warn);
+        box-shadow: 0 0 10px var(--warn);
+      }
+      .logo-dot.error {
+        background: var(--danger);
+        box-shadow: 0 0 10px var(--danger);
+      }
+      h1 {
+        font-size: 1.25rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      h1 span {
+        color: var(--accent);
+      }
+      .sub {
+        font-family: var(--mono);
+        font-size: 0.69rem;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .header-actions {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
 
-  /* Sync badge */
-  .sync-badge{font-family:var(--mono);font-size:.7rem;padding:4px 10px;border-radius:5px;
-    background:var(--surface2);border:1px solid var(--border);color:var(--muted);
-    display:flex;align-items:center;gap:6px;}
-  .sync-badge.saved{color:var(--accent);border-color:#05966944;}
-  .sync-badge.saving{color:var(--warn);border-color:#b4530044;}
-  .sync-badge.error{color:var(--danger);border-color:#b91c1c44;}
+      /* Sync badge */
+      .sync-badge {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        padding: 4px 10px;
+        border-radius: 5px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .sync-badge.saved {
+        color: var(--accent);
+        border-color: #05966944;
+      }
+      .sync-badge.saving {
+        color: var(--warn);
+        border-color: #b4530044;
+      }
+      .sync-badge.error {
+        color: var(--danger);
+        border-color: #b91c1c44;
+      }
 
-  /* Buttons */
-  .btn{font-family:var(--mono);font-size:.76rem;font-weight:500;padding:7px 13px;
-    border-radius:6px;border:1px solid var(--border);background:var(--surface2);
-    color:var(--text);cursor:pointer;transition:all .15s;white-space:nowrap;
-    display:inline-flex;align-items:center;gap:5px;}
-  .btn:hover{border-color:var(--accent);color:var(--accent);}
-  .btn-primary{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700;}
-  .btn-primary:hover{background:#00c988;color:#000;}
-  .btn-danger{border-color:var(--danger);color:var(--danger);}
-  .btn-danger:hover{background:var(--danger);color:#fff;}
+      /* Buttons */
+      .btn {
+        font-family: var(--mono);
+        font-size: 0.76rem;
+        font-weight: 500;
+        padding: 7px 13px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        background: var(--surface2);
+        color: var(--text);
+        cursor: pointer;
+        transition: all 0.15s;
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #000;
+        border-color: var(--accent);
+        font-weight: 700;
+      }
+      .btn-primary:hover {
+        background: #00c988;
+        color: #000;
+      }
+      .btn-danger {
+        border-color: var(--danger);
+        color: var(--danger);
+      }
+      .btn-danger:hover {
+        background: var(--danger);
+        color: #fff;
+      }
 
-  /* Banner */
-  #new-banner{display:none;background:linear-gradient(135deg,#0a2a1a,#0d1f2d);
-    border-bottom:1px solid var(--accent);padding:11px 26px;
-    align-items:center;gap:12px;flex-wrap:wrap;}
-  #new-banner.show{display:flex;}
-  .banner-msg{font-size:.84rem;}
-  .banner-msg strong{color:var(--accent);}
+      /* Banner */
+      #new-banner {
+        display: none;
+        background: linear-gradient(135deg, #0a2a1a, #0d1f2d);
+        border-bottom: 1px solid var(--accent);
+        padding: 11px 26px;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      #new-banner.show {
+        display: flex;
+      }
+      .banner-msg {
+        font-size: 0.84rem;
+      }
+      .banner-msg strong {
+        color: var(--accent);
+      }
 
-  /* Tabs */
-  .view-tabs{display:flex;gap:2px;padding:11px 26px 0;
-    border-bottom:1px solid var(--border);background:var(--surface);}
-  .tab{font-family:var(--mono);font-size:.76rem;padding:8px 15px;border-radius:6px 6px 0 0;
-    cursor:pointer;color:var(--muted);border:1px solid transparent;
-    border-bottom:none;transition:all .15s;position:relative;bottom:-1px;}
-  .tab:hover{color:var(--text);}
-  .tab.active{background:var(--bg);color:var(--accent);border-color:var(--border);border-bottom-color:var(--bg);}
-  .tab .cnt{display:inline-block;background:var(--accent);color:#000;font-size:.62rem;
-    font-weight:700;padding:1px 5px;border-radius:10px;margin-left:5px;vertical-align:middle;}
+      /* Tabs */
+      .view-tabs {
+        display: flex;
+        gap: 2px;
+        padding: 11px 26px 0;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .tab {
+        font-family: var(--mono);
+        font-size: 0.76rem;
+        padding: 8px 15px;
+        border-radius: 6px 6px 0 0;
+        cursor: pointer;
+        color: var(--muted);
+        border: 1px solid transparent;
+        border-bottom: none;
+        transition: all 0.15s;
+        position: relative;
+        bottom: -1px;
+      }
+      .tab:hover {
+        color: var(--text);
+      }
+      .tab.active {
+        background: var(--bg);
+        color: var(--accent);
+        border-color: var(--border);
+        border-bottom-color: var(--bg);
+      }
+      .tab .cnt {
+        display: inline-block;
+        background: var(--accent);
+        color: #000;
+        font-size: 0.62rem;
+        font-weight: 700;
+        padding: 1px 5px;
+        border-radius: 10px;
+        margin-left: 5px;
+        vertical-align: middle;
+      }
 
-  /* Stats */
-  .stats{display:flex;gap:1px;background:var(--border);border-bottom:1px solid var(--border);flex-wrap:wrap;}
-  .stat{flex:1;padding:11px 15px;background:var(--surface);display:flex;flex-direction:column;gap:2px;min-width:70px;}
-  .stat-num{font-family:var(--mono);font-size:1.4rem;font-weight:500;line-height:1;}
-  .stat-lbl{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;}
+      /* Stats */
+      .stats {
+        display: flex;
+        gap: 1px;
+        background: var(--border);
+        border-bottom: 1px solid var(--border);
+        flex-wrap: wrap;
+      }
+      .stat {
+        flex: 1;
+        padding: 11px 15px;
+        background: var(--surface);
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 70px;
+      }
+      .stat-num {
+        font-family: var(--mono);
+        font-size: 1.4rem;
+        font-weight: 500;
+        line-height: 1;
+      }
+      .stat-lbl {
+        font-size: 0.66rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
 
-  /* Toolbar */
-  .toolbar{padding:11px 20px;display:flex;gap:7px;flex-wrap:wrap;align-items:center;
-    border-bottom:1px solid var(--border);background:var(--surface);}
-  .toolbar input,.toolbar select{background:var(--surface2);border:1px solid var(--border);
-    color:var(--text);font-family:var(--mono);font-size:.76rem;padding:6px 10px;
-    border-radius:6px;outline:none;transition:border-color .15s;}
-  .toolbar input{width:190px;}
-  .toolbar input:focus,.toolbar select:focus{border-color:var(--accent);}
-  .toolbar select option{background:var(--surface2);}
+      /* Toolbar */
+      .toolbar {
+        padding: 11px 20px;
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+        align-items: center;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .toolbar input,
+      .toolbar select {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-family: var(--mono);
+        font-size: 0.76rem;
+        padding: 6px 10px;
+        border-radius: 6px;
+        outline: none;
+        transition: border-color 0.15s;
+      }
+      .toolbar input {
+        width: 190px;
+      }
+      .toolbar input:focus,
+      .toolbar select:focus {
+        border-color: var(--accent);
+      }
+      .toolbar select option {
+        background: var(--surface2);
+      }
 
-  /* Table */
-  .table-wrap{overflow-x:auto;}
-  table{width:100%;border-collapse:collapse;font-size:.8rem;}
-  thead th{background:var(--surface);color:var(--muted);font-family:var(--mono);
-    font-size:.66rem;text-transform:uppercase;letter-spacing:.07em;
-    padding:9px 11px;text-align:left;border-bottom:1px solid var(--border);
-    white-space:nowrap;cursor:pointer;user-select:none;}
-  thead th:hover{color:var(--accent);}
-  tbody tr{border-bottom:1px solid var(--border);transition:background .1s;}
-  tbody tr:hover{background:var(--surface);}
-  tbody tr.is-new{background:#071a10;}
-  tbody tr.is-new:hover{background:#0d2a1b;}
-  td{padding:10px 11px;vertical-align:middle;}
-  td.tc{max-width:250px;}
-  td.tc a{color:var(--text);text-decoration:none;font-weight:600;}
-  td.tc a:hover{color:var(--accent);}
-  .co{color:var(--muted);font-size:.71rem;margin-top:2px;}
-  .new-pill{display:inline-block;background:var(--accent);color:#000;font-family:var(--mono);
-    font-size:.59rem;font-weight:700;padding:1px 5px;border-radius:4px;margin-left:5px;
-    vertical-align:middle;animation:pop .3s ease;}
-  @keyframes pop{from{transform:scale(0);opacity:0}to{transform:none;opacity:1}}
-  .lc{font-family:var(--mono);font-size:.71rem;color:var(--muted);max-width:135px;}
-  .cc{font-family:var(--mono);font-size:.68rem;white-space:nowrap;}
-  .dc{font-family:var(--mono);font-size:.68rem;color:var(--muted);white-space:nowrap;}
-  .np{max-width:145px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    color:var(--muted);font-size:.71rem;cursor:pointer;}
-  .np:hover{color:var(--text);}
-  .acts{display:flex;gap:4px;}
-  .ib{background:none;border:1px solid var(--border);color:var(--muted);width:26px;height:26px;
-    border-radius:5px;cursor:pointer;font-size:.77rem;display:flex;align-items:center;
-    justify-content:center;transition:all .15s;}
-  .ib:hover{border-color:var(--accent);color:var(--accent);}
-  .ib.del:hover{border-color:var(--danger);color:var(--danger);}
+      /* Table */
+      .table-wrap {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.8rem;
+      }
+      thead th {
+        background: var(--surface);
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 0.66rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        padding: 9px 11px;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+        cursor: pointer;
+        user-select: none;
+      }
+      thead th:hover {
+        color: var(--accent);
+      }
+      tbody tr {
+        border-bottom: 1px solid var(--border);
+        transition: background 0.1s;
+      }
+      tbody tr:hover {
+        background: var(--surface);
+      }
+      tbody tr.is-new {
+        background: #071a10;
+      }
+      tbody tr.is-new:hover {
+        background: #0d2a1b;
+      }
+      td {
+        padding: 10px 11px;
+        vertical-align: middle;
+      }
+      td.tc {
+        max-width: 250px;
+      }
+      td.tc a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      td.tc a:hover {
+        color: var(--accent);
+      }
+      .co {
+        color: var(--muted);
+        font-size: 0.71rem;
+        margin-top: 2px;
+      }
+      .new-pill {
+        display: inline-block;
+        background: var(--accent);
+        color: #000;
+        font-family: var(--mono);
+        font-size: 0.59rem;
+        font-weight: 700;
+        padding: 1px 5px;
+        border-radius: 4px;
+        margin-left: 5px;
+        vertical-align: middle;
+        animation: pop 0.3s ease;
+      }
+      @keyframes pop {
+        from {
+          transform: scale(0);
+          opacity: 0;
+        }
+        to {
+          transform: none;
+          opacity: 1;
+        }
+      }
+      .lc {
+        font-family: var(--mono);
+        font-size: 0.71rem;
+        color: var(--muted);
+        max-width: 135px;
+      }
+      .cc {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        white-space: nowrap;
+      }
+      .dc {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .np {
+        max-width: 145px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: var(--muted);
+        font-size: 0.71rem;
+        cursor: pointer;
+      }
+      .np:hover {
+        color: var(--text);
+      }
+      .acts {
+        display: flex;
+        gap: 4px;
+      }
+      .ib {
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        width: 26px;
+        height: 26px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.77rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.15s;
+      }
+      .ib:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .ib.del:hover {
+        border-color: var(--danger);
+        color: var(--danger);
+      }
 
-  /* Status badge */
-  .sb{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;
-    font-family:var(--mono);font-size:.67rem;font-weight:500;white-space:nowrap;
-    cursor:pointer;border:1px solid transparent;transition:all .15s;}
-  .sb:hover{filter:brightness(1.25);}
-  .s-new{background:#1e2a3a;color:#60a5fa;border-color:#1e40af44;}
-  .s-applied{background:#1a2e26;color:var(--accent);border-color:#05966944;}
-  .s-interview{background:#2d2200;color:var(--warn);border-color:#b4530044;}
-  .s-offer{background:#1a1a2e;color:#a78bfa;border-color:#7c3aed44;}
-  .s-rejected{background:#2a1a1a;color:var(--danger);border-color:#b91c1c44;}
-  .s-withdrawn{background:#1e1e1e;color:var(--muted);border-color:#33333344;}
+      /* Status badge */
+      .sb {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 9px;
+        border-radius: 20px;
+        font-family: var(--mono);
+        font-size: 0.67rem;
+        font-weight: 500;
+        white-space: nowrap;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: all 0.15s;
+      }
+      .sb:hover {
+        filter: brightness(1.25);
+      }
+      .s-new {
+        background: #1e2a3a;
+        color: #60a5fa;
+        border-color: #1e40af44;
+      }
+      .s-applied {
+        background: #1a2e26;
+        color: var(--accent);
+        border-color: #05966944;
+      }
+      .s-interview {
+        background: #2d2200;
+        color: var(--warn);
+        border-color: #b4530044;
+      }
+      .s-offer {
+        background: #1a1a2e;
+        color: #a78bfa;
+        border-color: #7c3aed44;
+      }
+      .s-rejected {
+        background: #2a1a1a;
+        color: var(--danger);
+        border-color: #b91c1c44;
+      }
+      .s-withdrawn {
+        background: #1e1e1e;
+        color: var(--muted);
+        border-color: #33333344;
+      }
 
-  /* Empty */
-  .empty{text-align:center;padding:70px 20px;color:var(--muted);}
-  .empty h2{font-size:1rem;margin-bottom:8px;color:var(--text);}
-  .empty p{font-size:.8rem;line-height:1.6;max-width:380px;margin:0 auto;}
-  #no-results{display:none;text-align:center;padding:36px;color:var(--muted);font-size:.83rem;}
+      /* Empty */
+      .empty {
+        text-align: center;
+        padding: 70px 20px;
+        color: var(--muted);
+      }
+      .empty h2 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+        color: var(--text);
+      }
+      .empty p {
+        font-size: 0.8rem;
+        line-height: 1.6;
+        max-width: 380px;
+        margin: 0 auto;
+      }
+      #no-results {
+        display: none;
+        text-align: center;
+        padding: 36px;
+        color: var(--muted);
+        font-size: 0.83rem;
+      }
 
-  /* Modals */
-  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);
-    backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;}
-  .overlay.open{display:flex;}
-  .modal{background:var(--surface);border:1px solid var(--border);border-radius:12px;
-    padding:24px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;
-    position:relative;animation:slideUp .2s ease;}
-  .modal.wide{max-width:560px;}
-  @keyframes slideUp{from{transform:translateY(14px);opacity:0}}
-  .modal h2{font-size:1rem;font-weight:700;margin-bottom:16px;}
-  .mc{position:absolute;top:13px;right:13px;background:none;border:none;
-    color:var(--muted);font-size:1.1rem;cursor:pointer;}
-  .mc:hover{color:var(--text);}
-  .field{margin-bottom:13px;}
-  .field label{display:block;font-size:.68rem;color:var(--muted);text-transform:uppercase;
-    letter-spacing:.07em;margin-bottom:4px;}
-  .field input,.field select,.field textarea{width:100%;background:var(--surface2);
-    border:1px solid var(--border);color:var(--text);font-family:var(--mono);
-    font-size:.78rem;padding:8px 10px;border-radius:6px;outline:none;transition:border-color .15s;}
-  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent);}
-  .field textarea{resize:vertical;min-height:75px;}
-  .field select option{background:var(--surface2);}
-  .ma{display:flex;gap:8px;justify-content:flex-end;margin-top:15px;}
+      /* Modals */
+      .overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(4px);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+      }
+      .overlay.open {
+        display: flex;
+      }
+      .modal {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
+        width: 100%;
+        max-width: 480px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        animation: slideUp 0.2s ease;
+      }
+      .modal.wide {
+        max-width: 560px;
+      }
+      @keyframes slideUp {
+        from {
+          transform: translateY(14px);
+          opacity: 0;
+        }
+      }
+      .modal h2 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
+      .mc {
+        position: absolute;
+        top: 13px;
+        right: 13px;
+        background: none;
+        border: none;
+        color: var(--muted);
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
+      .mc:hover {
+        color: var(--text);
+      }
+      .field {
+        margin-bottom: 13px;
+      }
+      .field label {
+        display: block;
+        font-size: 0.68rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        margin-bottom: 4px;
+      }
+      .field input,
+      .field select,
+      .field textarea {
+        width: 100%;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        padding: 8px 10px;
+        border-radius: 6px;
+        outline: none;
+        transition: border-color 0.15s;
+      }
+      .field input:focus,
+      .field select:focus,
+      .field textarea:focus {
+        border-color: var(--accent);
+      }
+      .field textarea {
+        resize: vertical;
+        min-height: 75px;
+      }
+      .field select option {
+        background: var(--surface2);
+      }
+      .ma {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+        margin-top: 15px;
+      }
 
-  /* Setup modal */
-  .setup-note{background:var(--surface2);border:1px solid var(--border);border-radius:8px;
-    padding:13px;font-family:var(--mono);font-size:.75rem;color:var(--muted);
-    line-height:1.7;margin-bottom:16px;}
-  .setup-note a{color:var(--accent);}
-  .setup-note code{color:var(--text);background:var(--bg);padding:1px 5px;border-radius:3px;}
+      /* Setup modal */
+      .setup-note {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 13px;
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        color: var(--muted);
+        line-height: 1.7;
+        margin-bottom: 16px;
+      }
+      .setup-note a {
+        color: var(--accent);
+      }
+      .setup-note code {
+        color: var(--text);
+        background: var(--bg);
+        padding: 1px 5px;
+        border-radius: 3px;
+      }
 
-  /* History */
-  .hi-list{display:flex;flex-direction:column;gap:7px;margin-top:4px;}
-  .hi-item{background:var(--surface2);border:1px solid var(--border);border-radius:7px;
-    padding:11px 13px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
-  .hi-date{font-family:var(--mono);font-size:.79rem;color:var(--text);font-weight:500;}
-  .hi-cnt{font-family:var(--mono);font-size:.73rem;color:var(--muted);}
-  .hi-imp{font-family:var(--mono);font-size:.71rem;color:var(--accent);}
-  .hi-imp.none{color:var(--muted);}
-</style>
-</head>
-<body>
-
-<div id="loading"><div class="spinner"></div><div id="loading-msg">Connecting to GitHub…</div></div>
-
-<header>
-  <div class="logo">
-    <div class="logo-dot" id="sync-dot"></div>
-    <div>
-      <h1>QA Jobs <span>Tracker</span></h1>
-      <div class="sub" id="sync-label">Initialising…</div>
+      /* History */
+      .hi-list {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        margin-top: 4px;
+      }
+      .hi-item {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        padding: 11px 13px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .hi-date {
+        font-family: var(--mono);
+        font-size: 0.79rem;
+        color: var(--text);
+        font-weight: 500;
+      }
+      .hi-cnt {
+        font-family: var(--mono);
+        font-size: 0.73rem;
+        color: var(--muted);
+      }
+      .hi-imp {
+        font-family: var(--mono);
+        font-size: 0.71rem;
+        color: var(--accent);
+      }
+      .hi-imp.none {
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading">
+      <div class="spinner"></div>
+      <div id="loading-msg">Connecting to GitHub…</div>
     </div>
-  </div>
-  <div class="header-actions">
-    <div class="sync-badge" id="sync-badge">⟳ syncing</div>
-    <button class="btn" onclick="syncNow()">⟳ Sync</button>
-    <button class="btn" onclick="openHistory()">📋 History</button>
-    <button class="btn" onclick="exportCSV()">⬇ Export</button>
-    <button class="btn" onclick="openSetup()">⚙ Settings</button>
-    <button class="btn btn-primary" onclick="openAdd()">+ Add Job</button>
-  </div>
-</header>
 
-<div id="new-banner">
-  <div class="banner-msg" id="banner-msg"></div>
-  <div style="display:flex;gap:7px;margin-left:auto">
-    <button class="btn btn-primary" onclick="setTab('new')">Show new</button>
-    <button class="btn" onclick="setTab('needs-action')">Needs action</button>
-    <button class="btn" onclick="document.getElementById('new-banner').classList.remove('show')">✕</button>
-  </div>
-</div>
+    <header>
+      <div class="logo">
+        <div class="logo-dot" id="sync-dot"></div>
+        <div>
+          <h1>QA Jobs <span>Tracker</span></h1>
+          <div class="sub" id="sync-label">Initialising…</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="sync-badge" id="sync-badge">⟳ syncing</div>
+        <button class="btn" onclick="syncNow()">⟳ Sync</button>
+        <button class="btn" onclick="openHistory()">📋 History</button>
+        <button class="btn" onclick="exportCSV()">⬇ Export</button>
+        <button class="btn" onclick="openSetup()">⚙ Settings</button>
+        <button class="btn btn-primary" onclick="openAdd()">+ Add Job</button>
+      </div>
+    </header>
 
-<div class="view-tabs">
-  <div class="tab active" id="tab-needs-action" onclick="setTab('needs-action')">Needs Action <span class="cnt" id="cnt-na">0</span></div>
-  <div class="tab" id="tab-new" onclick="setTab('new')">New Today <span class="cnt" id="cnt-new" style="display:none">0</span></div>
-  <div class="tab" id="tab-all" onclick="setTab('all')">All Jobs</div>
-  <div class="tab" id="tab-applied" onclick="setTab('applied')">Applied</div>
-  <div class="tab" id="tab-interview" onclick="setTab('interview')">Interviews</div>
-</div>
+    <div id="new-banner">
+      <div class="banner-msg" id="banner-msg"></div>
+      <div style="display: flex; gap: 7px; margin-left: auto">
+        <button class="btn btn-primary" onclick="setTab('new')">
+          Show new
+        </button>
+        <button class="btn" onclick="setTab('needs-action')">
+          Needs action
+        </button>
+        <button
+          class="btn"
+          onclick="
+            document.getElementById('new-banner').classList.remove('show')
+          "
+        >
+          ✕
+        </button>
+      </div>
+    </div>
 
-<div class="stats">
-  <div class="stat"><div class="stat-num" id="s-total">0</div><div class="stat-lbl">Total</div></div>
-  <div class="stat"><div class="stat-num" style="color:var(--accent2)" id="s-new">0</div><div class="stat-lbl">New</div></div>
-  <div class="stat"><div class="stat-num" style="color:var(--accent)" id="s-applied">0</div><div class="stat-lbl">Applied</div></div>
-  <div class="stat"><div class="stat-num" style="color:var(--warn)" id="s-interview">0</div><div class="stat-lbl">Interview</div></div>
-  <div class="stat"><div class="stat-num" style="color:#a78bfa" id="s-offer">0</div><div class="stat-lbl">Offer</div></div>
-  <div class="stat"><div class="stat-num" style="color:var(--danger)" id="s-rejected">0</div><div class="stat-lbl">Rejected</div></div>
-</div>
+    <div class="view-tabs">
+      <div
+        class="tab active"
+        id="tab-needs-action"
+        onclick="setTab('needs-action')"
+      >
+        Needs Action <span class="cnt" id="cnt-na">0</span>
+      </div>
+      <div class="tab" id="tab-new" onclick="setTab('new')">
+        New Today <span class="cnt" id="cnt-new" style="display: none">0</span>
+      </div>
+      <div class="tab" id="tab-all" onclick="setTab('all')">All Jobs</div>
+      <div class="tab" id="tab-applied" onclick="setTab('applied')">
+        Applied
+      </div>
+      <div class="tab" id="tab-interview" onclick="setTab('interview')">
+        Interviews
+      </div>
+    </div>
 
-<div class="toolbar">
-  <input type="text" id="q" placeholder="Search title, company, location…" oninput="render()">
-  <select id="f-board" onchange="render()"><option value="">All boards</option></select>
-  <select id="f-type" onchange="render()">
-    <option value="">All types</option>
-    <option value="remote">🌐 Remote</option>
-    <option value="hybrid">🔀 Hybrid</option>
-    <option value="office">🏢 Office</option>
-  </select>
-  <button class="btn btn-danger" onclick="clearAll()" style="margin-left:auto">🗑 Clear all</button>
-</div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num" id="s-total">0</div>
+        <div class="stat-lbl">Total</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color: var(--accent2)" id="s-new">0</div>
+        <div class="stat-lbl">New</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color: var(--accent)" id="s-applied">
+          0
+        </div>
+        <div class="stat-lbl">Applied</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color: var(--warn)" id="s-interview">
+          0
+        </div>
+        <div class="stat-lbl">Interview</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color: #a78bfa" id="s-offer">0</div>
+        <div class="stat-lbl">Offer</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" style="color: var(--danger)" id="s-rejected">
+          0
+        </div>
+        <div class="stat-lbl">Rejected</div>
+      </div>
+    </div>
 
-<div class="table-wrap" id="table-wrap">
-  <table>
-    <thead>
-      <tr>
-        <th onclick="sortBy('title')">Title ↕</th>
-        <th onclick="sortBy('company')">Company ↕</th>
-        <th>Location</th><th>Commute</th><th>Board</th>
-        <th onclick="sortBy('status')">Status ↕</th>
-        <th onclick="sortBy('appliedDate')">Applied ↕</th>
-        <th>Notes</th><th></th>
-      </tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
-  <div id="no-results">No jobs match your current view or filters.</div>
-</div>
-<div id="empty-state" class="empty" style="display:none">
-  <h2>No jobs tracked yet</h2>
-  <p>Run the scraper, push to GitHub, then click ⟳ Sync.</p>
-</div>
-
-<!-- Edit Modal -->
-<div class="overlay" id="edit-overlay" onclick="if(event.target===this)closeEdit()">
-  <div class="modal">
-    <button class="mc" onclick="closeEdit()">✕</button>
-    <h2 id="edit-heading">Edit Application</h2>
-    <div class="field"><label>Job Title</label><input id="e-title" type="text"></div>
-    <div class="field"><label>Company</label><input id="e-company" type="text"></div>
-    <div class="field"><label>Location</label><input id="e-location" type="text"></div>
-    <div class="field"><label>Job URL</label><input id="e-url" type="url"></div>
-    <div class="field"><label>Board</label><input id="e-board" type="text"></div>
-    <div class="field"><label>Status</label>
-      <select id="e-status">
-        <option value="new">New</option><option value="applied">Applied</option>
-        <option value="interview">Interview</option><option value="offer">Offer</option>
-        <option value="rejected">Rejected</option><option value="withdrawn">Withdrawn</option>
+    <div class="toolbar">
+      <input
+        type="text"
+        id="q"
+        placeholder="Search title, company, location…"
+        oninput="render()"
+      />
+      <select id="f-board" onchange="render()">
+        <option value="">All boards</option>
       </select>
+      <select id="f-type" onchange="render()">
+        <option value="">All types</option>
+        <option value="remote">🌐 Remote</option>
+        <option value="hybrid">🔀 Hybrid</option>
+        <option value="office">🏢 Office</option>
+      </select>
+      <button
+        class="btn btn-danger"
+        onclick="clearAll()"
+        style="margin-left: auto"
+      >
+        🗑 Clear all
+      </button>
     </div>
-    <div class="field"><label>Date Applied</label><input id="e-applied" type="date"></div>
-    <div class="field"><label>Next Step / Interview Date</label><input id="e-next" type="date"></div>
-    <div class="field"><label>Notes</label><textarea id="e-notes" placeholder="Recruiter, salary, interview format…"></textarea></div>
-    <div class="ma">
-      <button class="btn" onclick="closeEdit()">Cancel</button>
-      <button class="btn btn-primary" onclick="saveEdit()">Save</button>
+
+    <div class="table-wrap" id="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th onclick="sortBy('title')">Title ↕</th>
+            <th onclick="sortBy('company')">Company ↕</th>
+            <th>Location</th>
+            <th>Commute</th>
+            <th>Board</th>
+            <th onclick="sortBy('status')">Status ↕</th>
+            <th onclick="sortBy('appliedDate')">Applied ↕</th>
+            <th>Notes</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <div id="no-results">No jobs match your current view or filters.</div>
     </div>
-  </div>
-</div>
-
-<!-- Setup Modal -->
-<div class="overlay" id="setup-overlay" onclick="if(event.target===this)closeSetup()">
-  <div class="modal wide">
-    <button class="mc" onclick="closeSetup()">✕</button>
-    <h2>⚙ GitHub Sync Settings</h2>
-    <div class="setup-note">
-      Tracker state is saved as <code>tracker-state.json</code> in your GitHub repo so every device stays in sync.<br><br>
-      <strong style="color:var(--text)">One-time setup:</strong><br>
-      1. Go to <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a><br>
-      2. Generate new token (classic) → tick <code>repo</code> scope → copy it<br>
-      3. Paste below — token is stored only in this browser's localStorage, never sent anywhere except GitHub's API<br>
-      4. Repeat on every device you use
+    <div id="empty-state" class="empty" style="display: none">
+      <h2>No jobs tracked yet</h2>
+      <p>Run the scraper, push to GitHub, then click ⟳ Sync.</p>
     </div>
-    <div class="field"><label>GitHub Username</label><input id="cfg-user" type="text" placeholder="yourusername"></div>
-    <div class="field"><label>Repository Name</label><input id="cfg-repo" type="text" placeholder="job-scraper"></div>
-    <div class="field"><label>Branch</label><input id="cfg-branch" type="text" placeholder="main"></div>
-    <div class="field"><label>Personal Access Token</label><input id="cfg-token" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"></div>
-    <div id="setup-error" style="color:var(--danger);font-family:var(--mono);font-size:.75rem;margin-top:8px;display:none"></div>
-    <div class="ma">
-      <button class="btn" onclick="closeSetup()">Cancel</button>
-      <button class="btn btn-primary" onclick="saveSetup()">Save & Connect</button>
+
+    <!-- Edit Modal -->
+    <div
+      class="overlay"
+      id="edit-overlay"
+      onclick="if (event.target === this) closeEdit();"
+    >
+      <div class="modal">
+        <button class="mc" onclick="closeEdit()">✕</button>
+        <h2 id="edit-heading">Edit Application</h2>
+        <div class="field">
+          <label>Job Title</label><input id="e-title" type="text" />
+        </div>
+        <div class="field">
+          <label>Company</label><input id="e-company" type="text" />
+        </div>
+        <div class="field">
+          <label>Location</label><input id="e-location" type="text" />
+        </div>
+        <div class="field">
+          <label>Job URL</label><input id="e-url" type="url" />
+        </div>
+        <div class="field">
+          <label>Board</label><input id="e-board" type="text" />
+        </div>
+        <div class="field">
+          <label>Status</label>
+          <select id="e-status">
+            <option value="new">New</option>
+            <option value="applied">Applied</option>
+            <option value="interview">Interview</option>
+            <option value="offer">Offer</option>
+            <option value="rejected">Rejected</option>
+            <option value="withdrawn">Withdrawn</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Date Applied</label><input id="e-applied" type="date" />
+        </div>
+        <div class="field">
+          <label>Next Step / Interview Date</label
+          ><input id="e-next" type="date" />
+        </div>
+        <div class="field">
+          <label>Notes</label
+          ><textarea
+            id="e-notes"
+            placeholder="Recruiter, salary, interview format…"
+          ></textarea>
+        </div>
+        <div class="ma">
+          <button class="btn" onclick="closeEdit()">Cancel</button>
+          <button class="btn btn-primary" onclick="saveEdit()">Save</button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- History Modal -->
-<div class="overlay" id="history-overlay" onclick="if(event.target===this)closeHistory()">
-  <div class="modal wide">
-    <button class="mc" onclick="closeHistory()">✕</button>
-    <h2>📋 Scrape History</h2>
-    <div class="hi-list" id="hi-list"></div>
-  </div>
-</div>
+    <!-- Setup Modal -->
+    <div
+      class="overlay"
+      id="setup-overlay"
+      onclick="if (event.target === this) closeSetup();"
+    >
+      <div class="modal wide">
+        <button class="mc" onclick="closeSetup()">✕</button>
+        <h2>⚙ GitHub Sync Settings</h2>
+        <div class="setup-note">
+          Tracker state is saved as <code>tracker-state.json</code> in your
+          GitHub repo so every device stays in sync.<br /><br />
+          <strong style="color: var(--text)">One-time setup:</strong><br />
+          1. Go to
+          <a href="https://github.com/settings/tokens" target="_blank"
+            >github.com/settings/tokens</a
+          ><br />
+          2. Generate new token (classic) → tick <code>repo</code> scope → copy
+          it<br />
+          3. Paste below — token is stored only in this browser's localStorage,
+          never sent anywhere except GitHub's API<br />
+          4. Repeat on every device you use
+        </div>
+        <div class="field">
+          <label>GitHub Username</label
+          ><input id="cfg-user" type="text" placeholder="yourusername" />
+        </div>
+        <div class="field">
+          <label>Repository Name</label
+          ><input id="cfg-repo" type="text" placeholder="job-scraper" />
+        </div>
+        <div class="field">
+          <label>Branch</label
+          ><input id="cfg-branch" type="text" placeholder="main" />
+        </div>
+        <div class="field">
+          <label>Personal Access Token</label
+          ><input
+            id="cfg-token"
+            type="password"
+            placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
+          />
+        </div>
+        <div
+          id="setup-error"
+          style="
+            color: var(--danger);
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            margin-top: 8px;
+            display: none;
+          "
+        ></div>
+        <div class="ma">
+          <button class="btn" onclick="closeSetup()">Cancel</button>
+          <button class="btn btn-primary" onclick="saveSetup()">
+            Save & Connect
+          </button>
+        </div>
+      </div>
+    </div>
 
-<script>
-// ── Config (stored in localStorage, per device) ───────────────────────────────
-const CFG_KEY   = 'qa_gh_config';
-const STATE_FILE = 'tracker-state.json';
-const INDEX_PATH = 'output/index.json';
+    <!-- History Modal -->
+    <div
+      class="overlay"
+      id="history-overlay"
+      onclick="if (event.target === this) closeHistory();"
+    >
+      <div class="modal wide">
+        <button class="mc" onclick="closeHistory()">✕</button>
+        <h2>📋 Scrape History</h2>
+        <div class="hi-list" id="hi-list"></div>
+      </div>
+    </div>
 
-function loadCfg() { try { return JSON.parse(localStorage.getItem(CFG_KEY) || 'null'); } catch { return null; } }
-function saveCfg(c){ localStorage.setItem(CFG_KEY, JSON.stringify(c)); }
+    <script>
+      // ── Config (stored in localStorage, per device) ───────────────────────────────
+      const CFG_KEY = "qa_gh_config";
+      const STATE_FILE = "tracker-state.json";
+      const INDEX_PATH = "output/index.json";
 
-// ── State (lives in GitHub repo as tracker-state.json) ────────────────────────
-// Shape: { jobs: [], meta: { importedFiles:{}, lastNewIds:[], scrapeIndex:[] } }
-let cfg   = loadCfg();
-let state = { jobs: [], meta: { importedFiles: {}, lastNewIds: [], scrapeIndex: [] } };
-let ghSHA = null;      // current SHA of tracker-state.json in GitHub (needed for updates)
-let saveTimer = null;
-let saving = false;
-
-const STATUS_CYCLE = ['new','applied','interview','offer','rejected','withdrawn'];
-let currentTab = 'needs-action';
-let sortKey    = 'addedAt';
-let sortAsc    = false;
-let editIndex  = null;
-
-// ── GitHub API helpers ────────────────────────────────────────────────────────
-
-function ghHeaders() {
-  return {
-    'Authorization': `token ${cfg.token}`,
-    'Accept': 'application/vnd.github.v3+json',
-    'Content-Type': 'application/json',
-  };
-}
-
-function ghBase() {
-  return `https://api.github.com/repos/${cfg.user}/${cfg.repo}`;
-}
-
-// Read tracker-state.json from repo
-async function ghReadState() {
-  const url = `${ghBase()}/contents/${STATE_FILE}?ref=${cfg.branch}&_=${Date.now()}`;
-  const res  = await fetch(url, { headers: ghHeaders() });
-  if (res.status === 404) return null;   // file doesn't exist yet — first run
-  if (!res.ok) throw new Error(`GitHub API ${res.status}: ${await res.text()}`);
-  const data    = await res.json();
-  ghSHA         = data.sha;
-  const decoded = JSON.parse(atob(data.content.replace(/\n/g, '')));
-  return decoded;
-}
-
-// Write tracker-state.json back to repo
-async function ghWriteState(newState) {
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(newState, null, 2))));
-  const body    = {
-    message: `tracker: sync state ${today()}`,
-    content,
-    branch: cfg.branch,
-    ...(ghSHA ? { sha: ghSHA } : {}),
-  };
-  const res = await fetch(`${ghBase()}/contents/${STATE_FILE}`, {
-    method:  'PUT',
-    headers: ghHeaders(),
-    body:    JSON.stringify(body),
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    // Conflict = someone else wrote at the same time — re-read and retry
-    if (res.status === 409) return 'conflict';
-    throw new Error(err.message || `GitHub write failed: ${res.status}`);
-  }
-  const data = await res.json();
-  ghSHA = data.content.sha;
-  return 'ok';
-}
-
-// Read output/index.json to discover new CSVs
-async function ghReadIndex() {
-  // Use raw.githubusercontent.com to avoid API rate limits for read-only files
-  const url = `https://raw.githubusercontent.com/${cfg.user}/${cfg.repo}/${cfg.branch}/${INDEX_PATH}?_=${Date.now()}`;
-  const res  = await fetch(url);
-  if (!res.ok) return null;
-  return res.json();
-}
-
-// Read a CSV file from the repo
-async function ghReadCSV(filename) {
-  const url = `https://raw.githubusercontent.com/${cfg.user}/${cfg.repo}/${cfg.branch}/output/${filename}?_=${Date.now()}`;
-  const res  = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.text();
-}
-
-// ── Boot ──────────────────────────────────────────────────────────────────────
-async function boot() {
-  if (!cfg) {
-    // Hide loader first, then open setup modal after the browser has painted
-    setLoading(false);
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => openSetup());
-    });
-    setSyncStatus('error', 'Setup required — enter your GitHub details');
-    render();
-    return;
-  }
-  await syncNow();
-}
-
-// ── Main sync ─────────────────────────────────────────────────────────────────
-async function syncNow() {
-  setLoading(true, 'Loading tracker state from GitHub…');
-  setSyncBadge('saving', '⟳ syncing');
-
-  try {
-    // 1. Load current state from GitHub
-    const remote = await ghReadState();
-    if (remote) {
-      state = remote;
-    }
-    // Ensure meta shape
-    state.meta = state.meta || {};
-    state.meta.importedFiles = state.meta.importedFiles || {};
-    state.meta.lastNewIds    = state.meta.lastNewIds    || [];
-    state.meta.scrapeIndex   = state.meta.scrapeIndex   || [];
-
-    // 2. Check for new CSV files
-    setLoading(true, 'Checking for new scrape results…');
-    const index = await ghReadIndex();
-    let totalNew = 0;
-
-    if (index?.files?.length) {
-      state.meta.scrapeIndex = index.files;
-      const existingUrls = new Set(state.jobs.map(j => j.url));
-      const newIds       = [];
-
-      for (const fileEntry of index.files) {
-        if (state.meta.importedFiles[fileEntry.filename]) continue;
-
-        setLoading(true, `Importing ${fileEntry.filename}…`);
+      function loadCfg() {
         try {
-          const text   = await ghReadCSV(fileEntry.filename);
-          const parsed = parseCSV(text);
-          for (const job of parsed) {
-            if (!job.url || existingUrls.has(job.url)) continue;
-            job.id          = uid();
-            job.status      = 'new';
-            job.appliedDate = '';
-            job.nextStep    = '';
-            job.notes       = '';
-            job.addedAt     = new Date().toISOString();
-            job.sourceFile  = fileEntry.filename;
-            state.jobs.unshift(job);
-            existingUrls.add(job.url);
-            newIds.push(job.id);
-            totalNew++;
+          return JSON.parse(localStorage.getItem(CFG_KEY) || "null");
+        } catch {
+          return null;
+        }
+      }
+      function saveCfg(c) {
+        localStorage.setItem(CFG_KEY, JSON.stringify(c));
+      }
+
+      // ── State (lives in GitHub repo as tracker-state.json) ────────────────────────
+      // Shape: { jobs: [], meta: { importedFiles:{}, lastNewIds:[], scrapeIndex:[] } }
+      let cfg = loadCfg();
+      let state = {
+        jobs: [],
+        meta: { importedFiles: {}, lastNewIds: [], scrapeIndex: [] },
+      };
+      let ghSHA = null; // current SHA of tracker-state.json in GitHub (needed for updates)
+      let saveTimer = null;
+      let saving = false;
+
+      const STATUS_CYCLE = [
+        "new",
+        "applied",
+        "interview",
+        "offer",
+        "rejected",
+        "withdrawn",
+      ];
+      let currentTab = "needs-action";
+      let sortKey = "addedAt";
+      let sortAsc = false;
+      let editIndex = null;
+
+      // ── GitHub API helpers ────────────────────────────────────────────────────────
+
+      function ghHeaders() {
+        return {
+          Authorization: `token ${cfg.token}`,
+          Accept: "application/vnd.github.v3+json",
+          "Content-Type": "application/json",
+        };
+      }
+
+      function ghBase() {
+        return `https://api.github.com/repos/${cfg.user}/${cfg.repo}`;
+      }
+
+      // Read tracker-state.json from repo
+      async function ghReadState() {
+        const url = `${ghBase()}/contents/${STATE_FILE}?ref=${cfg.branch}&_=${Date.now()}`;
+        const res = await fetch(url, { headers: ghHeaders() });
+        if (res.status === 404) return null; // file doesn't exist yet — first run
+        if (!res.ok)
+          throw new Error(`GitHub API ${res.status}: ${await res.text()}`);
+        const data = await res.json();
+        ghSHA = data.sha;
+        const decoded = JSON.parse(atob(data.content.replace(/\n/g, "")));
+        return decoded;
+      }
+
+      // Write tracker-state.json back to repo
+      async function ghWriteState(newState) {
+        const content = btoa(
+          unescape(encodeURIComponent(JSON.stringify(newState, null, 2))),
+        );
+        const body = {
+          message: `tracker: sync state ${today()}`,
+          content,
+          branch: cfg.branch,
+          ...(ghSHA ? { sha: ghSHA } : {}),
+        };
+        const res = await fetch(`${ghBase()}/contents/${STATE_FILE}`, {
+          method: "PUT",
+          headers: ghHeaders(),
+          body: JSON.stringify(body),
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          // Conflict = someone else wrote at the same time — re-read and retry
+          if (res.status === 409) return "conflict";
+          throw new Error(err.message || `GitHub write failed: ${res.status}`);
+        }
+        const data = await res.json();
+        ghSHA = data.content.sha;
+        return "ok";
+      }
+
+      // Read output/index.json to discover new CSVs
+      async function ghReadIndex() {
+        // Use raw.githubusercontent.com to avoid API rate limits for read-only files
+        const url = `https://raw.githubusercontent.com/${cfg.user}/${cfg.repo}/${cfg.branch}/${INDEX_PATH}?_=${Date.now()}`;
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        return res.json();
+      }
+
+      // Read a CSV file from the repo
+      async function ghReadCSV(filename) {
+        const url = `https://raw.githubusercontent.com/${cfg.user}/${cfg.repo}/${cfg.branch}/output/${filename}?_=${Date.now()}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const buffer = await res.arrayBuffer();
+        const decoder = new TextDecoder("utf-8");
+        return decoder.decode(buffer);
+      }
+
+      // ── Boot ──────────────────────────────────────────────────────────────────────
+      async function boot() {
+        if (!cfg) {
+          // Hide loader first, then open setup modal after the browser has painted
+          setLoading(false);
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => openSetup());
+          });
+          setSyncStatus("error", "Setup required — enter your GitHub details");
+          render();
+          return;
+        }
+        await syncNow();
+      }
+
+      // ── Main sync ─────────────────────────────────────────────────────────────────
+      async function syncNow() {
+        setLoading(true, "Loading tracker state from GitHub…");
+        setSyncBadge("saving", "⟳ syncing");
+
+        try {
+          // 1. Load current state from GitHub
+          const remote = await ghReadState();
+          if (remote) {
+            state = remote;
           }
-          state.meta.importedFiles[fileEntry.filename] = true;
-        } catch (e) {
-          console.warn(`Could not load ${fileEntry.filename}: ${e.message}`);
+          // Ensure meta shape
+          state.meta = state.meta || {};
+          state.meta.importedFiles = state.meta.importedFiles || {};
+          state.meta.lastNewIds = state.meta.lastNewIds || [];
+          state.meta.scrapeIndex = state.meta.scrapeIndex || [];
+
+          // 2. Check for new CSV files
+          setLoading(true, "Checking for new scrape results…");
+          const index = await ghReadIndex();
+          let totalNew = 0;
+
+          if (index?.files?.length) {
+            state.meta.scrapeIndex = index.files;
+            const existingUrls = new Set(state.jobs.map((j) => j.url));
+            const newIds = [];
+
+            for (const fileEntry of index.files) {
+              if (state.meta.importedFiles[fileEntry.filename]) continue;
+
+              setLoading(true, `Importing ${fileEntry.filename}…`);
+              try {
+                const text = await ghReadCSV(fileEntry.filename);
+                const parsed = parseCSV(text);
+                for (const job of parsed) {
+                  if (!job.url || existingUrls.has(job.url)) continue;
+                  job.id = uid();
+                  job.status = "new";
+                  job.appliedDate = "";
+                  job.nextStep = "";
+                  job.notes = "";
+                  job.addedAt = new Date().toISOString();
+                  job.sourceFile = fileEntry.filename;
+                  state.jobs.unshift(job);
+                  existingUrls.add(job.url);
+                  newIds.push(job.id);
+                  totalNew++;
+                }
+                state.meta.importedFiles[fileEntry.filename] = true;
+              } catch (e) {
+                console.warn(
+                  `Could not load ${fileEntry.filename}: ${e.message}`,
+                );
+              }
+            }
+
+            if (totalNew > 0) {
+              state.meta.lastNewIds = newIds;
+              // Save updated state back to GitHub
+              setLoading(true, "Saving updated state to GitHub…");
+              await ghWriteState(state);
+              showNewBanner(totalNew, index.files.length);
+              currentTab = "new";
+              document
+                .querySelectorAll(".tab")
+                .forEach((t) => t.classList.remove("active"));
+              document.getElementById("tab-new").classList.add("active");
+            }
+          }
+
+          const latest = index?.files?.[0];
+          setSyncBadge("saved", `✓ synced · ${today()}`);
+          setSyncStatus(
+            "ok",
+            `Last scrape: ${latest?.date || "—"} · ${latest?.jobCount || 0} jobs found`,
+          );
+        } catch (err) {
+          console.error("Sync error:", err);
+          setSyncBadge("error", "✕ sync failed");
+          setSyncStatus("error", `Sync error: ${err.message}`);
+        }
+
+        setLoading(false);
+        render();
+      }
+
+      // ── Debounced save to GitHub ──────────────────────────────────────────────────
+      // Called after every user action (status change, edit, delete)
+      // Debounced 1.5s so rapid clicks don't spam the API
+      function scheduleSave() {
+        setSyncBadge("saving", "⟳ saving…");
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(async () => {
+          if (saving) {
+            scheduleSave();
+            return;
+          }
+          saving = true;
+          try {
+            const result = await ghWriteState(state);
+            if (result === "conflict") {
+              // Another device saved simultaneously — re-read remote, merge, re-save
+              setSyncBadge("saving", "⟳ merging…");
+              const remote = await ghReadState();
+              if (remote) mergeRemoteIntoLocal(remote);
+              await ghWriteState(state);
+            }
+            setSyncBadge("saved", `✓ saved · ${timeNow()}`);
+          } catch (err) {
+            setSyncBadge("error", `✕ save failed: ${err.message}`);
+          }
+          saving = false;
+        }, 1500);
+      }
+
+      // Merge: keep local status/notes, add any remote jobs not present locally
+      function mergeRemoteIntoLocal(remote) {
+        const localUrls = new Set(state.jobs.map((j) => j.url));
+        for (const rj of remote.jobs) {
+          if (!localUrls.has(rj.url)) {
+            state.jobs.push(rj);
+            localUrls.add(rj.url);
+          } else {
+            // Remote may have newer status from another device — use whichever is more progressed
+            const local = state.jobs.find((j) => j.url === rj.url);
+            if (local) {
+              const localPos = STATUS_CYCLE.indexOf(local.status);
+              const remotePos = STATUS_CYCLE.indexOf(rj.status);
+              if (remotePos > localPos) {
+                local.status = rj.status;
+                local.appliedDate = rj.appliedDate || local.appliedDate;
+                local.notes = rj.notes || local.notes;
+                local.nextStep = rj.nextStep || local.nextStep;
+              }
+            }
+          }
         }
       }
 
-      if (totalNew > 0) {
-        state.meta.lastNewIds = newIds;
-        // Save updated state back to GitHub
-        setLoading(true, 'Saving updated state to GitHub…');
-        await ghWriteState(state);
-        showNewBanner(totalNew, index.files.length);
-        currentTab = 'new';
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.getElementById('tab-new').classList.add('active');
-      }
-    }
+      // ── Render ────────────────────────────────────────────────────────────────────
+      function render() {
+        const jobs = state.jobs;
+        const q = document.getElementById("q").value.toLowerCase();
+        const fBoard = document.getElementById("f-board").value;
+        const fType = document.getElementById("f-type").value;
+        const newIds = new Set(state.meta.lastNewIds || []);
 
-    const latest = index?.files?.[0];
-    setSyncBadge('saved', `✓ synced · ${today()}`);
-    setSyncStatus('ok', `Last scrape: ${latest?.date || '—'} · ${latest?.jobCount || 0} jobs found`);
+        const tabFilter = (j) => {
+          switch (currentTab) {
+            case "needs-action":
+              return j.status === "new";
+            case "new":
+              return newIds.has(j.id);
+            case "applied":
+              return ["applied", "interview", "offer"].includes(j.status);
+            case "interview":
+              return j.status === "interview";
+            default:
+              return true;
+          }
+        };
 
-  } catch (err) {
-    console.error('Sync error:', err);
-    setSyncBadge('error', '✕ sync failed');
-    setSyncStatus('error', `Sync error: ${err.message}`);
-  }
+        const filtered = jobs
+          .filter((j) => {
+            if (!tabFilter(j)) return false;
+            const text = [j.title, j.company, j.location, j.notes]
+              .filter(Boolean)
+              .join(" ")
+              .toLowerCase();
+            if (q && !text.includes(q)) return false;
+            if (fBoard && j.board !== fBoard) return false;
+            if (fType) {
+              const note = (j.commuteNote || "").toLowerCase();
+              if (fType === "remote" && !note.includes("remote")) return false;
+              if (fType === "hybrid" && !note.includes("hybrid")) return false;
+              if (
+                fType === "office" &&
+                (note.includes("remote") || note.includes("hybrid"))
+              )
+                return false;
+            }
+            return true;
+          })
+          .sort((a, b) => {
+            const av = (a[sortKey] || "").toString().toLowerCase();
+            const bv = (b[sortKey] || "").toString().toLowerCase();
+            return sortAsc ? av.localeCompare(bv) : bv.localeCompare(av);
+          });
 
-  setLoading(false);
-  render();
-}
-
-// ── Debounced save to GitHub ──────────────────────────────────────────────────
-// Called after every user action (status change, edit, delete)
-// Debounced 1.5s so rapid clicks don't spam the API
-function scheduleSave() {
-  setSyncBadge('saving', '⟳ saving…');
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(async () => {
-    if (saving) { scheduleSave(); return; }
-    saving = true;
-    try {
-      const result = await ghWriteState(state);
-      if (result === 'conflict') {
-        // Another device saved simultaneously — re-read remote, merge, re-save
-        setSyncBadge('saving', '⟳ merging…');
-        const remote = await ghReadState();
-        if (remote) mergeRemoteIntoLocal(remote);
-        await ghWriteState(state);
-      }
-      setSyncBadge('saved', `✓ saved · ${timeNow()}`);
-    } catch (err) {
-      setSyncBadge('error', `✕ save failed: ${err.message}`);
-    }
-    saving = false;
-  }, 1500);
-}
-
-// Merge: keep local status/notes, add any remote jobs not present locally
-function mergeRemoteIntoLocal(remote) {
-  const localUrls = new Set(state.jobs.map(j => j.url));
-  for (const rj of remote.jobs) {
-    if (!localUrls.has(rj.url)) {
-      state.jobs.push(rj);
-      localUrls.add(rj.url);
-    } else {
-      // Remote may have newer status from another device — use whichever is more progressed
-      const local = state.jobs.find(j => j.url === rj.url);
-      if (local) {
-        const localPos  = STATUS_CYCLE.indexOf(local.status);
-        const remotePos = STATUS_CYCLE.indexOf(rj.status);
-        if (remotePos > localPos) {
-          local.status      = rj.status;
-          local.appliedDate = rj.appliedDate || local.appliedDate;
-          local.notes       = rj.notes       || local.notes;
-          local.nextStep    = rj.nextStep     || local.nextStep;
-        }
-      }
-    }
-  }
-}
-
-// ── Render ────────────────────────────────────────────────────────────────────
-function render() {
-  const jobs   = state.jobs;
-  const q      = document.getElementById('q').value.toLowerCase();
-  const fBoard = document.getElementById('f-board').value;
-  const fType  = document.getElementById('f-type').value;
-  const newIds = new Set(state.meta.lastNewIds || []);
-
-  const tabFilter = j => {
-    switch (currentTab) {
-      case 'needs-action': return j.status === 'new';
-      case 'new':          return newIds.has(j.id);
-      case 'applied':      return ['applied','interview','offer'].includes(j.status);
-      case 'interview':    return j.status === 'interview';
-      default:             return true;
-    }
-  };
-
-  const filtered = jobs.filter(j => {
-    if (!tabFilter(j)) return false;
-    const text = [j.title,j.company,j.location,j.notes].filter(Boolean).join(' ').toLowerCase();
-    if (q && !text.includes(q)) return false;
-    if (fBoard && j.board !== fBoard) return false;
-    if (fType) {
-      const note = (j.commuteNote||'').toLowerCase();
-      if (fType==='remote' && !note.includes('remote')) return false;
-      if (fType==='hybrid' && !note.includes('hybrid')) return false;
-      if (fType==='office' && (note.includes('remote')||note.includes('hybrid'))) return false;
-    }
-    return true;
-  }).sort((a,b) => {
-    const av=(a[sortKey]||'').toString().toLowerCase();
-    const bv=(b[sortKey]||'').toString().toLowerCase();
-    return sortAsc ? av.localeCompare(bv) : bv.localeCompare(av);
-  });
-
-  document.getElementById('tbody').innerHTML = filtered.map(j => {
-    const idx   = jobs.indexOf(j);
-    const isNew = newIds.has(j.id);
-    return `
-    <tr class="${isNew?'is-new':''}">
+        document.getElementById("tbody").innerHTML = filtered
+          .map((j) => {
+            const idx = jobs.indexOf(j);
+            const isNew = newIds.has(j.id);
+            return `
+    <tr class="${isNew ? "is-new" : ""}">
       <td class="tc">
-        <a href="${esc(j.url)}" target="_blank">${esc(j.title)}</a>${isNew?'<span class="new-pill">NEW</span>':''}
-        <div class="co">${esc(j.company||'—')}</div>
+        <a href="${esc(j.url)}" target="_blank">${esc(j.title)}</a>${isNew ? '<span class="new-pill">NEW</span>' : ""}
+        <div class="co">${esc(j.company || "—")}</div>
       </td>
-      <td class="lc">${esc(j.location||'—')}</td>
-      <td class="cc">${esc(j.commuteNote||'—')}</td>
-      <td style="font-size:.71rem;color:var(--muted)">${esc(j.board||'—')}</td>
+      <td class="lc">${esc(j.location || "—")}</td>
+      <td class="cc">${esc(j.commuteNote || "—")}</td>
+      <td style="font-size:.71rem;color:var(--muted)">${esc(j.board || "—")}</td>
       <td><span class="sb s-${j.status}" onclick="cycleStatus(${idx})" title="Click to advance">${sIcon(j.status)} ${j.status}</span></td>
-      <td class="dc">${j.appliedDate||'—'}</td>
-      <td><div class="np" onclick="openEdit(${idx})" title="${esc(j.notes||'')}">${esc(j.notes||'—')}</div></td>
+      <td class="dc">${j.appliedDate || "—"}</td>
+      <td><div class="np" onclick="openEdit(${idx})" title="${esc(j.notes || "")}">${esc(j.notes || "—")}</div></td>
       <td><div class="acts">
         <button class="ib" onclick="openEdit(${idx})">✏️</button>
         <button class="ib del" onclick="deleteJob(${idx})">🗑</button>
       </div></td>
     </tr>`;
-  }).join('');
+          })
+          .join("");
 
-  // Stats
-  const c={new:0,applied:0,interview:0,offer:0,rejected:0};
-  jobs.forEach(j=>{if(c[j.status]!==undefined)c[j.status]++;});
-  document.getElementById('s-total').textContent    = jobs.length;
-  document.getElementById('s-new').textContent      = c.new;
-  document.getElementById('s-applied').textContent  = c.applied;
-  document.getElementById('s-interview').textContent= c.interview;
-  document.getElementById('s-offer').textContent    = c.offer;
-  document.getElementById('s-rejected').textContent = c.rejected;
-  document.getElementById('cnt-na').textContent     = c.new;
-  const nn = (state.meta.lastNewIds||[]).length;
-  const cntNew = document.getElementById('cnt-new');
-  cntNew.textContent   = nn;
-  cntNew.style.display = nn>0 ? 'inline-block' : 'none';
+        // Stats
+        const c = { new: 0, applied: 0, interview: 0, offer: 0, rejected: 0 };
+        jobs.forEach((j) => {
+          if (c[j.status] !== undefined) c[j.status]++;
+        });
+        document.getElementById("s-total").textContent = jobs.length;
+        document.getElementById("s-new").textContent = c.new;
+        document.getElementById("s-applied").textContent = c.applied;
+        document.getElementById("s-interview").textContent = c.interview;
+        document.getElementById("s-offer").textContent = c.offer;
+        document.getElementById("s-rejected").textContent = c.rejected;
+        document.getElementById("cnt-na").textContent = c.new;
+        const nn = (state.meta.lastNewIds || []).length;
+        const cntNew = document.getElementById("cnt-new");
+        cntNew.textContent = nn;
+        cntNew.style.display = nn > 0 ? "inline-block" : "none";
 
-  // Board filter
-  const bs = document.getElementById('f-board');
-  const bc = bs.value;
-  const boards=[...new Set(jobs.map(j=>j.board).filter(Boolean))].sort();
-  bs.innerHTML='<option value="">All boards</option>'+boards.map(b=>`<option value="${b}"${b===bc?' selected':''}>${b}</option>`).join('');
+        // Board filter
+        const bs = document.getElementById("f-board");
+        const bc = bs.value;
+        const boards = [
+          ...new Set(jobs.map((j) => j.board).filter(Boolean)),
+        ].sort();
+        bs.innerHTML =
+          '<option value="">All boards</option>' +
+          boards
+            .map(
+              (b) =>
+                `<option value="${b}"${b === bc ? " selected" : ""}>${b}</option>`,
+            )
+            .join("");
 
-  const empty = jobs.length===0;
-  document.getElementById('table-wrap').style.display   = empty?'none':'';
-  document.getElementById('empty-state').style.display  = empty?'block':'none';
-  document.getElementById('no-results').style.display   = !empty&&filtered.length===0?'block':'none';
-}
+        const empty = jobs.length === 0;
+        document.getElementById("table-wrap").style.display = empty
+          ? "none"
+          : "";
+        document.getElementById("empty-state").style.display = empty
+          ? "block"
+          : "none";
+        document.getElementById("no-results").style.display =
+          !empty && filtered.length === 0 ? "block" : "none";
+      }
 
-// ── Status / edit / delete ────────────────────────────────────────────────────
-function cycleStatus(idx) {
-  const j   = state.jobs[idx];
-  const pos = STATUS_CYCLE.indexOf(j.status);
-  j.status  = STATUS_CYCLE[(pos+1) % STATUS_CYCLE.length];
-  if (j.status==='applied' && !j.appliedDate) j.appliedDate = today();
-  scheduleSave();
-  render();
-}
-function sIcon(s){return{new:'🔵',applied:'✅',interview:'🟡',offer:'🟣',rejected:'❌',withdrawn:'⚫'}[s]||'⚪';}
-function setTab(t){currentTab=t;document.querySelectorAll('.tab').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+t)?.classList.add('active');render();}
-function sortBy(k){sortAsc=sortKey===k?!sortAsc:true;sortKey=k;render();}
+      // ── Status / edit / delete ────────────────────────────────────────────────────
+      function cycleStatus(idx) {
+        const j = state.jobs[idx];
+        const pos = STATUS_CYCLE.indexOf(j.status);
+        j.status = STATUS_CYCLE[(pos + 1) % STATUS_CYCLE.length];
+        if (j.status === "applied" && !j.appliedDate) j.appliedDate = today();
+        scheduleSave();
+        render();
+      }
+      function sIcon(s) {
+        return (
+          {
+            new: "🔵",
+            applied: "✅",
+            interview: "🟡",
+            offer: "🟣",
+            rejected: "❌",
+            withdrawn: "⚫",
+          }[s] || "⚪"
+        );
+      }
+      function setTab(t) {
+        currentTab = t;
+        document
+          .querySelectorAll(".tab")
+          .forEach((e) => e.classList.remove("active"));
+        document.getElementById("tab-" + t)?.classList.add("active");
+        render();
+      }
+      function sortBy(k) {
+        sortAsc = sortKey === k ? !sortAsc : true;
+        sortKey = k;
+        render();
+      }
 
-function openAdd(){
-  editIndex=null;
-  document.getElementById('edit-heading').textContent='Add Job';
-  ['e-title','e-company','e-location','e-url','e-board','e-applied','e-next','e-notes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('e-status').value='new';
-  document.getElementById('edit-overlay').classList.add('open');
-}
-function openEdit(idx){
-  editIndex=idx; const j=state.jobs[idx];
-  document.getElementById('edit-heading').textContent='Edit Application';
-  document.getElementById('e-title').value   =j.title   ||'';
-  document.getElementById('e-company').value =j.company ||'';
-  document.getElementById('e-location').value=j.location||'';
-  document.getElementById('e-url').value     =j.url     ||'';
-  document.getElementById('e-board').value   =j.board   ||'';
-  document.getElementById('e-status').value  =j.status  ||'new';
-  document.getElementById('e-applied').value =j.appliedDate||'';
-  document.getElementById('e-next').value    =j.nextStep||'';
-  document.getElementById('e-notes').value   =j.notes   ||'';
-  document.getElementById('edit-overlay').classList.add('open');
-}
-function closeEdit(){document.getElementById('edit-overlay').classList.remove('open');}
-function saveEdit(){
-  const g=id=>document.getElementById(id).value.trim();
-  if(!g('e-title')){alert('Title required');return;}
-  const entry={title:g('e-title'),company:g('e-company'),location:g('e-location'),
-    url:g('e-url'),board:g('e-board'),status:document.getElementById('e-status').value,
-    appliedDate:g('e-applied'),nextStep:g('e-next'),notes:g('e-notes')};
-  if(editIndex===null){entry.id=uid();entry.addedAt=new Date().toISOString();entry.commuteNote='';state.jobs.unshift(entry);}
-  else{state.jobs[editIndex]={...state.jobs[editIndex],...entry};}
-  scheduleSave();closeEdit();render();
-}
-function deleteJob(idx){
-  if(!confirm(`Remove "${state.jobs[idx].title}"?`))return;
-  state.jobs.splice(idx,1);scheduleSave();render();
-}
-function clearAll(){
-  if(!confirm('Delete ALL tracked applications? This cannot be undone.'))return;
-  state={jobs:[],meta:{importedFiles:{},lastNewIds:[],scrapeIndex:[]}};
-  ghSHA=null;scheduleSave();render();
-}
+      function openAdd() {
+        editIndex = null;
+        document.getElementById("edit-heading").textContent = "Add Job";
+        [
+          "e-title",
+          "e-company",
+          "e-location",
+          "e-url",
+          "e-board",
+          "e-applied",
+          "e-next",
+          "e-notes",
+        ].forEach((id) => (document.getElementById(id).value = ""));
+        document.getElementById("e-status").value = "new";
+        document.getElementById("edit-overlay").classList.add("open");
+      }
+      function openEdit(idx) {
+        editIndex = idx;
+        const j = state.jobs[idx];
+        document.getElementById("edit-heading").textContent =
+          "Edit Application";
+        document.getElementById("e-title").value = j.title || "";
+        document.getElementById("e-company").value = j.company || "";
+        document.getElementById("e-location").value = j.location || "";
+        document.getElementById("e-url").value = j.url || "";
+        document.getElementById("e-board").value = j.board || "";
+        document.getElementById("e-status").value = j.status || "new";
+        document.getElementById("e-applied").value = j.appliedDate || "";
+        document.getElementById("e-next").value = j.nextStep || "";
+        document.getElementById("e-notes").value = j.notes || "";
+        document.getElementById("edit-overlay").classList.add("open");
+      }
+      function closeEdit() {
+        document.getElementById("edit-overlay").classList.remove("open");
+      }
+      function saveEdit() {
+        const g = (id) => document.getElementById(id).value.trim();
+        if (!g("e-title")) {
+          alert("Title required");
+          return;
+        }
+        const entry = {
+          title: g("e-title"),
+          company: g("e-company"),
+          location: g("e-location"),
+          url: g("e-url"),
+          board: g("e-board"),
+          status: document.getElementById("e-status").value,
+          appliedDate: g("e-applied"),
+          nextStep: g("e-next"),
+          notes: g("e-notes"),
+        };
+        if (editIndex === null) {
+          entry.id = uid();
+          entry.addedAt = new Date().toISOString();
+          entry.commuteNote = "";
+          state.jobs.unshift(entry);
+        } else {
+          state.jobs[editIndex] = { ...state.jobs[editIndex], ...entry };
+        }
+        scheduleSave();
+        closeEdit();
+        render();
+      }
+      function deleteJob(idx) {
+        if (!confirm(`Remove "${state.jobs[idx].title}"?`)) return;
+        state.jobs.splice(idx, 1);
+        scheduleSave();
+        render();
+      }
+      function clearAll() {
+        if (!confirm("Delete ALL tracked applications? This cannot be undone."))
+          return;
+        state = {
+          jobs: [],
+          meta: { importedFiles: {}, lastNewIds: [], scrapeIndex: [] },
+        };
+        ghSHA = null;
+        scheduleSave();
+        render();
+      }
 
-// ── Setup modal ───────────────────────────────────────────────────────────────
-function openSetup(){
-  if(cfg){
-    document.getElementById('cfg-user').value  =cfg.user  ||'';
-    document.getElementById('cfg-repo').value  =cfg.repo  ||'';
-    document.getElementById('cfg-branch').value=cfg.branch||'main';
-    document.getElementById('cfg-token').value =cfg.token ||'';
-  }
-  document.getElementById('setup-overlay').classList.add('open');
-}
-function closeSetup(){document.getElementById('setup-overlay').classList.remove('open');}
-async function saveSetup(){
-  const g=id=>document.getElementById(id).value.trim();
-  const newCfg={user:g('cfg-user'),repo:g('cfg-repo'),branch:g('cfg-branch')||'main',token:g('cfg-token')};
-  if(!newCfg.user||!newCfg.repo||!newCfg.token){
-    document.getElementById('setup-error').textContent='Username, repo, and token are all required.';
-    document.getElementById('setup-error').style.display='block';
-    return;
-  }
-  document.getElementById('setup-error').style.display='none';
-  saveCfg(newCfg);cfg=newCfg;
-  closeSetup();
-  await syncNow();
-}
+      // ── Setup modal ───────────────────────────────────────────────────────────────
+      function openSetup() {
+        if (cfg) {
+          document.getElementById("cfg-user").value = cfg.user || "";
+          document.getElementById("cfg-repo").value = cfg.repo || "";
+          document.getElementById("cfg-branch").value = cfg.branch || "main";
+          document.getElementById("cfg-token").value = cfg.token || "";
+        }
+        document.getElementById("setup-overlay").classList.add("open");
+      }
+      function closeSetup() {
+        document.getElementById("setup-overlay").classList.remove("open");
+      }
+      async function saveSetup() {
+        const g = (id) => document.getElementById(id).value.trim();
+        const newCfg = {
+          user: g("cfg-user"),
+          repo: g("cfg-repo"),
+          branch: g("cfg-branch") || "main",
+          token: g("cfg-token"),
+        };
+        if (!newCfg.user || !newCfg.repo || !newCfg.token) {
+          document.getElementById("setup-error").textContent =
+            "Username, repo, and token are all required.";
+          document.getElementById("setup-error").style.display = "block";
+          return;
+        }
+        document.getElementById("setup-error").style.display = "none";
+        saveCfg(newCfg);
+        cfg = newCfg;
+        closeSetup();
+        await syncNow();
+      }
 
-// ── History modal ─────────────────────────────────────────────────────────────
-function openHistory(){
-  const files=state.meta.scrapeIndex||[];
-  const imp  =state.meta.importedFiles||{};
-  document.getElementById('hi-list').innerHTML=files.length===0
-    ?'<div style="color:var(--muted);font-size:.8rem">No history yet.</div>'
-    :files.map(f=>{
-      const jobsFromFile=state.jobs.filter(j=>j.sourceFile===f.filename).length;
-      return `<div class="hi-item">
+      // ── History modal ─────────────────────────────────────────────────────────────
+      function openHistory() {
+        const files = state.meta.scrapeIndex || [];
+        const imp = state.meta.importedFiles || {};
+        document.getElementById("hi-list").innerHTML =
+          files.length === 0
+            ? '<div style="color:var(--muted);font-size:.8rem">No history yet.</div>'
+            : files
+                .map((f) => {
+                  const jobsFromFile = state.jobs.filter(
+                    (j) => j.sourceFile === f.filename,
+                  ).length;
+                  return `<div class="hi-item">
         <div><div class="hi-date">${f.date}</div><div class="hi-cnt">${f.jobCount} jobs found</div></div>
-        <div class="${imp[f.filename]?'hi-imp':'hi-imp none'}">${imp[f.filename]?`✅ ${jobsFromFile} imported`:'⏳ pending'}</div>
+        <div class="${imp[f.filename] ? "hi-imp" : "hi-imp none"}">${imp[f.filename] ? `✅ ${jobsFromFile} imported` : "⏳ pending"}</div>
       </div>`;
-    }).join('');
-  document.getElementById('history-overlay').classList.add('open');
-}
-function closeHistory(){document.getElementById('history-overlay').classList.remove('open');}
+                })
+                .join("");
+        document.getElementById("history-overlay").classList.add("open");
+      }
+      function closeHistory() {
+        document.getElementById("history-overlay").classList.remove("open");
+      }
 
-// ── Export ────────────────────────────────────────────────────────────────────
-function exportCSV(){
-  const hdr='Title,Company,Location,Board,Status,Applied Date,Next Step,Commute,URL,Notes';
-  const rows=state.jobs.map(j=>[j.title,j.company,j.location,j.board,j.status,j.appliedDate,j.nextStep,j.commuteNote,j.url,j.notes].map(v=>`"${(v||'').replace(/"/g,'""')}"`).join(','));
-  const blob=new Blob([[hdr,...rows].join('\n')],{type:'text/csv'});
-  Object.assign(document.createElement('a'),{href:URL.createObjectURL(blob),download:`qa-applications-${today()}.csv`}).click();
-}
+      // ── Export ────────────────────────────────────────────────────────────────────
+      function exportCSV() {
+        const hdr =
+          "Title,Company,Location,Board,Status,Applied Date,Next Step,Commute,URL,Notes";
+        const rows = state.jobs.map((j) =>
+          [
+            j.title,
+            j.company,
+            j.location,
+            j.board,
+            j.status,
+            j.appliedDate,
+            j.nextStep,
+            j.commuteNote,
+            j.url,
+            j.notes,
+          ]
+            .map((v) => `"${(v || "").replace(/"/g, '""')}"`)
+            .join(","),
+        );
+        const blob = new Blob([[hdr, ...rows].join("\n")], {
+          type: "text/csv",
+        });
+        Object.assign(document.createElement("a"), {
+          href: URL.createObjectURL(blob),
+          download: `qa-applications-${today()}.csv`,
+        }).click();
+      }
 
-// ── UI helpers ────────────────────────────────────────────────────────────────
-function showNewBanner(count,files){
-  document.getElementById('banner-msg').innerHTML=`<strong>${count} new job${count!==1?'s':''} found</strong> from ${files} new scrape${files!==1?'s':''} · ${state.jobs.filter(j=>j.status==='new').length} total needing action`;
-  document.getElementById('new-banner').classList.add('show');
-}
-function setLoading(on,msg){
-  const el=document.getElementById('loading');
-  if(on){el.classList.remove('hidden');document.getElementById('loading-msg').textContent=msg||'Loading…';}
-  else el.classList.add('hidden');
-}
-function setSyncStatus(state,label){
-  const dot=document.getElementById('sync-dot');
-  dot.className='logo-dot'+(state==='error'?' error':state==='saving'?' saving':'');
-  if(label)document.getElementById('sync-label').textContent=label;
-}
-function setSyncBadge(type,text){
-  const el=document.getElementById('sync-badge');
-  el.textContent=text;
-  el.className='sync-badge'+(type==='saved'?' saved':type==='saving'?' saving':type==='error'?' error':'');
-}
+      // ── UI helpers ────────────────────────────────────────────────────────────────
+      function showNewBanner(count, files) {
+        document.getElementById("banner-msg").innerHTML =
+          `<strong>${count} new job${count !== 1 ? "s" : ""} found</strong> from ${files} new scrape${files !== 1 ? "s" : ""} · ${state.jobs.filter((j) => j.status === "new").length} total needing action`;
+        document.getElementById("new-banner").classList.add("show");
+      }
+      function setLoading(on, msg) {
+        const el = document.getElementById("loading");
+        if (on) {
+          el.classList.remove("hidden");
+          document.getElementById("loading-msg").textContent =
+            msg || "Loading…";
+        } else el.classList.add("hidden");
+      }
+      function setSyncStatus(state, label) {
+        const dot = document.getElementById("sync-dot");
+        dot.className =
+          "logo-dot" +
+          (state === "error" ? " error" : state === "saving" ? " saving" : "");
+        if (label) document.getElementById("sync-label").textContent = label;
+      }
+      function setSyncBadge(type, text) {
+        const el = document.getElementById("sync-badge");
+        el.textContent = text;
+        el.className =
+          "sync-badge" +
+          (type === "saved"
+            ? " saved"
+            : type === "saving"
+              ? " saving"
+              : type === "error"
+                ? " error"
+                : "");
+      }
 
-// ── CSV parser ────────────────────────────────────────────────────────────────
-function parseCSV(text){
-  const lines=text.trim().split('\n');
-  const header=parseCSVLine(lines[0]).map(h=>h.toLowerCase().trim());
-  const col=name=>header.indexOf(name);
-  const results=[];
-  for(let i=1;i<lines.length;i++){
-    if(!lines[i].trim())continue;
-    const cells=parseCSVLine(lines[i]);
-    const get=name=>(cells[col(name)]||'').trim();
-    results.push({title:get('title'),company:get('company'),location:get('location'),
-      board:get('board'),searchTerm:get('search term'),commuteNote:get('commute'),
-      url:get('url'),posted:get('posted')});
-  }
-  return results.filter(j=>j.title&&j.url);
-}
-function parseCSVLine(line){
-  const result=[];let cur='',inQ=false;
-  for(let i=0;i<line.length;i++){
-    const c=line[i];
-    if(c==='"'){if(inQ&&line[i+1]==='"'){cur+='"';i++;}else inQ=!inQ;}
-    else if(c===','&&!inQ){result.push(cur);cur='';}
-    else cur+=c;
-  }
-  result.push(cur);return result;
-}
+      // ── CSV parser ────────────────────────────────────────────────────────────────
+      function parseCSV(text) {
+        const lines = text.trim().split("\n");
+        const header = parseCSVLine(lines[0]).map((h) =>
+          h.toLowerCase().trim(),
+        );
+        const col = (name) => header.indexOf(name);
+        const results = [];
+        for (let i = 1; i < lines.length; i++) {
+          if (!lines[i].trim()) continue;
+          const cells = parseCSVLine(lines[i]);
+          const get = (name) => (cells[col(name)] || "").trim();
+          results.push({
+            title: get("title"),
+            company: get("company"),
+            location: get("location"),
+            board: get("board"),
+            searchTerm: get("search term"),
+            commuteNote: get("commute"),
+            url: get("url"),
+            posted: get("posted"),
+          });
+        }
+        return results.filter((j) => j.title && j.url);
+      }
+      function parseCSVLine(line) {
+        const result = [];
+        let cur = "",
+          inQ = false;
+        for (let i = 0; i < line.length; i++) {
+          const c = line[i];
+          if (c === '"') {
+            if (inQ && line[i + 1] === '"') {
+              cur += '"';
+              i++;
+            } else inQ = !inQ;
+          } else if (c === "," && !inQ) {
+            result.push(cur);
+            cur = "";
+          } else cur += c;
+        }
+        result.push(cur);
+        return result;
+      }
 
-function uid()   {return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
-function today() {return new Date().toISOString().split('T')[0];}
-function timeNow(){return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
-function esc(s)  {return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+      function uid() {
+        return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+      }
+      function today() {
+        return new Date().toISOString().split("T")[0];
+      }
+      function timeNow() {
+        return new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      }
+      function esc(s) {
+        return (s || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
 
-boot();
-</script>
-</body>
+      boot();
+    </script>
+  </body>
 </html>

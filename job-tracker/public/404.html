@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>QA Job Tracker</title>
+    <script>
+      // Redirect to index with the path encoded as a query param
+      // so the React app can restore it
+      const path = window.location.pathname.replace("/job_search_page", "");
+      sessionStorage.setItem("redirect", path);
+      window.location.replace("/job_search_page/");
+    </script>
+  </head>
+</html>
