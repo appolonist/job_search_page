@@ -43,6 +43,6 @@ export interface GitHubConfig {
   token:  string
 }
 
-export type TabId = 'needs-action' | 'new' | 'all' | 'applied' | 'interview'
+export type TabId = 'needs-action' | 'new' | 'all' | 'applied' | 'interview' | 'offer' | 'rejected'
 
 export type SyncStatus = 'idle' | 'syncing' | 'saved' | 'error'

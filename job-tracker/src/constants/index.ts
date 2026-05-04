@@ -28,4 +28,6 @@ export const TABS: { id: TabId; label: string }[] = [
   { id: 'all',          label: 'All Jobs'     },
   { id: 'applied',      label: 'Applied'      },
   { id: 'interview',    label: 'Interviews'   },
+  { id: 'offer',        label: 'Offer'        },
+  { id: 'rejected',     label: 'Rejected'     },
 ]

@@ -28,10 +28,13 @@ export function useJobFilter(jobs: Job[], activeTab: TabId, newIds: Set<string>)
         switch (activeTab) {
           case 'needs-action': if (j.status !== 'new') return false; break
           case 'new':          if (!newIds.has(j.id))  return false; break
+          case 'all':          break // Show all jobs
           case 'applied':
             if (!['applied', 'interview', 'offer'].includes(j.status)) return false
             break
           case 'interview': if (j.status !== 'interview') return false; break
+          case 'offer':     if (j.status !== 'offer') return false; break
+          case 'rejected':  if (j.status !== 'rejected') return false; break
         }
 
         // Text search

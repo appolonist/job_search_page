@@ -111,7 +111,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0d0f12] text-slate-200 flex flex-col h-screen">
+    <div className="min-h-screen bg-[#0d0f12] text-slate-200 flex flex-col h-screen overflow-hidden">
       <LoadingOverlay show={loading} message={loadingMsg} />
 
       <Header
@@ -140,6 +140,11 @@ export default function App() {
         counts={{
           'needs-action': state.jobs.filter(j => j.status === 'new').length,
           'new':          newIds.size,
+          'all':          state.jobs.length,
+          'applied':      state.jobs.filter(j => ['applied', 'interview', 'offer'].includes(j.status)).length,
+          'interview':    state.jobs.filter(j => j.status === 'interview').length,
+          'offer':        state.jobs.filter(j => j.status === 'offer').length,
+          'rejected':     state.jobs.filter(j => j.status === 'rejected').length,
         }}
       />
 
@@ -152,23 +157,25 @@ export default function App() {
         onClearAll={clearAll}
       />
 
-      {state.jobs.length === 0 && !loading ? (
-        <div className="text-center py-20 text-slate-500">
-          <p className="text-base font-semibold text-slate-400 mb-2">No jobs tracked yet</p>
-          <p className="text-sm">Run the scraper, push to GitHub, then click ⟳ Sync.</p>
-        </div>
-      ) : (
-        <JobList
-          jobs={filtered}
-          newIds={newIds}
-          onEdit={i   => setEditJob({ job: filtered[i], index: realIndex(i) })}
-          onDelete={i => deleteJob(realIndex(i))}
-          onCycle={i  => cycleStatus(realIndex(i))}
-          onSort={toggleSort}
-          sortKey={filters.sortKey}
-          sortAsc={filters.sortAsc}
-        />
-      )}
+      <div className="flex-1 overflow-y-auto">
+        {state.jobs.length === 0 && !loading ? (
+          <div className="text-center py-20 text-slate-500">
+            <p className="text-base font-semibold text-slate-400 mb-2">No jobs tracked yet</p>
+            <p className="text-sm">Run the scraper, push to GitHub, then click ⟳ Sync.</p>
+          </div>
+        ) : (
+          <JobList
+            jobs={filtered}
+            newIds={newIds}
+            onEdit={i   => setEditJob({ job: filtered[i], index: realIndex(i) })}
+            onDelete={i => deleteJob(realIndex(i))}
+            onCycle={i  => cycleStatus(realIndex(i))}
+            onSort={toggleSort}
+            sortKey={filters.sortKey}
+            sortAsc={filters.sortAsc}
+          />
+        )}
+      </div>
 
       {editJob !== null && (
         <EditJobModal
