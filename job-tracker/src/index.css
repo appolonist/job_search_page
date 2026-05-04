@@ -5,6 +5,7 @@ html, body {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
+  background: #0d0f12; /* Ensure background color is set on html/body */
 }
 
 #root {
@@ -12,18 +13,16 @@ html, body {
   flex-direction: column;
   min-height: 100vh;
   min-height: 100dvh; /* Dynamic viewport height - accounts for mobile UI */
+  background: #0d0f12; /* Ensure background color matches */
 }
 
 @media (max-width: 767px) {
   html, body {
     overflow-x: hidden;
-    position: fixed;
-    width: 100%;
+    background: #0d0f12;
   }
   
   #root {
-    position: fixed;
-    inset: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }

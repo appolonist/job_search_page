@@ -111,7 +111,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0d0f12] text-slate-200 flex flex-col">
+    <div className="min-h-screen bg-[#0d0f12] text-slate-200 flex flex-col h-screen">
       <LoadingOverlay show={loading} message={loadingMsg} />
 
       <Header
