@@ -2,8 +2,8 @@ name: Daily Job Scrape
 
 on:
   schedule:
-    - cron: '0 6 * * 1-5'   # 6am UTC, weekdays only
-  workflow_dispatch:          # allows manual trigger from GitHub UI
+    - cron: "0 6 * * 1-5" # 6am UTC, weekdays only
+  workflow_dispatch: # allows manual trigger from GitHub UI
 
 # ── Required for git push back to the repo ───────────────────────────────────
 permissions:
@@ -23,8 +23,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "24"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -34,11 +34,11 @@ jobs:
 
       - name: Run scraper
         env:
-          REED_API_KEY:   ${{ secrets.REED_API_KEY }}
-          ADZUNA_APP_ID:  ${{ secrets.ADZUNA_APP_ID }}
+          REED_API_KEY: ${{ secrets.REED_API_KEY }}
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
           TOMTOM_API_KEY: ${{ secrets.TOMTOM_API_KEY }}
-          HOME_POSTCODE:  ${{ secrets.HOME_POSTCODE }}
+          HOME_POSTCODE: ${{ secrets.HOME_POSTCODE }}
         run: node scraper.js
 
       - name: Commit updated files
