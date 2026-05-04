@@ -45,7 +45,7 @@ export function JobList({
 
   if (isMobile) {
     return (
-      <div className="grid gap-3 p-4">
+      <div className="px-4 sm:px-6 py-4 flex flex-col gap-3">
         {jobs.map((job, i) => (
           <JobCard
             key={job.id}

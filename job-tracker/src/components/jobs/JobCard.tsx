@@ -13,7 +13,7 @@ interface Props {
 export function JobCard({ job, isNew, onEdit, onDelete, onCycle }: Props) {
   return (
     <article className={`
-      rounded-xl border p-4 flex flex-col gap-3
+      rounded-xl border px-4 sm:px-6 py-4 flex flex-col gap-3
       ${isNew
         ? 'bg-emerald-950/30 border-emerald-900/50'
         : 'bg-slate-900 border-slate-800'
@@ -21,7 +21,7 @@ export function JobCard({ job, isNew, onEdit, onDelete, onCycle }: Props) {
     `}>
 
       {/* ── Title row ── */}
-      <div className="flex items-start justify-between gap-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <a
@@ -67,12 +67,12 @@ export function JobCard({ job, isNew, onEdit, onDelete, onCycle }: Props) {
       </div>
 
       {/* ── Meta grid ── */}
-      <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs font-mono text-slate-500">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-xs font-mono text-slate-500">
         {job.location && (
-          <span className="col-span-2 truncate">📍 {job.location}</span>
+          <span className="col-span-1 sm:col-span-2 truncate">📍 {job.location}</span>
         )}
         {job.commuteNote && (
-          <span className="col-span-2 truncate">{job.commuteNote}</span>
+          <span className="col-span-1 sm:col-span-2 truncate">{job.commuteNote}</span>
         )}
         {job.board && (
           <span className="truncate">🏢 {job.board}</span>
