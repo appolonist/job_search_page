@@ -1035,12 +1035,8 @@
         const data = await res.json();
         ghSHA = data.sha;
 
-        // ✅ FIXED - unicode-safe base64 decode
-        const binaryStr = atob(data.content.replace(/\n/g, ""));
-        const bytes = new Uint8Array(binaryStr.length);
-        for (let i = 0; i < binaryStr.length; i++) {
-          bytes[i] = binaryStr.charCodeAt(i);
-        }
+        // ✅ FIXED - unicode-safe base64 decode using helper
+        const bytes = base64ToUint8Array(data.content.replace(/\n/g, ""));
         const decoded = JSON.parse(new TextDecoder("utf-8").decode(bytes));
         return decoded;
       }
@@ -1048,16 +1044,10 @@
       // Write tracker-state.json back to repo
       async function ghWriteState(newState) {
         const json = JSON.stringify(newState, null, 2);
-        
-        // ✅ FIXED - unicode-safe base64 encode
-        const encoder = new TextEncoder();
-        const bytes = encoder.encode(json);
-        let binary = "";
-        for (let i = 0; i < bytes.length; i++) {
-          binary += String.fromCharCode(bytes[i]);
-        }
-        const content = btoa(binary);
-        
+
+        // ✅ FIXED - unicode-safe base64 encode using helper
+        const content = uint8ArrayToBase64(new TextEncoder().encode(json));
+
         const body = {
           message: `tracker: sync state ${today()}`,
           content,
@@ -1099,6 +1089,29 @@
       }
 
       // ── Boot ──────────────────────────────────────────────────────────────────────
+      // Unicode-safe Uint8Array → base64
+      // Processes in 8KB chunks to avoid call stack overflow on large state files
+      function uint8ArrayToBase64(bytes) {
+        const CHUNK = 8192;
+        let binary = "";
+        for (let i = 0; i < bytes.length; i += CHUNK) {
+          // Use .apply to call String.fromCharCode with chunk
+          const chunk = bytes.slice(i, i + CHUNK);
+          binary += String.fromCharCode(...chunk);
+        }
+        return btoa(binary);
+      }
+
+      // base64 → Uint8Array (for decoding GitHub API responses)
+      function base64ToUint8Array(base64) {
+        const binary = atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) {
+          bytes[i] = binary.charCodeAt(i);
+        }
+        return bytes;
+      }
+
       async function boot() {
         if (!cfg) {
           // Hide loader first, then open setup modal after the browser has painted
