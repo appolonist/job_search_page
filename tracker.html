@@ -1083,6 +1083,7 @@
           }
 
           const trimmed = text.trim();
+          console.log("Trimmed length:", trimmed.length);
           console.log(
             "Trimmed JSON starts with:",
             trimmed.substring(0, 50),
@@ -1092,27 +1093,52 @@
             trimmed.substring(Math.max(0, trimmed.length - 50)),
           );
 
-          if (!trimmed.startsWith("{") || !trimmed.endsWith("}")) {
+          if (!trimmed.startsWith("{")) {
             throw new Error(
-              `Invalid JSON structure: starts with '${trimmed.substring(0, 50)}...' ends with '...${trimmed.substring(Math.max(0, trimmed.length - 50))}'`,
+              `JSON doesn't start with "{", starts with: "${trimmed.substring(0, 100)}"`,
             );
           }
+          
+          // Find the last closing brace
+          let lastBraceIndex = trimmed.lastIndexOf("}");
+          if (lastBraceIndex === -1) {
+            throw new Error("No closing } found in JSON");
+          }
+          
+          // Extract from first { to last }
+          const jsonStr = trimmed.substring(0, lastBraceIndex + 1);
+          console.log("Extracted JSON length:", jsonStr.length);
 
           // Try to parse with detailed error info
           let decoded;
           try {
-            decoded = JSON.parse(trimmed);
+            decoded = JSON.parse(jsonStr);
           } catch (parseErr) {
             // Find where the parse error occurs
             console.error("JSON parse error:", parseErr.message);
-            const lines = trimmed.split("\n");
+            const lines = jsonStr.split("\n");
             console.error("Total lines in JSON:", lines.length);
             console.error(
               "Last 5 lines:",
               lines.slice(-5).join("\n"),
             );
+            // Try to find the problematic area
+            try {
+              // Try parsing progressively smaller chunks to find where it breaks
+              for (let i = Math.min(lines.length, 100); i > 0; i--) {
+                try {
+                  JSON.parse(lines.slice(0, i).join("\n"));
+                  console.error(`JSON is valid up to line ${i}`);
+                  break;
+                } catch (e) {
+                  // Keep trying
+                }
+              }
+            } catch (debugErr) {
+              console.error("Could not find valid JSON prefix");
+            }
             throw new Error(
-              `JSON parse failed: ${parseErr.message}. File has ${trimmed.length} chars, ${lines.length} lines`,
+              `JSON parse failed: ${parseErr.message}. File has ${jsonStr.length} chars, ${lines.length} lines`,
             );
           }
 
