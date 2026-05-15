@@ -1071,7 +1071,10 @@
 
           const text = await rawRes.text();
           console.log("Raw file length:", text.length);
-          console.log("Raw file content type:", rawRes.headers.get("content-type"));
+          console.log(
+            "Raw file content type:",
+            rawRes.headers.get("content-type"),
+          );
           console.log("First 200 chars:", text.substring(0, 200));
           console.log(
             "Last 200 chars:",
@@ -1084,10 +1087,7 @@
 
           const trimmed = text.trim();
           console.log("Trimmed length:", trimmed.length);
-          console.log(
-            "Trimmed JSON starts with:",
-            trimmed.substring(0, 50),
-          );
+          console.log("Trimmed JSON starts with:", trimmed.substring(0, 50));
           console.log(
             "Trimmed JSON ends with:",
             trimmed.substring(Math.max(0, trimmed.length - 50)),
@@ -1098,13 +1098,13 @@
               `JSON doesn't start with "{", starts with: "${trimmed.substring(0, 100)}"`,
             );
           }
-          
+
           // Find the last closing brace
           let lastBraceIndex = trimmed.lastIndexOf("}");
           if (lastBraceIndex === -1) {
             throw new Error("No closing } found in JSON");
           }
-          
+
           // Extract from first { to last }
           const jsonStr = trimmed.substring(0, lastBraceIndex + 1);
           console.log("Extracted JSON length:", jsonStr.length);
@@ -1118,10 +1118,7 @@
             console.error("JSON parse error:", parseErr.message);
             const lines = jsonStr.split("\n");
             console.error("Total lines in JSON:", lines.length);
-            console.error(
-              "Last 5 lines:",
-              lines.slice(-5).join("\n"),
-            );
+            console.error("Last 5 lines:", lines.slice(-5).join("\n"));
             // Try to find the problematic area
             try {
               // Try parsing progressively smaller chunks to find where it breaks
