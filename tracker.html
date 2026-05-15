@@ -1029,43 +1029,103 @@
       // Uses raw.githubusercontent.com to avoid size limits and encoding issues with the GitHub API
       async function ghReadState() {
         try {
+          console.log("ghReadState called with config:", {
+            user: cfg?.user,
+            repo: cfg?.repo,
+            branch: cfg?.branch,
+            hasToken: !!cfg?.token,
+          });
+
           // First, try the API endpoint to get the SHA (needed for updates)
           const apiUrl = `${ghBase()}/contents/${STATE_FILE}?ref=${cfg.branch}&_=${Date.now()}`;
+          console.log("Fetching API:", apiUrl);
           const apiRes = await fetch(apiUrl, { headers: ghHeaders() });
-          
-          if (apiRes.status === 404) return null;
+          console.log("API response status:", apiRes.status);
+
+          if (apiRes.status === 404) {
+            console.log("State file not found on GitHub (404)");
+            return null;
+          }
           if (apiRes.ok) {
             const data = await apiRes.json();
             ghSHA = data.sha;
+            console.log("Got SHA from API:", ghSHA);
+          } else {
+            console.warn("API response not ok, status:", apiRes.status);
           }
-          
+
           // Now use raw.githubusercontent.com to download the actual content
           // This is more reliable for large files
           const rawUrl = `https://raw.githubusercontent.com/${cfg.user}/${cfg.repo}/${cfg.branch}/${STATE_FILE}?_=${Date.now()}`;
           console.log("Reading state from raw URL:", rawUrl);
-          
+
           const rawRes = await fetch(rawUrl);
+          console.log("Raw response status:", rawRes.status);
           if (!rawRes.ok) {
-            if (rawRes.status === 404) return null;
+            if (rawRes.status === 404) {
+              console.log("Raw state file not found (404)");
+              return null;
+            }
             throw new Error(`HTTP ${rawRes.status} reading state file`);
           }
-          
+
           const text = await rawRes.text();
           console.log("Raw file length:", text.length);
-          console.log("First 100 chars:", text.substring(0, 100));
-          console.log("Last 100 chars:", text.substring(Math.max(0, text.length - 100)));
-          
-          const trimmed = text.trim();
-          if (!trimmed.startsWith("{") || !trimmed.endsWith("}")) {
-            throw new Error(`Invalid JSON structure: starts with '${trimmed.substring(0, 50)}...' ends with '...${trimmed.substring(Math.max(0, trimmed.length - 50))}'`);
+          console.log("Raw file content type:", rawRes.headers.get("content-type"));
+          console.log("First 200 chars:", text.substring(0, 200));
+          console.log(
+            "Last 200 chars:",
+            text.substring(Math.max(0, text.length - 200)),
+          );
+
+          if (!text || text.length === 0) {
+            throw new Error("State file is empty!");
           }
-          
-          const decoded = JSON.parse(trimmed);
-          console.log("Successfully parsed state with", decoded.jobs?.length || 0, "jobs");
+
+          const trimmed = text.trim();
+          console.log(
+            "Trimmed JSON starts with:",
+            trimmed.substring(0, 50),
+          );
+          console.log(
+            "Trimmed JSON ends with:",
+            trimmed.substring(Math.max(0, trimmed.length - 50)),
+          );
+
+          if (!trimmed.startsWith("{") || !trimmed.endsWith("}")) {
+            throw new Error(
+              `Invalid JSON structure: starts with '${trimmed.substring(0, 50)}...' ends with '...${trimmed.substring(Math.max(0, trimmed.length - 50))}'`,
+            );
+          }
+
+          // Try to parse with detailed error info
+          let decoded;
+          try {
+            decoded = JSON.parse(trimmed);
+          } catch (parseErr) {
+            // Find where the parse error occurs
+            console.error("JSON parse error:", parseErr.message);
+            const lines = trimmed.split("\n");
+            console.error("Total lines in JSON:", lines.length);
+            console.error(
+              "Last 5 lines:",
+              lines.slice(-5).join("\n"),
+            );
+            throw new Error(
+              `JSON parse failed: ${parseErr.message}. File has ${trimmed.length} chars, ${lines.length} lines`,
+            );
+          }
+
+          console.log(
+            "Successfully parsed state with",
+            decoded.jobs?.length || 0,
+            "jobs",
+          );
           return decoded;
         } catch (err) {
           console.error("Failed to read tracker state:", err);
           console.error("Error details:", err.message);
+          console.error("Full error:", err);
           throw err;
         }
       }
@@ -1145,7 +1205,9 @@
         } catch (err) {
           console.error("atob failed, trying fetch-based approach:", err);
           // Method 2: Fallback to fetch-based decoding
-          const response = await fetch("data:application/octet-binary;base64," + base64);
+          const response = await fetch(
+            "data:application/octet-binary;base64," + base64,
+          );
           return new Uint8Array(await response.arrayBuffer());
         }
       }
@@ -1173,15 +1235,21 @@
           // 1. Load current state from GitHub
           console.log("Attempting to read state from GitHub...");
           const remote = await ghReadState();
-          console.log("ghReadState returned:", remote ? `object with ${remote.jobs?.length || 0} jobs` : "null");
-          
+          console.log(
+            "ghReadState returned:",
+            remote ? `object with ${remote.jobs?.length || 0} jobs` : "null",
+          );
+
           if (remote) {
             state = remote;
-            console.log("State loaded from GitHub, total jobs:", state.jobs.length);
+            console.log(
+              "State loaded from GitHub, total jobs:",
+              state.jobs.length,
+            );
           } else {
             console.log("No state found on GitHub, using empty state");
           }
-          
+
           // Ensure meta shape
           state.meta = state.meta || {};
           state.meta.importedFiles = state.meta.importedFiles || {};
@@ -1313,8 +1381,11 @@
       // ── Render ────────────────────────────────────────────────────────────────────
       function render() {
         const jobs = state.jobs;
-        console.log("render() called with jobs array:", jobs ? jobs.length + " jobs" : "undefined");
-        
+        console.log(
+          "render() called with jobs array:",
+          jobs ? jobs.length + " jobs" : "undefined",
+        );
+
         const q = document.getElementById("q").value.toLowerCase();
         const fBoard = document.getElementById("f-board").value;
         const fType = document.getElementById("f-type").value;
