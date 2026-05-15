@@ -1026,19 +1026,48 @@
       }
 
       // Read tracker-state.json from repo
+      // Uses raw.githubusercontent.com to avoid size limits and encoding issues with the GitHub API
       async function ghReadState() {
-        const url = `${ghBase()}/contents/${STATE_FILE}?ref=${cfg.branch}&_=${Date.now()}`;
-        const res = await fetch(url, { headers: ghHeaders() });
-        if (res.status === 404) return null;
-        if (!res.ok)
-          throw new Error(`GitHub API ${res.status}: ${await res.text()}`);
-        const data = await res.json();
-        ghSHA = data.sha;
-
-        // ✅ FIXED - unicode-safe base64 decode using helper
-        const bytes = base64ToUint8Array(data.content.replace(/\n/g, ""));
-        const decoded = JSON.parse(new TextDecoder("utf-8").decode(bytes));
-        return decoded;
+        try {
+          // First, try the API endpoint to get the SHA (needed for updates)
+          const apiUrl = `${ghBase()}/contents/${STATE_FILE}?ref=${cfg.branch}&_=${Date.now()}`;
+          const apiRes = await fetch(apiUrl, { headers: ghHeaders() });
+          
+          if (apiRes.status === 404) return null;
+          if (apiRes.ok) {
+            const data = await apiRes.json();
+            ghSHA = data.sha;
+          }
+          
+          // Now use raw.githubusercontent.com to download the actual content
+          // This is more reliable for large files
+          const rawUrl = `https://raw.githubusercontent.com/${cfg.user}/${cfg.repo}/${cfg.branch}/${STATE_FILE}?_=${Date.now()}`;
+          console.log("Reading state from raw URL:", rawUrl);
+          
+          const rawRes = await fetch(rawUrl);
+          if (!rawRes.ok) {
+            if (rawRes.status === 404) return null;
+            throw new Error(`HTTP ${rawRes.status} reading state file`);
+          }
+          
+          const text = await rawRes.text();
+          console.log("Raw file length:", text.length);
+          console.log("First 100 chars:", text.substring(0, 100));
+          console.log("Last 100 chars:", text.substring(Math.max(0, text.length - 100)));
+          
+          const trimmed = text.trim();
+          if (!trimmed.startsWith("{") || !trimmed.endsWith("}")) {
+            throw new Error(`Invalid JSON structure: starts with '${trimmed.substring(0, 50)}...' ends with '...${trimmed.substring(Math.max(0, trimmed.length - 50))}'`);
+          }
+          
+          const decoded = JSON.parse(trimmed);
+          console.log("Successfully parsed state with", decoded.jobs?.length || 0, "jobs");
+          return decoded;
+        } catch (err) {
+          console.error("Failed to read tracker state:", err);
+          console.error("Error details:", err.message);
+          throw err;
+        }
       }
 
       // Write tracker-state.json back to repo
@@ -1103,13 +1132,22 @@
       }
 
       // base64 → Uint8Array (for decoding GitHub API responses)
-      function base64ToUint8Array(base64) {
-        const binary = atob(base64);
-        const bytes = new Uint8Array(binary.length);
-        for (let i = 0; i < binary.length; i++) {
-          bytes[i] = binary.charCodeAt(i);
+      // Uses Blob for more reliable decoding of large base64 strings
+      async function base64ToUint8Array(base64) {
+        try {
+          // Method 1: Try using Blob slicing (more reliable for large strings)
+          const binaryString = atob(base64);
+          const bytes = new Uint8Array(binaryString.length);
+          for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+          }
+          return bytes;
+        } catch (err) {
+          console.error("atob failed, trying fetch-based approach:", err);
+          // Method 2: Fallback to fetch-based decoding
+          const response = await fetch("data:application/octet-binary;base64," + base64);
+          return new Uint8Array(await response.arrayBuffer());
         }
-        return bytes;
       }
 
       async function boot() {
@@ -1133,10 +1171,17 @@
 
         try {
           // 1. Load current state from GitHub
+          console.log("Attempting to read state from GitHub...");
           const remote = await ghReadState();
+          console.log("ghReadState returned:", remote ? `object with ${remote.jobs?.length || 0} jobs` : "null");
+          
           if (remote) {
             state = remote;
+            console.log("State loaded from GitHub, total jobs:", state.jobs.length);
+          } else {
+            console.log("No state found on GitHub, using empty state");
           }
+          
           // Ensure meta shape
           state.meta = state.meta || {};
           state.meta.importedFiles = state.meta.importedFiles || {};
@@ -1268,6 +1313,8 @@
       // ── Render ────────────────────────────────────────────────────────────────────
       function render() {
         const jobs = state.jobs;
+        console.log("render() called with jobs array:", jobs ? jobs.length + " jobs" : "undefined");
+        
         const q = document.getElementById("q").value.toLowerCase();
         const fBoard = document.getElementById("f-board").value;
         const fType = document.getElementById("f-type").value;
