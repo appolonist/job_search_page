@@ -1093,16 +1093,24 @@
       // Helper function to parse tracker state JSON
       function parseTrackerState(text) {
         console.log("parseTrackerState called with text length:", text.length);
+        console.log("Text type:", typeof text);
+        console.log("Text is string:", text instanceof String);
+        console.log("First 100 chars (charCodes):", Array.from(text.slice(0, 100)).map(c => c.charCodeAt(0)).join(","));
+        console.log("First 100 chars (text):", text.slice(0, 100));
         
         // First attempt: direct parse
         try {
           const trimmed = text.trim();
           console.log("Attempting direct JSON.parse...");
+          console.log("Trimmed length:", trimmed.length);
+          console.log("Trimmed first 50 chars:", trimmed.slice(0, 50));
+          console.log("Trimmed last 50 chars:", trimmed.slice(-50));
           const decoded = JSON.parse(trimmed);
           console.log("Successfully parsed state with", decoded.jobs?.length || 0, "jobs");
           return decoded;
         } catch (err1) {
           console.warn("Direct parse failed:", err1.message);
+          console.warn("Error name:", err1.name);
           
           // Second attempt: find valid JSON boundaries
           try {
@@ -1124,12 +1132,15 @@
             const jsonStr = trimmed.substring(firstBrace, lastBrace + 1);
             console.log("Extracted JSON from position", firstBrace, "to", lastBrace + 1);
             console.log("Extracted JSON length:", jsonStr.length);
+            console.log("Extracted first 50:", jsonStr.slice(0, 50));
+            console.log("Extracted last 50:", jsonStr.slice(-50));
             
             const decoded = JSON.parse(jsonStr);
             console.log("Successfully parsed state with", decoded.jobs?.length || 0, "jobs");
             return decoded;
           } catch (err2) {
             console.error("Extraction method also failed:", err2.message);
+            console.error("err2 name:", err2.name);
             throw new Error(`All JSON parse methods failed: ${err1.message}; ${err2.message}`);
           }
         }
