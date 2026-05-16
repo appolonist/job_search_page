@@ -1095,9 +1095,14 @@
         console.log("parseTrackerState called with text length:", text.length);
         console.log("Text type:", typeof text);
         console.log("Text is string:", text instanceof String);
-        console.log("First 100 chars (charCodes):", Array.from(text.slice(0, 100)).map(c => c.charCodeAt(0)).join(","));
+        console.log(
+          "First 100 chars (charCodes):",
+          Array.from(text.slice(0, 100))
+            .map((c) => c.charCodeAt(0))
+            .join(","),
+        );
         console.log("First 100 chars (text):", text.slice(0, 100));
-        
+
         // First attempt: direct parse
         try {
           const trimmed = text.trim();
@@ -1106,42 +1111,57 @@
           console.log("Trimmed first 50 chars:", trimmed.slice(0, 50));
           console.log("Trimmed last 50 chars:", trimmed.slice(-50));
           const decoded = JSON.parse(trimmed);
-          console.log("Successfully parsed state with", decoded.jobs?.length || 0, "jobs");
+          console.log(
+            "Successfully parsed state with",
+            decoded.jobs?.length || 0,
+            "jobs",
+          );
           return decoded;
         } catch (err1) {
           console.warn("Direct parse failed:", err1.message);
           console.warn("Error name:", err1.name);
-          
+
           // Second attempt: find valid JSON boundaries
           try {
             const trimmed = text.trim();
             console.log("Attempting to extract valid JSON boundaries...");
-            
+
             // Find first {
             const firstBrace = trimmed.indexOf("{");
             if (firstBrace === -1) {
               throw new Error("No opening brace found");
             }
-            
+
             // Find last }
             const lastBrace = trimmed.lastIndexOf("}");
             if (lastBrace === -1) {
               throw new Error("No closing brace found");
             }
-            
+
             const jsonStr = trimmed.substring(firstBrace, lastBrace + 1);
-            console.log("Extracted JSON from position", firstBrace, "to", lastBrace + 1);
+            console.log(
+              "Extracted JSON from position",
+              firstBrace,
+              "to",
+              lastBrace + 1,
+            );
             console.log("Extracted JSON length:", jsonStr.length);
             console.log("Extracted first 50:", jsonStr.slice(0, 50));
             console.log("Extracted last 50:", jsonStr.slice(-50));
-            
+
             const decoded = JSON.parse(jsonStr);
-            console.log("Successfully parsed state with", decoded.jobs?.length || 0, "jobs");
+            console.log(
+              "Successfully parsed state with",
+              decoded.jobs?.length || 0,
+              "jobs",
+            );
             return decoded;
           } catch (err2) {
             console.error("Extraction method also failed:", err2.message);
             console.error("err2 name:", err2.name);
-            throw new Error(`All JSON parse methods failed: ${err1.message}; ${err2.message}`);
+            throw new Error(
+              `All JSON parse methods failed: ${err1.message}; ${err2.message}`,
+            );
           }
         }
       }
@@ -1820,7 +1840,21 @@
           .replace(/"/g, "&quot;");
       }
 
+      // Debug: show current config and provide reset option
+      console.log("Current config:", cfg);
+      if (cfg) {
+        console.log("Repo URL would be:", `https://api.github.com/repos/${cfg.user}/${cfg.repo}`);
+        if (cfg.repo && cfg.repo.includes("serach")) {
+          console.warn("⚠️ Typo detected in repo name:", cfg.repo);
+          console.log("To fix: Open Settings (⚙), change repo name to 'job_search_page', save");
+          console.log("Or run in console: localStorage.removeItem('qa_gh_config'); location.reload()");
+        }
+      } else {
+        console.log("No config found - Settings modal will open");
+      }
+
       boot();
     </script>
   </body>
 </html>
+
