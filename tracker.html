@@ -1027,7 +1027,10 @@
       }
 
       // Read tracker-state.json from repo
-      // Uses raw.githubusercontent.com to avoid size limits and encoding issues with the GitHub API
+      // IMPORTANT: The GitHub Contents API has a hard 1MB limit.
+      // tracker-state.json grows indefinitely and exceeds 1MB, causing the
+      // Contents API to return 403 which CORS masks as "Failed to fetch".
+      // Fix: use Git Trees API for the SHA (no size limit), then raw CDN for content.
       async function ghReadState() {
         try {
           console.log("ghReadState called with config:", {
@@ -1037,26 +1040,34 @@
             hasToken: !!cfg?.token,
           });
 
-          // First, try the API endpoint to get the SHA (needed for updates)
-          const apiUrl = `${ghBase()}/contents/${STATE_FILE}?ref=${cfg.branch}&_=${Date.now()}`;
-          console.log("Fetching API:", apiUrl);
-          const apiRes = await fetch(apiUrl, { headers: ghHeaders() });
-          console.log("API response status:", apiRes.status);
+          // Step 1: Get SHA via Git Trees API (works for any file size)
+          const treeUrl = `${ghBase()}/git/trees/${cfg.branch}?recursive=1&_=${Date.now()}`;
+          console.log("Fetching tree for SHA:", treeUrl);
+          const treeRes = await fetch(treeUrl, { headers: ghHeaders() });
+          console.log("Tree API status:", treeRes.status);
 
-          if (apiRes.status === 404) {
-            console.log("State file not found on GitHub (404)");
+          if (treeRes.status === 404) {
+            console.log("Branch or repo not found (404)");
             return null;
           }
-          if (apiRes.ok) {
-            const data = await apiRes.json();
-            ghSHA = data.sha;
-            console.log("Got SHA from API:", ghSHA);
-          } else {
-            console.warn("API response not ok, status:", apiRes.status);
+          if (!treeRes.ok) {
+            throw new Error(`Tree API HTTP ${treeRes.status}`);
           }
 
-          // Now use raw.githubusercontent.com to download the actual content
-          // This is more reliable for large files
+          const treeData = await treeRes.json();
+          const fileEntry = (treeData.tree || []).find(
+            (item) => item.path === STATE_FILE
+          );
+
+          if (!fileEntry) {
+            console.log("tracker-state.json not in tree — first run");
+            return null;
+          }
+
+          ghSHA = fileEntry.sha;
+          console.log("SHA from tree:", ghSHA, "size:", fileEntry.size, "bytes");
+
+          // Step 2: Download content via raw CDN (no size limit, no auth needed)
           const rawUrl = `https://raw.githubusercontent.com/${cfg.user}/${cfg.repo}/${cfg.branch}/${STATE_FILE}?_=${Date.now()}`;
           console.log("Reading state from raw URL:", rawUrl);
 
@@ -1070,22 +1081,17 @@
             throw new Error(`HTTP ${rawRes.status} reading state file`);
           }
 
-          // FIX: arrayBuffer+TextDecoder forces UTF-8 — response.text() defaults to
-          // latin-1 when Content-Type has no charset (raw.githubusercontent.com
-          // never sends charset), corrupting emoji in commuteNote and breaking JSON.
+          // arrayBuffer + TextDecoder forces UTF-8 decoding.
+          // response.text() defaults to latin-1 when no charset in Content-Type,
+          // corrupting emoji in commuteNote fields and producing invalid JSON.
           const buffer = await rawRes.arrayBuffer();
           const text = new TextDecoder("utf-8").decode(buffer);
-          console.log("Raw file length:", text.length);
-          console.log(
-            "Raw file content type:",
-            rawRes.headers.get("content-type"),
-          );
+          console.log("Raw file length:", text.length, "chars");
 
           if (!text || text.length === 0) {
             throw new Error("State file is empty!");
           }
 
-          // Parse the JSON text
           return parseTrackerState(text);
         } catch (err) {
           console.error("Failed to read tracker state:", err);
@@ -1848,11 +1854,18 @@
       // Debug: show current config and provide reset option
       console.log("Current config:", cfg);
       if (cfg) {
-        console.log("Repo URL would be:", `https://api.github.com/repos/${cfg.user}/${cfg.repo}`);
+        console.log(
+          "Repo URL would be:",
+          `https://api.github.com/repos/${cfg.user}/${cfg.repo}`,
+        );
         if (cfg.repo && cfg.repo.includes("serach")) {
           console.warn("⚠️ Typo detected in repo name:", cfg.repo);
-          console.log("To fix: Open Settings (⚙), change repo name to 'job_search_page', save");
-          console.log("Or run in console: localStorage.removeItem('qa_gh_config'); location.reload()");
+          console.log(
+            "To fix: Open Settings (⚙), change repo name to 'job_search_page', save",
+          );
+          console.log(
+            "Or run in console: localStorage.removeItem('qa_gh_config'); location.reload()",
+          );
         }
       } else {
         console.log("No config found - Settings modal will open");
