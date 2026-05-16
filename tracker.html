@@ -1075,81 +1075,63 @@
             "Raw file content type:",
             rawRes.headers.get("content-type"),
           );
-          console.log("First 200 chars:", text.substring(0, 200));
-          console.log(
-            "Last 200 chars:",
-            text.substring(Math.max(0, text.length - 200)),
-          );
 
           if (!text || text.length === 0) {
             throw new Error("State file is empty!");
           }
 
-          const trimmed = text.trim();
-          console.log("Trimmed length:", trimmed.length);
-          console.log("Trimmed JSON starts with:", trimmed.substring(0, 50));
-          console.log(
-            "Trimmed JSON ends with:",
-            trimmed.substring(Math.max(0, trimmed.length - 50)),
-          );
-
-          if (!trimmed.startsWith("{")) {
-            throw new Error(
-              `JSON doesn't start with "{", starts with: "${trimmed.substring(0, 100)}"`,
-            );
-          }
-
-          // Find the last closing brace
-          let lastBraceIndex = trimmed.lastIndexOf("}");
-          if (lastBraceIndex === -1) {
-            throw new Error("No closing } found in JSON");
-          }
-
-          // Extract from first { to last }
-          const jsonStr = trimmed.substring(0, lastBraceIndex + 1);
-          console.log("Extracted JSON length:", jsonStr.length);
-
-          // Try to parse with detailed error info
-          let decoded;
-          try {
-            decoded = JSON.parse(jsonStr);
-          } catch (parseErr) {
-            // Find where the parse error occurs
-            console.error("JSON parse error:", parseErr.message);
-            const lines = jsonStr.split("\n");
-            console.error("Total lines in JSON:", lines.length);
-            console.error("Last 5 lines:", lines.slice(-5).join("\n"));
-            // Try to find the problematic area
-            try {
-              // Try parsing progressively smaller chunks to find where it breaks
-              for (let i = Math.min(lines.length, 100); i > 0; i--) {
-                try {
-                  JSON.parse(lines.slice(0, i).join("\n"));
-                  console.error(`JSON is valid up to line ${i}`);
-                  break;
-                } catch (e) {
-                  // Keep trying
-                }
-              }
-            } catch (debugErr) {
-              console.error("Could not find valid JSON prefix");
-            }
-            throw new Error(
-              `JSON parse failed: ${parseErr.message}. File has ${jsonStr.length} chars, ${lines.length} lines`,
-            );
-          }
-
-          console.log(
-            "Successfully parsed state with",
-            decoded.jobs?.length || 0,
-            "jobs",
-          );
-          return decoded;
+          // Parse the JSON text
+          return parseTrackerState(text);
         } catch (err) {
           console.error("Failed to read tracker state:", err);
           console.error("Error details:", err.message);
           console.error("Full error:", err);
           throw err;
+        }
+      }
+
+      // Helper function to parse tracker state JSON
+      function parseTrackerState(text) {
+        console.log("parseTrackerState called with text length:", text.length);
+        
+        // First attempt: direct parse
+        try {
+          const trimmed = text.trim();
+          console.log("Attempting direct JSON.parse...");
+          const decoded = JSON.parse(trimmed);
+          console.log("Successfully parsed state with", decoded.jobs?.length || 0, "jobs");
+          return decoded;
+        } catch (err1) {
+          console.warn("Direct parse failed:", err1.message);
+          
+          // Second attempt: find valid JSON boundaries
+          try {
+            const trimmed = text.trim();
+            console.log("Attempting to extract valid JSON boundaries...");
+            
+            // Find first {
+            const firstBrace = trimmed.indexOf("{");
+            if (firstBrace === -1) {
+              throw new Error("No opening brace found");
+            }
+            
+            // Find last }
+            const lastBrace = trimmed.lastIndexOf("}");
+            if (lastBrace === -1) {
+              throw new Error("No closing brace found");
+            }
+            
+            const jsonStr = trimmed.substring(firstBrace, lastBrace + 1);
+            console.log("Extracted JSON from position", firstBrace, "to", lastBrace + 1);
+            console.log("Extracted JSON length:", jsonStr.length);
+            
+            const decoded = JSON.parse(jsonStr);
+            console.log("Successfully parsed state with", decoded.jobs?.length || 0, "jobs");
+            return decoded;
+          } catch (err2) {
+            console.error("Extraction method also failed:", err2.message);
+            throw new Error(`All JSON parse methods failed: ${err1.message}; ${err2.message}`);
+          }
         }
       }
 
