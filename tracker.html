@@ -1379,7 +1379,19 @@
             `Last scrape: ${latest?.date || "—"} · ${latest?.jobCount || 0} jobs found`,
           );
         } catch (err) {
-          console.error("Sync error:", err);
+          console.error("SYNC FAILED");
+          console.error("Message:", err.message);
+          console.error("Stack:", err.stack);
+          console.error("Full error:", err);
+
+          alert(`
+                SYNC FAILED
+
+                ${err.message}
+
+                Check browser console for details.
+                  `);
+
           setSyncBadge("error", "✕ sync failed");
           setSyncStatus("error", `Sync error: ${err.message}`);
         }
