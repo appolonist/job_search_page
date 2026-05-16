@@ -4,7 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QA Job Application Tracker</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com https://raw.githubusercontent.com; img-src 'self' data:;" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline';
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src https://fonts.gstatic.com;
+    connect-src *;
+    img-src 'self' data:;
+    "
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap"
       rel="stylesheet"
@@ -1056,7 +1066,7 @@
 
           const treeData = await treeRes.json();
           const fileEntry = (treeData.tree || []).find(
-            (item) => item.path === STATE_FILE
+            (item) => item.path === STATE_FILE,
           );
 
           if (!fileEntry) {
@@ -1065,7 +1075,13 @@
           }
 
           ghSHA = fileEntry.sha;
-          console.log("SHA from tree:", ghSHA, "size:", fileEntry.size, "bytes");
+          console.log(
+            "SHA from tree:",
+            ghSHA,
+            "size:",
+            fileEntry.size,
+            "bytes",
+          );
 
           // Step 2: Download content via raw CDN (no size limit, no auth needed)
           const rawUrl = `https://raw.githubusercontent.com/${cfg.user}/${cfg.repo}/${cfg.branch}/${STATE_FILE}?_=${Date.now()}`;
@@ -1484,23 +1500,80 @@
           .map((j) => {
             const idx = jobs.indexOf(j);
             const isNew = newIds.has(j.id);
-            return `
-    <tr class="${isNew ? "is-new" : ""}">
-      <td class="tc">
-        <a href="${esc(j.url)}" target="_blank">${esc(j.title)}</a>${isNew ? '<span class="new-pill">NEW</span>' : ""}
-        <div class="co">${esc(j.company || "—")}</div>
-      </td>
-      <td class="lc">${esc(j.location || "—")}</td>
-      <td class="cc">${esc(j.commuteNote || "—")}</td>
-      <td style="font-size:.71rem;color:var(--muted)">${esc(j.board || "—")}</td>
-      <td><span class="sb s-${j.status}" onclick="cycleStatus(${idx})" title="Click to advance">${sIcon(j.status)} ${j.status}</span></td>
-      <td class="dc">${j.appliedDate || "—"}</td>
-      <td><div class="np" onclick="openEdit(${idx})" title="${esc(j.notes || "")}">${esc(j.notes || "—")}</div></td>
-      <td><div class="acts">
-        <button class="ib" onclick="openEdit(${idx})">✏️</button>
-        <button class="ib del" onclick="deleteJob(${idx})">🗑</button>
-      </div></td>
-    </tr>`;
+            return `<tr class="${isNew ? "is-new" : ""}">
+
+        <!-- TITLE -->
+        <td class="tc">
+          <a href="${esc(j.url)}" target="_blank">
+            ${esc(j.title)}
+          </a>
+          ${isNew ? '<span class="new-pill">NEW</span>' : ""}
+        </td>
+
+        <!-- COMPANY -->
+        <td>
+          <div class="co">
+            ${esc(j.company || "—")}
+          </div>
+        </td>
+
+        <!-- LOCATION -->
+        <td class="lc">
+          ${esc(j.location || "—")}
+        </td>
+
+        <!-- COMMUTE -->
+        <td class="cc">
+          ${esc(j.commuteNote || "—")}
+        </td>
+
+        <!-- BOARD -->
+        <td style="font-size:.71rem;color:var(--muted)">
+          ${esc(j.board || "—")}
+        </td>
+
+        <!-- STATUS -->
+        <td>
+          <span
+            class="sb s-${j.status}"
+            onclick="cycleStatus(${idx})"
+            title="Click to advance"
+          >
+            ${sIcon(j.status)} ${j.status}
+          </span>
+        </td>
+
+        <!-- APPLIED DATE -->
+        <td class="dc">
+          ${j.appliedDate || "—"}
+        </td>
+
+        <!-- NOTES -->
+        <td>
+          <div
+            class="np"
+            onclick="openEdit(${idx})"
+            title="${esc(j.notes || "")}"
+          >
+            ${esc(j.notes || "—")}
+          </div>
+        </td>
+
+        <!-- ACTIONS -->
+        <td>
+          <div class="acts">
+            <button class="ib" onclick="openEdit(${idx})">
+              ✏️
+            </button>
+
+            <button class="ib del" onclick="deleteJob(${idx})">
+              🗑
+            </button>
+          </div>
+        </td>
+
+      </tr>
+    `;
           })
           .join("");
 
