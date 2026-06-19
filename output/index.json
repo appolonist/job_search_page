@@ -1,6 +1,11 @@
 {
-  "generated": "2026-06-18T10:15:15.082Z",
+  "generated": "2026-06-19T10:22:25.167Z",
   "files": [
+    {
+      "filename": "jobs-2026-06-19.csv",
+      "date": "2026-06-19",
+      "jobCount": 403
+    },
     {
       "filename": "jobs-2026-06-18.csv",
       "date": "2026-06-18",

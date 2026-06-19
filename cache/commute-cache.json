@@ -73359,13 +73359,6 @@
     "distKm": 99,
     "cachedAt": "2026-06-18T10:14:23.316Z"
   },
-  "https://www.adzuna.co.uk/jobs/details/5722148531?utm_medium=api&utm_source=fec81443": {
-    "locationStr": "Bristol, South West, UK",
-    "driveSecs": 6428,
-    "transitSecs": 8999,
-    "distKm": 98,
-    "cachedAt": "2026-06-18T10:14:23.956Z"
-  },
   "https://www.adzuna.co.uk/jobs/land/ad/5709486529?se=Ot4RTf1q8RG_XcdlzGzLnw&utm_medium=api&utm_source=fec81443&v=388155B216E76D22ED4B908F606A06544CAA9707": {
     "locationStr": "Glasgow City Centre, Glasgow, UK",
     "driveSecs": 14129,
@@ -73911,5 +73904,1552 @@
     "transitSecs": 9195,
     "distKm": 107,
     "cachedAt": "2026-06-18T10:15:14.564Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769209945?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Chilworth Science Park, Chilworth, UK",
+    "driveSecs": 12728,
+    "transitSecs": 17819,
+    "distKm": 254,
+    "cachedAt": "2026-06-19T10:19:57.757Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768352065?se=fjDTf8dr8RGT3vf2GufWsQ&utm_medium=api&utm_source=fec81443&v=95E203374C0D0F1C862F5C88FFDEBDC768FABAF2": {
+    "locationStr": "Portsmouth, Hampshire, UK",
+    "driveSecs": 15116,
+    "transitSecs": 21162,
+    "distKm": 282,
+    "cachedAt": "2026-06-19T10:19:58.422Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768037311?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Manchester, Greater Manchester, UK",
+    "driveSecs": 4855,
+    "transitSecs": 8739,
+    "distKm": 69,
+    "cachedAt": "2026-06-19T10:19:59.078Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5764347064?se=fjDTf8dr8RGT3vf2GufWsQ&utm_medium=api&utm_source=fec81443&v=B3C4B69A092FFD09B7EAAC1C9A2A2E49297BE236": {
+    "locationStr": "Craigavon, UK",
+    "driveSecs": 21014,
+    "transitSecs": 29420,
+    "distKm": 273,
+    "cachedAt": "2026-06-19T10:20:00.076Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5760598097?se=fjDTf8dr8RGT3vf2GufWsQ&utm_medium=api&utm_source=fec81443&v=D80AE6826B95FB273AA7998B17DEE91D9C0CC9D8": {
+    "locationStr": "Oxford, Oxfordshire, UK",
+    "driveSecs": 10310,
+    "transitSecs": 14434,
+    "distKm": 185,
+    "cachedAt": "2026-06-19T10:20:00.565Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5759991925?se=fjDTf8dr8RGT3vf2GufWsQ&utm_medium=api&utm_source=fec81443&v=AEC550E423D859931B0DE24081249DCF23EE0DD4": {
+    "locationStr": "Brighton, East Sussex, UK",
+    "driveSecs": 16077,
+    "transitSecs": 22508,
+    "distKm": 315,
+    "cachedAt": "2026-06-19T10:20:01.242Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5759989111?se=fjDTf8dr8RGT3vf2GufWsQ&utm_medium=api&utm_source=fec81443&v=43074C13CF815C9076931911F3E3EC55467F7C6A": {
+    "locationStr": "Sompting, Lancing, UK",
+    "driveSecs": 15799,
+    "transitSecs": 22119,
+    "distKm": 306,
+    "cachedAt": "2026-06-19T10:20:01.995Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5758542241?se=fjDTf8dr8RGT3vf2GufWsQ&utm_medium=api&utm_source=fec81443&v=C49580D399DC9437BD0025873EE940A503DDA74F": {
+    "locationStr": "County Down, UK",
+    "driveSecs": 22677,
+    "transitSecs": 31748,
+    "distKm": 251,
+    "cachedAt": "2026-06-19T10:20:03.236Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5744640102?se=fjDTf8dr8RGT3vf2GufWsQ&utm_medium=api&utm_source=fec81443&v=0CF016F44183EFB169089D137DCBAE352ABD33A1": {
+    "locationStr": "East Midlands, UK",
+    "driveSecs": 5682,
+    "transitSecs": 7955,
+    "distKm": 82,
+    "cachedAt": "2026-06-19T10:20:03.947Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5742341844?se=fjDTf8dr8RGT3vf2GufWsQ&utm_medium=api&utm_source=fec81443&v=3C847F4F58CEBBF0DC7718F0E46D2ECD9E483E2E": {
+    "locationStr": "Sompting, Lancing, UK",
+    "driveSecs": 15799,
+    "transitSecs": 22119,
+    "distKm": 306,
+    "cachedAt": "2026-06-19T10:20:04.643Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5742298253?se=fjDTf8dr8RGT3vf2GufWsQ&utm_medium=api&utm_source=fec81443&v=B84FEDAC1923E0FBCAAE14B04905D32D007EEE92": {
+    "locationStr": "Oxfordshire, South East, UK",
+    "driveSecs": 10147,
+    "transitSecs": 14206,
+    "distKm": 185,
+    "cachedAt": "2026-06-19T10:20:05.111Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5740349601?se=fjDTf8dr8RGT3vf2GufWsQ&utm_medium=api&utm_source=fec81443&v=A0514047D200C1EA08A8FDE8CEAB39C3FCEE213A": {
+    "locationStr": "Balsall Heath, Birmingham, UK",
+    "driveSecs": 6554,
+    "transitSecs": 9176,
+    "distKm": 99,
+    "cachedAt": "2026-06-19T10:20:05.557Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768352065?se=5ARrgMdr8RGT3vf2GufWsQ&utm_medium=api&utm_source=fec81443&v=95E203374C0D0F1C862F5C88FFDEBDC768FABAF2": {
+    "locationStr": "Portsmouth, Hampshire, UK",
+    "driveSecs": 15116,
+    "transitSecs": 21162,
+    "distKm": 282,
+    "cachedAt": "2026-06-19T10:20:06.209Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5740349601?se=5ARrgMdr8RGT3vf2GufWsQ&utm_medium=api&utm_source=fec81443&v=A0514047D200C1EA08A8FDE8CEAB39C3FCEE213A": {
+    "locationStr": "Balsall Heath, Birmingham, UK",
+    "driveSecs": 6554,
+    "transitSecs": 9176,
+    "distKm": 99,
+    "cachedAt": "2026-06-19T10:20:06.614Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769212346?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Redcliffe, Bristol, UK",
+    "driveSecs": 10728,
+    "transitSecs": 15019,
+    "distKm": 180,
+    "cachedAt": "2026-06-19T10:20:07.127Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769212318?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Hulme, Manchester, UK",
+    "driveSecs": 4414,
+    "transitSecs": 7945,
+    "distKm": 67,
+    "cachedAt": "2026-06-19T10:20:07.632Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769212052?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Hillhead, Glasgow City Centre, UK",
+    "driveSecs": 14243,
+    "transitSecs": 19940,
+    "distKm": 324,
+    "cachedAt": "2026-06-19T10:20:08.199Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211916?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "London, UK",
+    "driveSecs": 14355,
+    "transitSecs": 20097,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:20:08.913Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211250?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Hulme, Manchester, UK",
+    "driveSecs": 4414,
+    "transitSecs": 7945,
+    "distKm": 67,
+    "cachedAt": "2026-06-19T10:20:09.331Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211125?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Holborn, Central London, UK",
+    "driveSecs": 14136,
+    "transitSecs": 19790,
+    "distKm": 258,
+    "cachedAt": "2026-06-19T10:20:10.047Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769210751?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Tyndalls Park, Bristol, UK",
+    "driveSecs": 10934,
+    "transitSecs": 15308,
+    "distKm": 179,
+    "cachedAt": "2026-06-19T10:20:10.617Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769210342?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Deritend, Birmingham, UK",
+    "driveSecs": 6483,
+    "transitSecs": 9076,
+    "distKm": 98,
+    "cachedAt": "2026-06-19T10:20:11.090Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769209959?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Bank, Lyndhurst, UK",
+    "driveSecs": 14727,
+    "transitSecs": 20618,
+    "distKm": 261,
+    "cachedAt": "2026-06-19T10:20:11.776Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769209919?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "West Pottergate, Norwich, UK",
+    "driveSecs": 14826,
+    "transitSecs": 20756,
+    "distKm": 289,
+    "cachedAt": "2026-06-19T10:20:12.446Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769209799?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Chequers Centre, Maidstone, UK",
+    "driveSecs": 15048,
+    "transitSecs": 21067,
+    "distKm": 310,
+    "cachedAt": "2026-06-19T10:20:13.093Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769209809?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Brooklands, Sale, UK",
+    "driveSecs": 3836,
+    "transitSecs": 6905,
+    "distKm": 59,
+    "cachedAt": "2026-06-19T10:20:13.528Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769209372?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Fleet Street, Central London, UK",
+    "driveSecs": 15736,
+    "transitSecs": 22030,
+    "distKm": 314,
+    "cachedAt": "2026-06-19T10:20:14.182Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769129158?se=6hKdgMdr8RGlY4MUDVrv1g&utm_medium=api&utm_source=fec81443&v=FEFE879CBDF386D1B643FE4F099AFAEEB0D53914": {
+    "locationStr": "Whisby Moor, Lincoln, UK",
+    "driveSecs": 9600,
+    "transitSecs": 13440,
+    "distKm": 158,
+    "cachedAt": "2026-06-19T10:20:14.826Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769128071?se=6hKdgMdr8RGlY4MUDVrv1g&utm_medium=api&utm_source=fec81443&v=D9865647891ACFADE3CF494F2A9C68A1D76AA527": {
+    "locationStr": "Sheffield, South Yorkshire, UK",
+    "driveSecs": 8089,
+    "transitSecs": 11325,
+    "distKm": 107,
+    "cachedAt": "2026-06-19T10:20:15.503Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769127785?se=6hKdgMdr8RGlY4MUDVrv1g&utm_medium=api&utm_source=fec81443&v=594F96F8A135EE84A3000671BDD0B282E2AB6519": {
+    "locationStr": "Stevenage, Hertfordshire, UK",
+    "driveSecs": 11889,
+    "transitSecs": 16645,
+    "distKm": 227,
+    "cachedAt": "2026-06-19T10:20:16.012Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769127745?se=6hKdgMdr8RGlY4MUDVrv1g&utm_medium=api&utm_source=fec81443&v=1BD7B83CDF85E1C0696793FAE01F72DE195EA0CC": {
+    "locationStr": "Greenwich, South East London, UK",
+    "driveSecs": 14283,
+    "transitSecs": 19996,
+    "distKm": 267,
+    "cachedAt": "2026-06-19T10:20:16.831Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950129?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Lurgan, Craigavon, UK",
+    "driveSecs": 20867,
+    "transitSecs": 29214,
+    "distKm": 270,
+    "cachedAt": "2026-06-19T10:20:17.535Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950083?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Lislea, Newry, UK",
+    "driveSecs": 19522,
+    "transitSecs": 27331,
+    "distKm": 261,
+    "cachedAt": "2026-06-19T10:20:18.279Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950097?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Seskilgreen, Dungannon, UK",
+    "driveSecs": 21894,
+    "transitSecs": 30652,
+    "distKm": 313,
+    "cachedAt": "2026-06-19T10:20:19.205Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950084?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Drumgor, Craigavon, UK",
+    "driveSecs": 21029,
+    "transitSecs": 29441,
+    "distKm": 273,
+    "cachedAt": "2026-06-19T10:20:19.982Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950079?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Ormeau, Belfast, UK",
+    "driveSecs": 21830,
+    "transitSecs": 30562,
+    "distKm": 257,
+    "cachedAt": "2026-06-19T10:20:20.782Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950095?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Portadown, Craigavon, UK",
+    "driveSecs": 20879,
+    "transitSecs": 29231,
+    "distKm": 274,
+    "cachedAt": "2026-06-19T10:20:21.536Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950088?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Kircubbin, Newtownards, UK",
+    "driveSecs": 23936,
+    "transitSecs": 33510,
+    "distKm": 232,
+    "cachedAt": "2026-06-19T10:20:22.600Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950094?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Clogher, County Tyrone, UK",
+    "driveSecs": 22190,
+    "transitSecs": 31066,
+    "distKm": 315,
+    "cachedAt": "2026-06-19T10:20:23.423Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950086?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Glenavy, Crumlin, UK",
+    "driveSecs": 21461,
+    "transitSecs": 30045,
+    "distKm": 273,
+    "cachedAt": "2026-06-19T10:20:24.159Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950104?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Tullyhogue, Cookstown, UK",
+    "driveSecs": 22307,
+    "transitSecs": 31230,
+    "distKm": 301,
+    "cachedAt": "2026-06-19T10:20:24.985Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950027?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Charlemont, Moy, UK",
+    "driveSecs": 21150,
+    "transitSecs": 29610,
+    "distKm": 289,
+    "cachedAt": "2026-06-19T10:20:25.838Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950065?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Stranmillis, Belfast, UK",
+    "driveSecs": 21525,
+    "transitSecs": 30135,
+    "distKm": 258,
+    "cachedAt": "2026-06-19T10:20:26.593Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950063?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Magheralin, Craigavon, UK",
+    "driveSecs": 20742,
+    "transitSecs": 29039,
+    "distKm": 267,
+    "cachedAt": "2026-06-19T10:20:27.288Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950045?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Tullygally, Craigavon, UK",
+    "driveSecs": 20932,
+    "transitSecs": 29305,
+    "distKm": 271,
+    "cachedAt": "2026-06-19T10:20:28.034Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950035?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Groomsport, Bangor, UK",
+    "driveSecs": 23093,
+    "transitSecs": 32330,
+    "distKm": 250,
+    "cachedAt": "2026-06-19T10:20:29.012Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950037?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Muckamore, Antrim, UK",
+    "driveSecs": 22186,
+    "transitSecs": 31060,
+    "distKm": 279,
+    "cachedAt": "2026-06-19T10:20:29.837Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950010?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Clough, Ballymena, UK",
+    "driveSecs": 23499,
+    "transitSecs": 32899,
+    "distKm": 304,
+    "cachedAt": "2026-06-19T10:20:30.718Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768949967?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Finaghy, Belfast, UK",
+    "driveSecs": 21245,
+    "transitSecs": 29743,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:20:31.560Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768949994?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Glynn, Larne, UK",
+    "driveSecs": 23019,
+    "transitSecs": 32227,
+    "distKm": 271,
+    "cachedAt": "2026-06-19T10:20:32.537Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768949989?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Derriaghy, Belfast, UK",
+    "driveSecs": 21299,
+    "transitSecs": 29819,
+    "distKm": 260,
+    "cachedAt": "2026-06-19T10:20:33.375Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950006?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Knockmenagh, Craigavon, UK",
+    "driveSecs": 20981,
+    "transitSecs": 29373,
+    "distKm": 273,
+    "cachedAt": "2026-06-19T10:20:34.172Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768949963?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Knock, Belfast, UK",
+    "driveSecs": 22259,
+    "transitSecs": 31163,
+    "distKm": 254,
+    "cachedAt": "2026-06-19T10:20:35.055Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768949960?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Drumgor, Craigavon, UK",
+    "driveSecs": 21029,
+    "transitSecs": 29441,
+    "distKm": 273,
+    "cachedAt": "2026-06-19T10:20:35.811Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768949933?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Derriaghy, Belfast, UK",
+    "driveSecs": 21299,
+    "transitSecs": 29819,
+    "distKm": 260,
+    "cachedAt": "2026-06-19T10:20:36.539Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768888002?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Mossley, Newtownabbey, UK",
+    "driveSecs": 22002,
+    "transitSecs": 30803,
+    "distKm": 267,
+    "cachedAt": "2026-06-19T10:20:37.378Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768887988?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Mossley, Newtownabbey, UK",
+    "driveSecs": 22002,
+    "transitSecs": 30803,
+    "distKm": 267,
+    "cachedAt": "2026-06-19T10:20:38.091Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768887985?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Neston, Cheshire, UK",
+    "driveSecs": 2095,
+    "transitSecs": 3771,
+    "distKm": 27,
+    "cachedAt": "2026-06-19T10:20:38.467Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768771604?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Donaghadee, Ards, UK",
+    "driveSecs": 23417,
+    "transitSecs": 32784,
+    "distKm": 244,
+    "cachedAt": "2026-06-19T10:20:40.020Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768771586?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Kilroot, Carrickfergus, UK",
+    "driveSecs": 22617,
+    "transitSecs": 31664,
+    "distKm": 261,
+    "cachedAt": "2026-06-19T10:20:40.875Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768771625?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Neston, Cheshire, UK",
+    "driveSecs": 2095,
+    "transitSecs": 3771,
+    "distKm": 27,
+    "cachedAt": "2026-06-19T10:20:41.189Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768771608?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Groomsport, Bangor, UK",
+    "driveSecs": 23093,
+    "transitSecs": 32330,
+    "distKm": 250,
+    "cachedAt": "2026-06-19T10:20:42.084Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769129158?se=RMhQgcdr8RGlY4MUDVrv1g&utm_medium=api&utm_source=fec81443&v=FEFE879CBDF386D1B643FE4F099AFAEEB0D53914": {
+    "locationStr": "Whisby Moor, Lincoln, UK",
+    "driveSecs": 9600,
+    "transitSecs": 13440,
+    "distKm": 158,
+    "cachedAt": "2026-06-19T10:20:42.653Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769128071?se=RMhQgcdr8RGlY4MUDVrv1g&utm_medium=api&utm_source=fec81443&v=D9865647891ACFADE3CF494F2A9C68A1D76AA527": {
+    "locationStr": "Sheffield, South Yorkshire, UK",
+    "driveSecs": 8089,
+    "transitSecs": 11325,
+    "distKm": 107,
+    "cachedAt": "2026-06-19T10:20:43.353Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769127785?se=RMhQgcdr8RGlY4MUDVrv1g&utm_medium=api&utm_source=fec81443&v=594F96F8A135EE84A3000671BDD0B282E2AB6519": {
+    "locationStr": "Stevenage, Hertfordshire, UK",
+    "driveSecs": 11884,
+    "transitSecs": 16638,
+    "distKm": 227,
+    "cachedAt": "2026-06-19T10:20:43.825Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769127745?se=RMhQgcdr8RGlY4MUDVrv1g&utm_medium=api&utm_source=fec81443&v=1BD7B83CDF85E1C0696793FAE01F72DE195EA0CC": {
+    "locationStr": "Greenwich, South East London, UK",
+    "driveSecs": 14277,
+    "transitSecs": 19988,
+    "distKm": 267,
+    "cachedAt": "2026-06-19T10:20:44.558Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769212272?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Bloomsbury, Central London, UK",
+    "driveSecs": 14072,
+    "transitSecs": 19701,
+    "distKm": 258,
+    "cachedAt": "2026-06-19T10:20:45.301Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211449?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Caversham, Reading, UK",
+    "driveSecs": 11975,
+    "transitSecs": 16765,
+    "distKm": 222,
+    "cachedAt": "2026-06-19T10:20:45.786Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211475?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Caversham, Reading, UK",
+    "driveSecs": 11975,
+    "transitSecs": 16765,
+    "distKm": 222,
+    "cachedAt": "2026-06-19T10:20:46.215Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211377?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Caversham, Reading, UK",
+    "driveSecs": 11975,
+    "transitSecs": 16765,
+    "distKm": 222,
+    "cachedAt": "2026-06-19T10:20:46.663Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211072?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Impington, Cambridge, UK",
+    "driveSecs": 10831,
+    "transitSecs": 15163,
+    "distKm": 227,
+    "cachedAt": "2026-06-19T10:20:47.120Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769210253?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "North End, Dunmow, UK",
+    "driveSecs": 12888,
+    "transitSecs": 18043,
+    "distKm": 266,
+    "cachedAt": "2026-06-19T10:20:47.600Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769210194?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Redcliffe, Bristol, UK",
+    "driveSecs": 10728,
+    "transitSecs": 15019,
+    "distKm": 180,
+    "cachedAt": "2026-06-19T10:20:48.074Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769127291?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=E22F33756098D49AA1CF2EF0127739DB861FEF46": {
+    "locationStr": "Sidcup, Kent, UK",
+    "driveSecs": 14256,
+    "transitSecs": 19958,
+    "distKm": 277,
+    "cachedAt": "2026-06-19T10:20:48.858Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768955710?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "London, UK",
+    "driveSecs": 14350,
+    "transitSecs": 20090,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:20:49.523Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768754665?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=6A5AE8A0C5ACE7B3D31B8CD5DA596DB4BB103464": {
+    "locationStr": "Sheffield, South Yorkshire, UK",
+    "driveSecs": 8089,
+    "transitSecs": 11325,
+    "distKm": 107,
+    "cachedAt": "2026-06-19T10:20:50.155Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768749174?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Welwyn, Hertfordshire, UK",
+    "driveSecs": 11726,
+    "transitSecs": 16416,
+    "distKm": 231,
+    "cachedAt": "2026-06-19T10:20:50.614Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768723627?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "The City, Central London, UK",
+    "driveSecs": 12950,
+    "transitSecs": 18130,
+    "distKm": 251,
+    "cachedAt": "2026-06-19T10:20:51.279Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768702501?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "London, UK",
+    "driveSecs": 14350,
+    "transitSecs": 20090,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:20:51.999Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768661134?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=38E804D6ECDBDFE262B50DA2CCAA36E510EB20F7": {
+    "locationStr": "Bobbing, Sittingbourne, UK",
+    "driveSecs": 14921,
+    "transitSecs": 20889,
+    "distKm": 314,
+    "cachedAt": "2026-06-19T10:20:52.521Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768598242?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=23CF1E44025242255BC834594766D3F74EDC4200": {
+    "locationStr": "Barrow-In-Furness, Cumbria, UK",
+    "driveSecs": 9112,
+    "transitSecs": 12757,
+    "distKm": 120,
+    "cachedAt": "2026-06-19T10:20:53.162Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768375823?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=CA8CF8D2EB3A19A048F06F2A90A0377E1B72914D": {
+    "locationStr": "West London, London, UK",
+    "driveSecs": 11252,
+    "transitSecs": 15753,
+    "distKm": 189,
+    "cachedAt": "2026-06-19T10:20:53.675Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768363372?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Central London, London, UK",
+    "driveSecs": 15782,
+    "transitSecs": 22095,
+    "distKm": 314,
+    "cachedAt": "2026-06-19T10:20:54.595Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768362452?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "London, UK",
+    "driveSecs": 14350,
+    "transitSecs": 20090,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:20:55.255Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768354459?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=493A832878F5A79C74056C8AF888644499760A62": {
+    "locationStr": "Farringdon, Central London, UK",
+    "driveSecs": 15782,
+    "transitSecs": 22095,
+    "distKm": 314,
+    "cachedAt": "2026-06-19T10:20:55.941Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768352065?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=95E203374C0D0F1C862F5C88FFDEBDC768FABAF2": {
+    "locationStr": "Portsmouth, Hampshire, UK",
+    "driveSecs": 15116,
+    "transitSecs": 21162,
+    "distKm": 282,
+    "cachedAt": "2026-06-19T10:20:56.517Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768229864?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=B2F4BFE41CF2527E2C27CEE9527B29B9160D9031": {
+    "locationStr": "Preston, Paignton, UK",
+    "driveSecs": 15280,
+    "transitSecs": 21392,
+    "distKm": 292,
+    "cachedAt": "2026-06-19T10:20:57.099Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768199805?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Woodside, Luton, UK",
+    "driveSecs": 10582,
+    "transitSecs": 14815,
+    "distKm": 217,
+    "cachedAt": "2026-06-19T10:20:57.543Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768194032?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=F12F26F1504C138DE4029A9A0D39B9CB10DA7702": {
+    "locationStr": "Sompting, Lancing, UK",
+    "driveSecs": 15799,
+    "transitSecs": 22119,
+    "distKm": 306,
+    "cachedAt": "2026-06-19T10:20:58.349Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768160917?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "London, UK",
+    "driveSecs": 14350,
+    "transitSecs": 20090,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:20:59.042Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768100596?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "London, UK",
+    "driveSecs": 14350,
+    "transitSecs": 20090,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:00.214Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768042519?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "London, UK",
+    "driveSecs": 14350,
+    "transitSecs": 20090,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:01.096Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5767538473?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=1B311409A9F7A040F299A428D1981F2CF773F983": {
+    "locationStr": "South East London, London, UK",
+    "driveSecs": 13426,
+    "transitSecs": 18796,
+    "distKm": 256,
+    "cachedAt": "2026-06-19T10:21:01.778Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5767291228?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=DD4401E988FF222AC3D129A0CD3E99E57A9F186A": {
+    "locationStr": "Sleight, Devizes, UK",
+    "driveSecs": 12544,
+    "transitSecs": 17562,
+    "distKm": 203,
+    "cachedAt": "2026-06-19T10:21:02.388Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766989591?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=F78F52695C5E98FB1E776CB52906E235A00F0E2F": {
+    "locationStr": "Bristol, South West, UK",
+    "driveSecs": 6720,
+    "transitSecs": 9408,
+    "distKm": 98,
+    "cachedAt": "2026-06-19T10:21:02.858Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766989573?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=0C6CDE94F301B4F266B09BAE093C707D43D5E48B": {
+    "locationStr": "Stanley, Chippenham, UK",
+    "driveSecs": 12038,
+    "transitSecs": 16853,
+    "distKm": 188,
+    "cachedAt": "2026-06-19T10:21:03.437Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766987450?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=BC0F6FCD8F50ADFF9BFCF401EDB5CD7505CC2025": {
+    "locationStr": "Swindon, Wiltshire, UK",
+    "driveSecs": 10717,
+    "transitSecs": 15004,
+    "distKm": 185,
+    "cachedAt": "2026-06-19T10:21:03.985Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766915274?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=4BA679F5E9D0753D32FED9CA675E98DC8C2B732E": {
+    "locationStr": "London, UK",
+    "driveSecs": 14350,
+    "transitSecs": 20090,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:05.209Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766911498?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=291198E3BEC6F2F28B931F8801076C61B22B446D": {
+    "locationStr": "Liverpool, Merseyside, UK",
+    "driveSecs": 3115,
+    "transitSecs": 5607,
+    "distKm": 40,
+    "cachedAt": "2026-06-19T10:21:05.612Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766887358?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=1DAB3C5A7B67211D3774D2CC1984FEF5B4DDF1BA": {
+    "locationStr": "Holborn, Central London, UK",
+    "driveSecs": 14131,
+    "transitSecs": 19783,
+    "distKm": 258,
+    "cachedAt": "2026-06-19T10:21:06.270Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766881015?se=3g-rgcdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=23DFAFD6A91E2B5C5A616C067C28D15AF8BA8261": {
+    "locationStr": "Halifax, West Yorkshire, UK",
+    "driveSecs": 6254,
+    "transitSecs": 8756,
+    "distKm": 105,
+    "cachedAt": "2026-06-19T10:21:06.842Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768352065?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=95E203374C0D0F1C862F5C88FFDEBDC768FABAF2": {
+    "locationStr": "Portsmouth, Hampshire, UK",
+    "driveSecs": 15116,
+    "transitSecs": 21162,
+    "distKm": 282,
+    "cachedAt": "2026-06-19T10:21:07.393Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766989591?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=F78F52695C5E98FB1E776CB52906E235A00F0E2F": {
+    "locationStr": "Bristol, South West, UK",
+    "driveSecs": 6720,
+    "transitSecs": 9408,
+    "distKm": 98,
+    "cachedAt": "2026-06-19T10:21:07.800Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766989573?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=0C6CDE94F301B4F266B09BAE093C707D43D5E48B": {
+    "locationStr": "Stanley, Chippenham, UK",
+    "driveSecs": 12038,
+    "transitSecs": 16853,
+    "distKm": 188,
+    "cachedAt": "2026-06-19T10:21:08.331Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766987450?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=BC0F6FCD8F50ADFF9BFCF401EDB5CD7505CC2025": {
+    "locationStr": "Swindon, Wiltshire, UK",
+    "driveSecs": 10717,
+    "transitSecs": 15004,
+    "distKm": 185,
+    "cachedAt": "2026-06-19T10:21:08.792Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766915274?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=4BA679F5E9D0753D32FED9CA675E98DC8C2B732E": {
+    "locationStr": "London, UK",
+    "driveSecs": 14355,
+    "transitSecs": 20097,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:09.428Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5765777367?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=58AA16884A85C6F677589E025B249756CD888C88": {
+    "locationStr": "London, UK",
+    "driveSecs": 14355,
+    "transitSecs": 20097,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:10.076Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5758719543?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=EB7E5785F1F1AAE11A5F6F9420A9A4B5CAA50B7F": {
+    "locationStr": "Belfast, UK",
+    "driveSecs": 21424,
+    "transitSecs": 29994,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:11.075Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5750742335?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=82A9C5E3DEA040A19F1B431AC195B5E3F5058C96": {
+    "locationStr": "Norwich, Norfolk, UK",
+    "driveSecs": 15079,
+    "transitSecs": 21111,
+    "distKm": 291,
+    "cachedAt": "2026-06-19T10:21:11.996Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5749243286?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=A789C0CB7CB47CFD0881ADDE62549370EE42A34A": {
+    "locationStr": "Bristol, South West, UK",
+    "driveSecs": 6720,
+    "transitSecs": 9408,
+    "distKm": 98,
+    "cachedAt": "2026-06-19T10:21:12.397Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5744543266?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=991D3F14D894CE39D9C4FBC09C584473C1ED9B2A": {
+    "locationStr": "St. Olaves, Great Yarmouth, UK",
+    "driveSecs": 16100,
+    "transitSecs": 22540,
+    "distKm": 315,
+    "cachedAt": "2026-06-19T10:21:13.093Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5741324252?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=05DB5CC844CE9AEDDCEBA4E1974D3D465C089C0E": {
+    "locationStr": "Bristol, South West, UK",
+    "driveSecs": 6720,
+    "transitSecs": 9408,
+    "distKm": 98,
+    "cachedAt": "2026-06-19T10:21:13.500Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5740349601?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=A0514047D200C1EA08A8FDE8CEAB39C3FCEE213A": {
+    "locationStr": "Balsall Heath, Birmingham, UK",
+    "driveSecs": 6554,
+    "transitSecs": 9176,
+    "distKm": 99,
+    "cachedAt": "2026-06-19T10:21:13.930Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5734101772?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=9D86BD9D8ABD71CE43B0CF4AA6AB5A05E90EE02F": {
+    "locationStr": "London, UK",
+    "driveSecs": 14355,
+    "transitSecs": 20097,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:14.841Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5722919138?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=5B67EE9D56CE28C7E446EEFD3C931404241694F9": {
+    "locationStr": "Edinburgh, UK",
+    "driveSecs": 16339,
+    "transitSecs": 22875,
+    "distKm": 323,
+    "cachedAt": "2026-06-19T10:21:15.658Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5708452202?se=6F8Ugsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=205883280340BB9A549AE82DCD3517BE60769223": {
+    "locationStr": "Edinburgh, UK",
+    "driveSecs": 16339,
+    "transitSecs": 22875,
+    "distKm": 323,
+    "cachedAt": "2026-06-19T10:21:16.196Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769210296?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Hockley, Birmingham, UK",
+    "driveSecs": 6403,
+    "transitSecs": 8964,
+    "distKm": 94,
+    "cachedAt": "2026-06-19T10:21:16.962Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769209944?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Fleet Street, Central London, UK",
+    "driveSecs": 15736,
+    "transitSecs": 22030,
+    "distKm": 314,
+    "cachedAt": "2026-06-19T10:21:17.556Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768677527?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "York, North Yorkshire, UK",
+    "driveSecs": 8345,
+    "transitSecs": 11683,
+    "distKm": 161,
+    "cachedAt": "2026-06-19T10:21:18.077Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768664184?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=DF1FF373957A76877C02FF8F611AB11A5D1E8EDC": {
+    "locationStr": "Stevenage, Hertfordshire, UK",
+    "driveSecs": 11889,
+    "transitSecs": 16645,
+    "distKm": 227,
+    "cachedAt": "2026-06-19T10:21:18.539Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768362120?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Kingston Upon Thames, South West London, UK",
+    "driveSecs": 13606,
+    "transitSecs": 19048,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:19.331Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768360456?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "South East London, London, UK",
+    "driveSecs": 13431,
+    "transitSecs": 18803,
+    "distKm": 256,
+    "cachedAt": "2026-06-19T10:21:19.953Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768352065?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=95E203374C0D0F1C862F5C88FFDEBDC768FABAF2": {
+    "locationStr": "Portsmouth, Hampshire, UK",
+    "driveSecs": 15116,
+    "transitSecs": 21162,
+    "distKm": 282,
+    "cachedAt": "2026-06-19T10:21:20.730Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768351754?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=CF2E00492A871707026708CC4FFF8B831821AFFD": {
+    "locationStr": "Ipswich, Suffolk, UK",
+    "driveSecs": 14115,
+    "transitSecs": 19761,
+    "distKm": 300,
+    "cachedAt": "2026-06-19T10:21:21.245Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768230088?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=33FD9A4EC0B3B44C2A386FC961CC9CFE6A38EACB": {
+    "locationStr": "Glasgow City Centre, Glasgow, UK",
+    "driveSecs": 14243,
+    "transitSecs": 19940,
+    "distKm": 324,
+    "cachedAt": "2026-06-19T10:21:21.759Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768148592?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Belfast, UK",
+    "driveSecs": 21424,
+    "transitSecs": 29994,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:22.447Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768066780?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Stafford, Staffordshire, UK",
+    "driveSecs": 4560,
+    "transitSecs": 8208,
+    "distKm": 64,
+    "cachedAt": "2026-06-19T10:21:22.888Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766989591?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=F78F52695C5E98FB1E776CB52906E235A00F0E2F": {
+    "locationStr": "Bristol, South West, UK",
+    "driveSecs": 6720,
+    "transitSecs": 9408,
+    "distKm": 98,
+    "cachedAt": "2026-06-19T10:21:23.306Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766989488?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=6555CFA841868AAAA124B4640F82976F8ABF440A": {
+    "locationStr": "Farringdon, Central London, UK",
+    "driveSecs": 15782,
+    "transitSecs": 22095,
+    "distKm": 314,
+    "cachedAt": "2026-06-19T10:21:23.902Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766729268?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=0BC7181CCFE43F8A87528227E8152C7B7EC7E0DB": {
+    "locationStr": "Stratford, East London, UK",
+    "driveSecs": 13330,
+    "transitSecs": 18662,
+    "distKm": 261,
+    "cachedAt": "2026-06-19T10:21:24.507Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5765777367?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=58AA16884A85C6F677589E025B249756CD888C88": {
+    "locationStr": "London, UK",
+    "driveSecs": 14355,
+    "transitSecs": 20097,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:25.171Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5765776357?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=6C251D4FBB47D7C02C7E9F895A390E4BDCB51841": {
+    "locationStr": "Leicestershire, East Midlands, UK",
+    "driveSecs": 8941,
+    "transitSecs": 12517,
+    "distKm": 149,
+    "cachedAt": "2026-06-19T10:21:25.907Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5763543872?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=8B90F14BEECAECCBBB1D86EAD9148B3B82E04794": {
+    "locationStr": "Northampton, Northamptonshire, UK",
+    "driveSecs": 8828,
+    "transitSecs": 12359,
+    "distKm": 167,
+    "cachedAt": "2026-06-19T10:21:26.333Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5762640218?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=9363AA5BBEBAC20E7C83E0A68C9EBEB092C4A162": {
+    "locationStr": "London, UK",
+    "driveSecs": 14355,
+    "transitSecs": 20097,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:27.001Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5761456706?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=740120FE93BA04F52937522F310E3F0BA0908E12": {
+    "locationStr": "Northamptonshire, East Midlands, UK",
+    "driveSecs": 9318,
+    "transitSecs": 13045,
+    "distKm": 176,
+    "cachedAt": "2026-06-19T10:21:27.488Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5761412126?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=E6F3F6C89A9BB129E5AD91F3FF4EAF0E60727169": {
+    "locationStr": "Uxbridge, London, UK",
+    "driveSecs": 12872,
+    "transitSecs": 18021,
+    "distKm": 249,
+    "cachedAt": "2026-06-19T10:21:28.120Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5761405485?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=558DD556F1D8F728F6E412A5FDB94E450CC293AF": {
+    "locationStr": "Edinburgh, UK",
+    "driveSecs": 16339,
+    "transitSecs": 22875,
+    "distKm": 323,
+    "cachedAt": "2026-06-19T10:21:28.687Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5759839791?se=kMqDgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=C880ABF1CAAA6021D35CCBD4EFC986FB92429C62": {
+    "locationStr": "Enfield, London, UK",
+    "driveSecs": 14013,
+    "transitSecs": 19618,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:29.680Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768360468?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "The City, Central London, UK",
+    "driveSecs": 12956,
+    "transitSecs": 18138,
+    "distKm": 251,
+    "cachedAt": "2026-06-19T10:21:30.237Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768213296?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=3E8D456FEDCF8C23D0C99E97BAA1DAE34764BB8A": {
+    "locationStr": "Bishopsgate, Central London, UK",
+    "driveSecs": 15782,
+    "transitSecs": 22095,
+    "distKm": 314,
+    "cachedAt": "2026-06-19T10:21:31.025Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768063974?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=0DB57C80E1C05A7F295BDCEE59471251DD3B34EA": {
+    "locationStr": "London, UK",
+    "driveSecs": 14355,
+    "transitSecs": 20097,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:31.694Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766724897?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=B9BDB971386E1FB9BC4EB4D475E27E824A5668D0": {
+    "locationStr": "London, UK",
+    "driveSecs": 14355,
+    "transitSecs": 20097,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:32.345Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5759898325?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=E2AB8EA741FF33C904236BF855E1B49449D0D9D5": {
+    "locationStr": "London, UK",
+    "driveSecs": 14355,
+    "transitSecs": 20097,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:32.996Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5750885355?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=58DF6556FBBF3517A04E4B758E455F3D750C194C": {
+    "locationStr": "Belfast, UK",
+    "driveSecs": 21424,
+    "transitSecs": 29994,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:34.205Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5749418742?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=C50F713ABD0B07267B2FF43448BE983876861150": {
+    "locationStr": "Belfast, UK",
+    "driveSecs": 21424,
+    "transitSecs": 29994,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:34.895Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5747693649?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=9C8551748DEC67F74D521483F2BE4251F24CB50F": {
+    "locationStr": "Manchester, Greater Manchester, UK",
+    "driveSecs": 4855,
+    "transitSecs": 8739,
+    "distKm": 69,
+    "cachedAt": "2026-06-19T10:21:35.419Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5747693108?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=C1F603551FCB821D5B94EEAFD1C9DE59D31BCD9D": {
+    "locationStr": "Manchester, Greater Manchester, UK",
+    "driveSecs": 4855,
+    "transitSecs": 8739,
+    "distKm": 69,
+    "cachedAt": "2026-06-19T10:21:35.972Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5747531693?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=AFE69646C97A53E77BAB22EFC9B458E0803E34AD": {
+    "locationStr": "Rusholme, Manchester, UK",
+    "driveSecs": 4290,
+    "transitSecs": 7722,
+    "distKm": 67,
+    "cachedAt": "2026-06-19T10:21:36.409Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5747531695?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=7A0AF62822C6E3BA4E796211C532AE5C986C5C96": {
+    "locationStr": "Rusholme, Manchester, UK",
+    "driveSecs": 4290,
+    "transitSecs": 7722,
+    "distKm": 67,
+    "cachedAt": "2026-06-19T10:21:38.680Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5746370822?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=7D04AEDF9469DF74CB4DA6C9B6334A4DE61EC457": {
+    "locationStr": "Glasgow, UK",
+    "driveSecs": 14409,
+    "transitSecs": 20173,
+    "distKm": 324,
+    "cachedAt": "2026-06-19T10:21:39.218Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5743583282?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=88E92199AA2F5DD24CD29BA92021EF3CC6D0B149": {
+    "locationStr": "Glasgow, UK",
+    "driveSecs": 14409,
+    "transitSecs": 20173,
+    "distKm": 324,
+    "cachedAt": "2026-06-19T10:21:39.705Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5742298253?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=B84FEDAC1923E0FBCAAE14B04905D32D007EEE92": {
+    "locationStr": "Oxfordshire, South East, UK",
+    "driveSecs": 10147,
+    "transitSecs": 14206,
+    "distKm": 185,
+    "cachedAt": "2026-06-19T10:21:40.117Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5740349601?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=A0514047D200C1EA08A8FDE8CEAB39C3FCEE213A": {
+    "locationStr": "Balsall Heath, Birmingham, UK",
+    "driveSecs": 6554,
+    "transitSecs": 9176,
+    "distKm": 99,
+    "cachedAt": "2026-06-19T10:21:40.520Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5722148531?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Cheltenham, Gloucestershire, UK",
+    "driveSecs": 8868,
+    "transitSecs": 12415,
+    "distKm": 142,
+    "cachedAt": "2026-06-19T10:21:41.255Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5709486529?se=-NLqgsdr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=388155B216E76D22ED4B908F606A06544CAA9707": {
+    "locationStr": "Glasgow City Centre, Glasgow, UK",
+    "driveSecs": 14243,
+    "transitSecs": 19940,
+    "distKm": 324,
+    "cachedAt": "2026-06-19T10:21:41.730Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211776?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Hookwood, Horley, UK",
+    "driveSecs": 14195,
+    "transitSecs": 19873,
+    "distKm": 283,
+    "cachedAt": "2026-06-19T10:21:42.565Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211629?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Hulme, Manchester, UK",
+    "driveSecs": 4414,
+    "transitSecs": 7945,
+    "distKm": 67,
+    "cachedAt": "2026-06-19T10:21:42.981Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211384?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Hinxton, Saffron Walden, UK",
+    "driveSecs": 11414,
+    "transitSecs": 15980,
+    "distKm": 239,
+    "cachedAt": "2026-06-19T10:21:43.458Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769210004?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Brooklands, Sale, UK",
+    "driveSecs": 3836,
+    "transitSecs": 6905,
+    "distKm": 59,
+    "cachedAt": "2026-06-19T10:21:43.845Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769209964?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Caversham, Reading, UK",
+    "driveSecs": 11975,
+    "transitSecs": 16765,
+    "distKm": 222,
+    "cachedAt": "2026-06-19T10:21:44.282Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769209900?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Chapel Park, Newcastle Upon Tyne, UK",
+    "driveSecs": 12255,
+    "transitSecs": 17157,
+    "distKm": 232,
+    "cachedAt": "2026-06-19T10:21:45.019Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769209859?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Blucher, Newcastle Upon Tyne, UK",
+    "driveSecs": 12105,
+    "transitSecs": 16947,
+    "distKm": 231,
+    "cachedAt": "2026-06-19T10:21:45.642Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769209505?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Gilwell Park, East London, UK",
+    "driveSecs": 13082,
+    "transitSecs": 18315,
+    "distKm": 252,
+    "cachedAt": "2026-06-19T10:21:46.347Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768771575?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Stoneyford, Lisburn, UK",
+    "driveSecs": 21347,
+    "transitSecs": 29886,
+    "distKm": 267,
+    "cachedAt": "2026-06-19T10:21:47.097Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768771536?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Ballysillan, Belfast, UK",
+    "driveSecs": 21809,
+    "transitSecs": 30533,
+    "distKm": 263,
+    "cachedAt": "2026-06-19T10:21:47.912Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768771546?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Drumaness, Ballynahinch, UK",
+    "driveSecs": 21437,
+    "transitSecs": 30012,
+    "distKm": 240,
+    "cachedAt": "2026-06-19T10:21:48.728Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768771544?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Glynn, Larne, UK",
+    "driveSecs": 23019,
+    "transitSecs": 32227,
+    "distKm": 271,
+    "cachedAt": "2026-06-19T10:21:49.725Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768771520?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Ormeau, Belfast, UK",
+    "driveSecs": 21830,
+    "transitSecs": 30562,
+    "distKm": 257,
+    "cachedAt": "2026-06-19T10:21:50.444Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768771532?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Killard, Downpatrick, UK",
+    "driveSecs": 22268,
+    "transitSecs": 31175,
+    "distKm": 226,
+    "cachedAt": "2026-06-19T10:21:51.441Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768748941?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "London, UK",
+    "driveSecs": 14361,
+    "transitSecs": 20105,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:52.134Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768352065?se=tjJPg8dr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=95E203374C0D0F1C862F5C88FFDEBDC768FABAF2": {
+    "locationStr": "Portsmouth, Hampshire, UK",
+    "driveSecs": 15116,
+    "transitSecs": 21162,
+    "distKm": 282,
+    "cachedAt": "2026-06-19T10:21:52.699Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768188832?se=tjJPg8dr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=92816E98523C74ABAF815D4B84A34E55EE7ADB33": {
+    "locationStr": "London, UK",
+    "driveSecs": 14361,
+    "transitSecs": 20105,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:53.370Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768175218?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Manchester, Greater Manchester, UK",
+    "driveSecs": 4855,
+    "transitSecs": 8739,
+    "distKm": 69,
+    "cachedAt": "2026-06-19T10:21:53.898Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768175216?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "London, UK",
+    "driveSecs": 14361,
+    "transitSecs": 20105,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:54.609Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768175051?se=tjJPg8dr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=38012DC44FED2143A763814470EB81880ECD40CF": {
+    "locationStr": "Belfast, UK",
+    "driveSecs": 21424,
+    "transitSecs": 29994,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:55.347Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768160810?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "London, UK",
+    "driveSecs": 14361,
+    "transitSecs": 20105,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:21:56.010Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768112222?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "King's Newnham, Rugby, UK",
+    "driveSecs": 7342,
+    "transitSecs": 10279,
+    "distKm": 133,
+    "cachedAt": "2026-06-19T10:21:56.440Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768065939?se=tjJPg8dr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=6BC303C5AC63DE633BD23FFD01A24554B5E36BE7": {
+    "locationStr": "Walkern, Hertfordshire, UK",
+    "driveSecs": 12224,
+    "transitSecs": 17114,
+    "distKm": 230,
+    "cachedAt": "2026-06-19T10:21:57.241Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768055865?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Newcastle Upon Tyne, Tyne & Wear, UK",
+    "driveSecs": 12357,
+    "transitSecs": 17300,
+    "distKm": 232,
+    "cachedAt": "2026-06-19T10:21:57.953Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5767935928?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Heyside, Royton, UK",
+    "driveSecs": 4974,
+    "transitSecs": 6964,
+    "distKm": 81,
+    "cachedAt": "2026-06-19T10:21:58.432Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5767934718?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Seapatrick, Banbridge, UK",
+    "driveSecs": 20108,
+    "transitSecs": 28151,
+    "distKm": 262,
+    "cachedAt": "2026-06-19T10:21:59.391Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766992574?se=tjJPg8dr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=EF4146875481AEA156347F979F1EB63983441ECC": {
+    "locationStr": "Belfast, UK",
+    "driveSecs": 21424,
+    "transitSecs": 29994,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:22:00.358Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766911806?se=tjJPg8dr8RGNDcPGIEZ4Xg&utm_medium=api&utm_source=fec81443&v=0EF4930E1C7B5A61A211D4D0C9BD778EA8CF7A66": {
+    "locationStr": "Farnborough, Hampshire, UK",
+    "driveSecs": 13078,
+    "transitSecs": 18309,
+    "distKm": 247,
+    "cachedAt": "2026-06-19T10:22:00.905Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769239763?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Leigh Sinton, Malvern, UK",
+    "driveSecs": 7911,
+    "transitSecs": 11075,
+    "distKm": 109,
+    "cachedAt": "2026-06-19T10:22:01.395Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769212010?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Lincoln, Lincolnshire, UK",
+    "driveSecs": 10264,
+    "transitSecs": 14370,
+    "distKm": 164,
+    "cachedAt": "2026-06-19T10:22:02.136Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211889?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Redcliffe, Bristol, UK",
+    "driveSecs": 10728,
+    "transitSecs": 15019,
+    "distKm": 180,
+    "cachedAt": "2026-06-19T10:22:02.585Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211860?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Hillhead, Glasgow City Centre, UK",
+    "driveSecs": 14243,
+    "transitSecs": 19940,
+    "distKm": 324,
+    "cachedAt": "2026-06-19T10:22:03.075Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211605?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "West End, West London, UK",
+    "driveSecs": 13696,
+    "transitSecs": 19174,
+    "distKm": 258,
+    "cachedAt": "2026-06-19T10:22:03.831Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211564?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Earlswood, Redhill, UK",
+    "driveSecs": 14122,
+    "transitSecs": 19771,
+    "distKm": 279,
+    "cachedAt": "2026-06-19T10:22:04.454Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211435?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Stockport, Greater Manchester, UK",
+    "driveSecs": 4563,
+    "transitSecs": 8213,
+    "distKm": 69,
+    "cachedAt": "2026-06-19T10:22:04.919Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769211323?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Old Leake, Boston, UK",
+    "driveSecs": 12684,
+    "transitSecs": 17758,
+    "distKm": 206,
+    "cachedAt": "2026-06-19T10:22:05.752Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769210853?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Bromborough Pool, Wirral, UK",
+    "driveSecs": 2518,
+    "transitSecs": 4532,
+    "distKm": 33,
+    "cachedAt": "2026-06-19T10:22:06.387Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769210659?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Lenton, Nottingham, UK",
+    "driveSecs": 6978,
+    "transitSecs": 9769,
+    "distKm": 121,
+    "cachedAt": "2026-06-19T10:22:06.855Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769210578?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Binley, Coventry, UK",
+    "driveSecs": 7072,
+    "transitSecs": 9901,
+    "distKm": 125,
+    "cachedAt": "2026-06-19T10:22:07.293Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769210362?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Earley, Reading, UK",
+    "driveSecs": 12103,
+    "transitSecs": 16944,
+    "distKm": 227,
+    "cachedAt": "2026-06-19T10:22:07.818Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769209818?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Harlton, Cambridge, UK",
+    "driveSecs": 11102,
+    "transitSecs": 15543,
+    "distKm": 226,
+    "cachedAt": "2026-06-19T10:22:08.287Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769182825?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "London, UK",
+    "driveSecs": 14361,
+    "transitSecs": 20105,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:22:08.932Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5769182829?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Manchester, Greater Manchester, UK",
+    "driveSecs": 4855,
+    "transitSecs": 8739,
+    "distKm": 69,
+    "cachedAt": "2026-06-19T10:22:09.461Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769128596?se=4n3_g8dr8RGUufUilwOccg&utm_medium=api&utm_source=fec81443&v=A4C28D808022CCFF1A55C77B9AEBFE35AA984594": {
+    "locationStr": "South Wimbledon, South West London, UK",
+    "driveSecs": 12561,
+    "transitSecs": 17585,
+    "distKm": 253,
+    "cachedAt": "2026-06-19T10:22:10.041Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769127823?se=4n3_g8dr8RGUufUilwOccg&utm_medium=api&utm_source=fec81443&v=86C2B33C3B650B38D464C1617C53176BDB1E2C4D": {
+    "locationStr": "Wolverhampton, West Midlands, UK",
+    "driveSecs": 4995,
+    "transitSecs": 8991,
+    "distKm": 77,
+    "cachedAt": "2026-06-19T10:22:10.463Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769127771?se=4n3_g8dr8RGUufUilwOccg&utm_medium=api&utm_source=fec81443&v=34D8B5AD17E5D65DDB94782BE51569DDD0B7C3DA": {
+    "locationStr": "Stoke-On-Trent, Staffordshire, UK",
+    "driveSecs": 3824,
+    "transitSecs": 6883,
+    "distKm": 53,
+    "cachedAt": "2026-06-19T10:22:10.865Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769127745?se=4n3_g8dr8RGUufUilwOccg&utm_medium=api&utm_source=fec81443&v=1BD7B83CDF85E1C0696793FAE01F72DE195EA0CC": {
+    "locationStr": "Greenwich, South East London, UK",
+    "driveSecs": 14288,
+    "transitSecs": 20003,
+    "distKm": 267,
+    "cachedAt": "2026-06-19T10:22:11.599Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769127690?se=4n3_g8dr8RGUufUilwOccg&utm_medium=api&utm_source=fec81443&v=E6E135E99AD5B6E639E45F7910B13BE6419871C9": {
+    "locationStr": "South East London, London, UK",
+    "driveSecs": 13437,
+    "transitSecs": 18812,
+    "distKm": 256,
+    "cachedAt": "2026-06-19T10:22:12.249Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769127294?se=4n3_g8dr8RGUufUilwOccg&utm_medium=api&utm_source=fec81443&v=5EF3D56C06A9D02FD803EA2E86414B21DBBE0568": {
+    "locationStr": "Milton Keynes, Buckinghamshire, UK",
+    "driveSecs": 9500,
+    "transitSecs": 13300,
+    "distKm": 187,
+    "cachedAt": "2026-06-19T10:22:12.990Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769127251?se=4n3_g8dr8RGUufUilwOccg&utm_medium=api&utm_source=fec81443&v=668E5587FCD5C2A253DE113890C92EED74FC27C4": {
+    "locationStr": "Buckingham, Buckinghamshire, UK",
+    "driveSecs": 9696,
+    "transitSecs": 13574,
+    "distKm": 178,
+    "cachedAt": "2026-06-19T10:22:13.484Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768950879?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Newcastle Upon Tyne, Tyne & Wear, UK",
+    "driveSecs": 12357,
+    "transitSecs": 17300,
+    "distKm": 232,
+    "cachedAt": "2026-06-19T10:22:14.155Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5769127768?se=ZPtshcdr8RGXMvHQtAyEPA&utm_medium=api&utm_source=fec81443&v=4F19D8D8EEF50F615F45B8A26F0B0A44ECC439F6": {
+    "locationStr": "Portsmouth, Hampshire, UK",
+    "driveSecs": 15116,
+    "transitSecs": 21162,
+    "distKm": 282,
+    "cachedAt": "2026-06-19T10:22:14.795Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768745489?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Burn Banks, Penrith, UK",
+    "driveSecs": 8629,
+    "transitSecs": 12081,
+    "distKm": 166,
+    "cachedAt": "2026-06-19T10:22:15.257Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5768328145?se=ZPtshcdr8RGXMvHQtAyEPA&utm_medium=api&utm_source=fec81443&v=859FF0EB55C352B030BFC895E311F177EBA47106": {
+    "locationStr": "Netherton, Bootle, UK",
+    "driveSecs": 3749,
+    "transitSecs": 6748,
+    "distKm": 47,
+    "cachedAt": "2026-06-19T10:22:15.699Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5768230545?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "London, UK",
+    "driveSecs": 14361,
+    "transitSecs": 20105,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:22:16.366Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766989573?se=ZPtshcdr8RGXMvHQtAyEPA&utm_medium=api&utm_source=fec81443&v=0C6CDE94F301B4F266B09BAE093C707D43D5E48B": {
+    "locationStr": "Stanley, Chippenham, UK",
+    "driveSecs": 12038,
+    "transitSecs": 16853,
+    "distKm": 188,
+    "cachedAt": "2026-06-19T10:22:16.894Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766987450?se=ZPtshcdr8RGXMvHQtAyEPA&utm_medium=api&utm_source=fec81443&v=BC0F6FCD8F50ADFF9BFCF401EDB5CD7505CC2025": {
+    "locationStr": "Swindon, Wiltshire, UK",
+    "driveSecs": 10717,
+    "transitSecs": 15004,
+    "distKm": 185,
+    "cachedAt": "2026-06-19T10:22:17.320Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766881015?se=ZPtshcdr8RGXMvHQtAyEPA&utm_medium=api&utm_source=fec81443&v=23DFAFD6A91E2B5C5A616C067C28D15AF8BA8261": {
+    "locationStr": "Halifax, West Yorkshire, UK",
+    "driveSecs": 6254,
+    "transitSecs": 8756,
+    "distKm": 105,
+    "cachedAt": "2026-06-19T10:22:17.743Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766728958?se=ZPtshcdr8RGXMvHQtAyEPA&utm_medium=api&utm_source=fec81443&v=564EA5DAE8F4EFCCFF64AD653C4471726344DC30": {
+    "locationStr": "Holbeach, Spalding, UK",
+    "driveSecs": 12256,
+    "transitSecs": 17158,
+    "distKm": 202,
+    "cachedAt": "2026-06-19T10:22:18.534Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5766299817?se=ZPtshcdr8RGXMvHQtAyEPA&utm_medium=api&utm_source=fec81443&v=79BB0F5D2E188FFB2477069697AE6FA1DDF423D0": {
+    "locationStr": "Rumney, Cardiff, UK",
+    "driveSecs": 11826,
+    "transitSecs": 16556,
+    "distKm": 172,
+    "cachedAt": "2026-06-19T10:22:19.103Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5765777367?se=ZPtshcdr8RGXMvHQtAyEPA&utm_medium=api&utm_source=fec81443&v=58AA16884A85C6F677589E025B249756CD888C88": {
+    "locationStr": "London, UK",
+    "driveSecs": 14350,
+    "transitSecs": 20090,
+    "distKm": 259,
+    "cachedAt": "2026-06-19T10:22:19.751Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5764873077?se=ZPtshcdr8RGXMvHQtAyEPA&utm_medium=api&utm_source=fec81443&v=FB0F0176319C6262A919D8563A2EEF7FFF656EA0": {
+    "locationStr": "Poole, Dorset, UK",
+    "driveSecs": 16342,
+    "transitSecs": 22879,
+    "distKm": 268,
+    "cachedAt": "2026-06-19T10:22:20.868Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5762053591?se=ZPtshcdr8RGXMvHQtAyEPA&utm_medium=api&utm_source=fec81443&v=F705BAA7DF184D659C0F660D560D0023B81E30EA": {
+    "locationStr": "Eastern England, UK",
+    "driveSecs": 10384,
+    "transitSecs": 14538,
+    "distKm": 187,
+    "cachedAt": "2026-06-19T10:22:22.405Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5761469497?se=ZPtshcdr8RGXMvHQtAyEPA&utm_medium=api&utm_source=fec81443&v=CD0FE0CB4AE91B326F552BDF1B28B912E84D29DE": {
+    "locationStr": "Fulbourn, Cambridge, UK",
+    "driveSecs": 11473,
+    "transitSecs": 16062,
+    "distKm": 236,
+    "cachedAt": "2026-06-19T10:22:22.859Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5761456462?se=ZPtshcdr8RGXMvHQtAyEPA&utm_medium=api&utm_source=fec81443&v=D84C4CCE352054A7D8A9DDC9ECDDA0CBC98477F9": {
+    "locationStr": "Cambridgeshire, Eastern, UK",
+    "driveSecs": 9771,
+    "transitSecs": 13679,
+    "distKm": 194,
+    "cachedAt": "2026-06-19T10:22:23.344Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5761412357?se=ZPtshcdr8RGXMvHQtAyEPA&utm_medium=api&utm_source=fec81443&v=12B1DED8B1EC81DCF7BAE2CEED43AA22D96F2AD1": {
+    "locationStr": "Halifax, West Yorkshire, UK",
+    "driveSecs": 6254,
+    "transitSecs": 8756,
+    "distKm": 105,
+    "cachedAt": "2026-06-19T10:22:23.900Z"
   }
 }
