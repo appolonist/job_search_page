@@ -6,26 +6,40 @@ const STATE_FILE = 'tracker-state.json'
 const INDEX_PATH = 'output/index.json'
 
 // ── Read tracker-state.json ───────────────────────────────────────────────────
+// IMPORTANT: The GitHub Contents API only serves blobs up to 1 MB. Our
+// tracker-state.json grows past that (hundreds of jobs/day), at which point the
+// Contents API responds 403 — which aborted the whole sync and left the page
+// showing zero jobs. Fix: read the blob SHA from the Git Trees API (no size
+// limit) and pull the file body from the raw CDN (no size limit, cache-busted).
 
 export async function readState(
   cfg: GitHubConfig,
 ): Promise<{ state: TrackerState; sha: string } | null> {
-  const url = `https://api.github.com/repos/${cfg.user}/${cfg.repo}/contents/${STATE_FILE}?ref=${cfg.branch}&_=${Date.now()}`
-  const res  = await fetch(url, { headers: ghHeaders(cfg) })
+  // 1. Resolve the file's blob SHA via the Trees API — works for any size.
+  const treeUrl = `https://api.github.com/repos/${cfg.user}/${cfg.repo}/git/trees/${cfg.branch}?recursive=1&_=${Date.now()}`
+  const treeRes = await fetch(treeUrl, { headers: ghHeaders(cfg) })
+
+  if (treeRes.status === 404) return null
+  if (!treeRes.ok) throw new Error(`GitHub Trees API ${treeRes.status}: ${await treeRes.text()}`)
+
+  const tree  = (await treeRes.json()) as { tree?: Array<{ path: string; sha: string }> }
+  const entry = (tree.tree ?? []).find(item => item.path === STATE_FILE)
+
+  // File not committed yet — first run, treat as empty state.
+  if (!entry) return null
+
+  // 2. Download the body from the raw CDN (no 1 MB cap). Force UTF-8 so emoji
+  // in commuteNote/notes survive regardless of the CDN's Content-Type charset.
+  const res = await fetch(rawUrl(cfg, STATE_FILE))
 
   if (res.status === 404) return null
-  if (!res.ok) throw new Error(`GitHub API ${res.status}: ${await res.text()}`)
+  if (!res.ok) throw new Error(`HTTP ${res.status} reading ${STATE_FILE}`)
 
-  const data = await res.json()
-  const sha  = data.sha as string
-
-  // GitHub returns content as base64 — decode it safely with TextDecoder
-  // to preserve any unicode characters in notes/titles
-  const bytes   = base64ToUint8Array(data.content.replace(/\n/g, ''))
-  const text    = new TextDecoder('utf-8').decode(bytes)
+  const buffer  = await res.arrayBuffer()
+  const text    = new TextDecoder('utf-8').decode(buffer)
   const decoded = JSON.parse(text) as TrackerState
 
-  return { state: decoded, sha }
+  return { state: decoded, sha: entry.sha }
 }
 
 // ── Write tracker-state.json ──────────────────────────────────────────────────
@@ -115,16 +129,6 @@ function uint8ArrayToBase64(bytes: Uint8Array): string {
     binary += String.fromCharCode(...bytes.subarray(i, i + CHUNK))
   }
   return btoa(binary)
-}
-
-// base64 → Uint8Array (for decoding GitHub API responses)
-function base64ToUint8Array(base64: string): Uint8Array {
-  const binary = atob(base64)
-  const bytes  = new Uint8Array(binary.length)
-  for (let i = 0; i < binary.length; i++) {
-    bytes[i] = binary.charCodeAt(i)
-  }
-  return bytes
 }
 
 function today(): string {
