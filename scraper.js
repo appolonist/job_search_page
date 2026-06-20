@@ -24,14 +24,28 @@ const SEARCH_TERMS = [
 const LOCATION = 'United Kingdom';
 const OUT_DIR  = path.join(__dirname, 'output');
 
-async function runScraper() {
-  const browser = await chromium.launch({
+// Launch real Google Chrome when available. CV-Library's anti-bot fingerprints
+// Playwright's bundled Chromium and serves a 403 "Blocked" page to it, while
+// real Chrome (channel: 'chrome') passes. Fall back to bundled Chromium if Chrome
+// isn't installed so the scraper still runs (other boards work either way).
+async function launchBrowser() {
+  const opts = {
     headless: true,
     args: [
       '--disable-blink-features=AutomationControlled',
       '--disable-features=IsolateOrigins,site-per-process',
     ],
-  });
+  };
+  try {
+    return await chromium.launch({ ...opts, channel: 'chrome' });
+  } catch (err) {
+    console.warn(`⚠️  Google Chrome not available (${err.message.split('\n')[0]}) — falling back to bundled Chromium. CV-Library may be blocked.`);
+    return chromium.launch(opts);
+  }
+}
+
+async function runScraper() {
+  const browser = await launchBrowser();
   const context = await browser.newContext({
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36',
     viewport: { width: 1920, height: 1080 },
@@ -42,9 +56,12 @@ async function runScraper() {
     },
   });
 
-  // Remove webdriver flag to reduce bot detection
+  // Reduce headless-automation fingerprints that bot-detection looks for
   await context.addInitScript(() => {
     Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+    Object.defineProperty(navigator, 'languages', { get: () => ['en-GB', 'en'] });
+    Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
+    window.chrome = window.chrome || { runtime: {} };
   });
   
   let allJobs = [];

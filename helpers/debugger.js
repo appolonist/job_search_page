@@ -88,6 +88,7 @@ async function run() {
   fs.mkdirSync(DEBUG_DIR, { recursive: true });
 
   const browser = await chromium.launch({ headless: false,
+    channel: 'chrome', // real Chrome — bundled Chromium is fingerprinted & blocked by CV-Library
     args: ['--disable-blink-features=AutomationControlled'],
   });
   const context = await browser.newContext({
@@ -106,8 +107,10 @@ async function run() {
     'https://uk.indeed.com/jobs?q=QA+Engineer&l=United+Kingdom&sort=date',
     context);
 
+  // NOTE: /search-jobs?q=... now returns 403; the working entry point is the
+  // SEO path URL /<Keyword>-jobs (see sites/cvlibrary.js).
   await debug('CV-Library',
-    'https://www.cv-library.co.uk/search-jobs?q=QA+Engineer&geo=United+Kingdom&us=1&distance=50&order=d',
+    'https://www.cv-library.co.uk/QA-Engineer-jobs?order=d',
     context);
 
   await debug('Glassdoor',

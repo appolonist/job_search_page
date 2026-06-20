@@ -30,7 +30,9 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        # Install real Google Chrome (channel) in addition to Chromium.
+        # CV-Library's anti-bot blocks bundled Chromium but allows real Chrome.
+        run: npx playwright install --with-deps chromium chrome
 
       - name: Run scraper
         env:
