@@ -33,8 +33,8 @@ const path  = require('path');
 const API_KEY = process.env.TOMTOM_API_KEY;
 const HOME_PC = (process.env.HOME_POSTCODE || 'LL139AY').trim();
 
-const MAX_DRIVE_SECS   = 2 * 60 * 60;      // 1 godzina samochodem
-const MAX_TRANSIT_SECS = 4 * 60 * 60;  // 2 godziny komunikacją
+const MAX_DRIVE_SECS   = 1.5 * 60 * 60;  // 1h 30min samochodem
+const MAX_TRANSIT_SECS = 4 * 60 * 60;    // 4 godziny komunikacją
 
 // Plik cache — tworzony automatycznie przy pierwszym uruchomieniu
 const CACHE_DIR  = path.join(__dirname, '..', 'cache');
@@ -253,6 +253,23 @@ function extractLocation(raw) {
   return parts.length >= 2 ? `${parts[0]}, ${parts[1]}, UK` : `${parts[0]}, UK`;
 }
 
+// Zwraca szerszą lokalizację (miasto/region) z ciągu, by ujednoznacznić geocoding.
+// Np. "Liverpool Street, Central London, UK" → "London" (nie miasto Liverpool!).
+function regionHints(locationStr) {
+  const parts = locationStr
+    .replace(/,?\s*UK$/i, '')
+    .split(',')
+    .map(p => p.trim())
+    .filter(Boolean);
+  if (parts.length < 2) return [];
+  const region = parts[parts.length - 1]; // ostatni człon = miasto/hrabstwo
+  const bare = region
+    .toLowerCase()
+    .replace(/^(central|greater|city of|north|south|east|west)\s+/i, '')
+    .trim();
+  return [region.toLowerCase(), bare].filter(Boolean);
+}
+
 async function getDriveTime(origin, dest) {
   const departAt = nextWeekdayMorning();
   const url = `https://api.tomtom.com/routing/1/calculateRoute/`
@@ -270,12 +287,27 @@ async function geocode(query) {
   const key = query.toLowerCase();
   if (geocodeCache.has(key)) return geocodeCache.get(key);
 
+  // limit=6, by móc odrzucić błędne dopasowanie (np. "Liverpool Street, London"
+  // domyślnie zwraca miasto Liverpool zamiast londyńskiej lokalizacji).
   const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(query)}.json`
-    + `?key=${API_KEY}&countrySet=GB&limit=1`;
+    + `?key=${API_KEY}&countrySet=GB&limit=6`;
 
-  const data   = await fetchJSON(url);
-  const result = data?.results?.[0];
-  if (!result) throw new Error(`Brak wyniku geocodowania dla "${query}"`);
+  const data    = await fetchJSON(url);
+  const results = data?.results || [];
+  if (!results.length) throw new Error(`Brak wyniku geocodowania dla "${query}"`);
+
+  // Jeśli zapytanie zawiera miasto/region (np. "...London"), preferuj wynik,
+  // którego adres faktycznie zawiera ten człon — inaczej geocoder potrafi
+  // dopasować pierwszy człon ("Liverpool Street") do innego miasta.
+  const hints = regionHints(query);
+  let result = results[0];
+  if (hints.length) {
+    const match = results.find(r => {
+      const addr = (r.address?.freeformAddress || '').toLowerCase();
+      return hints.some(h => addr.includes(h));
+    });
+    if (match) result = match;
+  }
 
   const coords = { lat: result.position.lat, lng: result.position.lon };
   geocodeCache.set(key, coords);
