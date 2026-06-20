@@ -1,4 +1,7 @@
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+const { isRecent, isOlderThan } = require('../helpers/postedDate');
+
+const MAX_PAGES = 15; // safety cap; the date boundary normally stops us sooner
 
 // CV-Library is a Next.js app fronted by an anti-bot layer. Two things matter:
 //
@@ -79,10 +82,34 @@ async function fetchCards(browser, url) {
   }
 }
 
+// One page, with the fresh-context retry that clears the anti-bot block.
+// Returns an array of jobs, or null if every attempt was blocked.
+async function fetchPage(browser, url, term) {
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    let result;
+    try {
+      result = await fetchCards(browser, url);
+    } catch (err) {
+      if (attempt === 3) throw err;
+      await sleep(4000 * attempt);
+      continue;
+    }
+
+    if (result.jobs === null) { // blocked — a fresh context next try usually clears it
+      if (attempt < 3) { await sleep(5000 * attempt); continue; }
+      console.warn(`    ⚠️  CV-Library: blocked by anti-bot (HTTP ${result.status}) — "${term}"`);
+      return null;
+    }
+
+    return result.jobs.filter(j => j.title && j.url);
+  }
+  return [];
+}
+
 module.exports = {
   name: 'CV-Library',
 
-  async search(parentContext, term, location) {
+  async search(parentContext, term, location, maxDays = 7) {
     const browser = parentContext.browser();
     if (!browser) {
       console.warn('    ⚠️  CV-Library: no browser handle available — skipping');
@@ -93,28 +120,32 @@ module.exports = {
     if (location && !NATIONWIDE.test(location.trim())) {
       path += `-in-${slugify(location)}`;
     }
-    const url = `${BASE}/${path}?order=d`; // order=d => newest first
 
+    const all = [];
     try {
-      for (let attempt = 1; attempt <= 3; attempt++) {
-        let result;
+      // order=d => newest first, so once a page crosses the date window we stop.
+      for (let page = 1; page <= MAX_PAGES; page++) {
+        const url = `${BASE}/${path}?order=d&page=${page}`;
+
+        let jobs;
         try {
-          result = await fetchCards(browser, url);
+          jobs = await fetchPage(browser, url, term);
         } catch (err) {
-          if (attempt === 3) throw err;
-          await sleep(4000 * attempt);
-          continue;
+          console.warn(`    ⚠️  CV-Library: error on page ${page} — "${term}": ${err.message}`);
+          break;
         }
 
-        if (result.jobs === null) { // blocked — a fresh context next try usually clears it
-          if (attempt < 3) { await sleep(5000 * attempt); continue; }
-          console.warn(`    ⚠️  CV-Library: blocked by anti-bot (HTTP ${result.status}) — "${term}"`);
-          return [];
-        }
+        if (jobs === null) break;          // blocked
+        if (jobs.length === 0) break;      // no more results
 
-        return result.jobs.filter(j => j.title && j.url);
+        all.push(...jobs.filter(j => isRecent(j.posted, maxDays)));
+
+        // Newest-first: a datably-old card means everything after is older too.
+        if (jobs.some(j => isOlderThan(j.posted, maxDays))) break;
+
+        await sleep(2000 + Math.floor(Math.random() * 1500)); // polite between pages
       }
-      return [];
+      return all;
     } finally {
       // Be polite between terms so we don't trip the rate limiter.
       await sleep(3000 + Math.floor(Math.random() * 2000));

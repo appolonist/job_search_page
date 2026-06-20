@@ -5,6 +5,7 @@ const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
 const { filterByCommute } = require('./helpers/commuteFilter');
+const { isRecent } = require('./helpers/postedDate');
 
 
 const SEARCH_TERMS = [
@@ -23,6 +24,11 @@ const SEARCH_TERMS = [
 
 const LOCATION = 'United Kingdom';
 const OUT_DIR  = path.join(__dirname, 'output');
+
+// Only keep jobs posted within this many days. Each scraper also uses it to
+// know when to stop paginating (boards are sorted newest-first). Override via
+// MAX_DAYS env var, e.g. MAX_DAYS=14.
+const MAX_DAYS = Number(process.env.MAX_DAYS) || 7;
 
 // Launch real Google Chrome when available. CV-Library's anti-bot fingerprints
 // Playwright's bundled Chromium and serves a 403 "Blocked" page to it, while
@@ -79,7 +85,7 @@ async function runScraper() {
     for (const term of SEARCH_TERMS) {
       try {
         console.log(`Scraping ${scraper.name} for: ${term}`);
-        const jobs = await scraper.search(context, term, LOCATION);
+        const jobs = await scraper.search(context, term, LOCATION, MAX_DAYS);
         console.log(`  → ${jobs.length} results`);
         allJobs = allJobs.concat(jobs.map(j => ({ ...j, searchTerm: term })));
 
@@ -110,9 +116,15 @@ async function runScraper() {
     return true;
   });
 
-  console.log(`\n📦 ${unique.length} unique jobs before commute filter`);
+  // Backstop: enforce the "last N days" window centrally too. The scrapers
+  // already trim per board, but this guarantees the final report regardless of
+  // any board whose pagination stop was looser (undated cards are kept).
+  const recent  = unique.filter(j => isRecent(j.posted, MAX_DAYS));
+  const dropped = unique.length - recent.length;
 
-  const filtered = await filterByCommute(unique);
+  console.log(`\n📦 ${unique.length} unique jobs (${dropped} older than ${MAX_DAYS}d dropped) → ${recent.length} within window before commute filter`);
+
+  const filtered = await filterByCommute(recent);
 
   saveReport(filtered);
 }
