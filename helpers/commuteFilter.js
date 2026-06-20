@@ -342,20 +342,38 @@ function formatMins(seconds) {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-function fetchJSON(url) {
+function fetchJSON(url, timeoutMs = 15000) {
   return new Promise((resolve, reject) => {
-    https.get(url, { headers: { Accept: 'application/json' } }, res => {
+    let settled = false;
+    let timer;
+    const done = (fn, arg) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      fn(arg);
+    };
+
+    const req = https.get(url, { headers: { Accept: 'application/json' } }, res => {
       let raw = '';
       res.on('data', c => raw += c);
       res.on('end', () => {
         if (res.statusCode !== 200) {
-          reject(new Error(`HTTP ${res.statusCode}: ${raw.substring(0, 300)}`));
+          done(reject, new Error(`HTTP ${res.statusCode}: ${raw.substring(0, 300)}`));
           return;
         }
-        try { resolve(JSON.parse(raw)); }
-        catch { reject(new Error('Błąd parsowania JSON: ' + raw.substring(0, 100))); }
+        try { done(resolve, JSON.parse(raw)); }
+        catch { done(reject, new Error('Błąd parsowania JSON: ' + raw.substring(0, 100))); }
       });
-    }).on('error', reject);
+    });
+
+    req.on('error', err => done(reject, err));
+
+    // Hard timeout covering DNS/connect/idle stalls — without this a single hung
+    // TomTom request blocks the whole (sequential) commute filter indefinitely.
+    timer = setTimeout(() => {
+      req.destroy();
+      done(reject, new Error(`Timeout po ${timeoutMs}ms`));
+    }, timeoutMs);
   });
 }
 
