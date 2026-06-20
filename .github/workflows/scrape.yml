@@ -54,5 +54,6 @@ jobs:
             echo "Nothing changed — skipping commit"
           else
             git commit -m "scrape: $(date -u +%Y-%m-%d) — auto update"
+            git pull --rebase
             git push
           fi
