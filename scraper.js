@@ -25,9 +25,26 @@ const LOCATION = 'United Kingdom';
 const OUT_DIR  = path.join(__dirname, 'output');
 
 async function runScraper() {
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({
+    headless: true,
+    args: [
+      '--disable-blink-features=AutomationControlled',
+      '--disable-features=IsolateOrigins,site-per-process',
+    ],
+  });
   const context = await browser.newContext({
-    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0.0.0 Safari/537.36'
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36',
+    viewport: { width: 1920, height: 1080 },
+    locale: 'en-GB',
+    timezoneId: 'Europe/London',
+    extraHTTPHeaders: {
+      'Accept-Language': 'en-GB,en;q=0.9',
+    },
+  });
+
+  // Remove webdriver flag to reduce bot detection
+  await context.addInitScript(() => {
+    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
   });
   
   let allJobs = [];
@@ -41,14 +58,27 @@ async function runScraper() {
   ];
 
   for (const scraper of scrapers) {
+    let consecutiveZeros = 0;
     for (const term of SEARCH_TERMS) {
       try {
         console.log(`Scraping ${scraper.name} for: ${term}`);
         const jobs = await scraper.search(context, term, LOCATION);
         console.log(`  → ${jobs.length} results`);
         allJobs = allJobs.concat(jobs.map(j => ({ ...j, searchTerm: term })));
+
+        if (jobs.length === 0) {
+          consecutiveZeros++;
+          // After 3 consecutive zero-result searches, capture debug info
+          if (consecutiveZeros === 3) {
+            console.warn(`  ⚠️  ${scraper.name}: 3 consecutive 0-result searches — likely blocked or selectors changed`);
+            console.warn(`     Run the debugger to inspect: node helpers/debugger.js`);
+          }
+        } else {
+          consecutiveZeros = 0;
+        }
       } catch (err) {
         console.error(`  ❌ ${scraper.name} | "${term}" → ERROR: ${err.message}`);
+        consecutiveZeros++;
       }
     }
   }
