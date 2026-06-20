@@ -1,9 +1,10 @@
 name: Daily Job Scrape
 
 on:
-  schedule:
-    - cron: "0 6 * * 1-5" # 6am UTC, weekdays only
-  workflow_dispatch: # allows manual trigger from GitHub UI
+  # Scheduled runs are disabled — daily scraping now runs locally at logon via
+  # scripts/daily-scrape.ps1 (which also opens the tracker). Re-add a `schedule:`
+  # block here if you ever want the cloud/self-hosted cron back.
+  workflow_dispatch: # manual trigger only, from the GitHub UI
 
 # ── Required for git push back to the repo ───────────────────────────────────
 permissions:
@@ -11,7 +12,14 @@ permissions:
 
 jobs:
   scrape:
-    runs-on: ubuntu-latest
+    # Self-hosted runner on a residential (home) IP. The browser-scraped boards
+    # (Indeed, CV-Library, Glassdoor) are blocked by anti-bot when run from
+    # GitHub's cloud/datacenter IPs — only a residential IP gets through. The
+    # API-based boards (Reed, Adzuna) work from anywhere.
+    #
+    # NOTE: scheduled runs only fire while the runner machine is online. If the
+    # PC is off at the cron time, trigger manually via workflow_dispatch.
+    runs-on: [self-hosted]
 
     steps:
       - name: Checkout repo
@@ -29,12 +37,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright browsers
-        # Install real Google Chrome (channel) in addition to Chromium.
-        # CV-Library's anti-bot blocks bundled Chromium but allows real Chrome.
-        run: npx playwright install --with-deps chromium chrome
+      - name: Install Playwright browser
+        # Ensure bundled Chromium is present as a fallback. The scraper prefers
+        # system-installed Google Chrome (channel: 'chrome'), which the anti-bot
+        # lets through; make sure Chrome is installed on the runner machine.
+        run: npx playwright install chromium
 
       - name: Run scraper
+        shell: bash
         env:
           REED_API_KEY: ${{ secrets.REED_API_KEY }}
           ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
@@ -44,6 +54,7 @@ jobs:
         run: node scraper.js
 
       - name: Commit updated files
+        shell: bash
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

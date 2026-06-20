@@ -91,4 +91,9 @@ export default defineConfig({
   ],
 
   base: '/job_search_page/',
+
+  // Local dev/preview run on a fixed port so the daily startup script can open
+  // a predictable URL (http://localhost:3000/job_search_page/).
+  server:  { port: 3000, strictPort: true },
+  preview: { port: 3000, strictPort: true },
 })
