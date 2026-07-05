@@ -77208,5 +77208,19 @@
     "transitSecs": 10591,
     "distKm": 78,
     "cachedAt": "2026-07-03T17:52:51.971Z"
+  },
+  "https://www.reed.co.uk/jobs/software-development-engineer-in-test-sdet-12-month-ftc/57090315?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-engineer-jobs-in-united-kingdom%3Fpageno%3D12": {
+    "locationStr": "London, UK",
+    "driveSecs": 14375,
+    "transitSecs": 20125,
+    "distKm": 259,
+    "cachedAt": "2026-07-05T21:54:02.534Z"
+  },
+  "https://www.glassdoor.co.uk/job-listing/sdet-quality-assurance-engineer-net-sdlc-integration-testing-performance-testing-adaro-optics-ltd-JV_IC2689292_KO0,80_KE81,97.htm?jl=1010183933883": {
+    "locationStr": "Marden, UK",
+    "driveSecs": 15789,
+    "transitSecs": 22105,
+    "distKm": 315,
+    "cachedAt": "2026-07-05T21:54:03.372Z"
   }
 }
