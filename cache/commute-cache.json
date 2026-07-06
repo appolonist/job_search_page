@@ -77222,5 +77222,19 @@
     "transitSecs": 22105,
     "distKm": 315,
     "cachedAt": "2026-07-05T21:54:03.372Z"
+  },
+  "https://www.reed.co.uk/jobs/senior-testing-and-environments-manager/57090453?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-engineer-jobs-in-united-kingdom%3Fpageno%3D8": {
+    "locationStr": "Belfast, County Antrim, UK",
+    "driveSecs": 21497,
+    "transitSecs": 30096,
+    "distKm": 259,
+    "cachedAt": "2026-07-06T15:09:06.095Z"
+  },
+  "https://www.reed.co.uk/jobs/software-development-engineer-in-test-sdet-12-month-ftc/57091628?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-engineer-jobs-in-united-kingdom%3Fpageno%3D12": {
+    "locationStr": "London, UK",
+    "driveSecs": 14487,
+    "transitSecs": 20282,
+    "distKm": 259,
+    "cachedAt": "2026-07-06T15:09:07.137Z"
   }
 }
