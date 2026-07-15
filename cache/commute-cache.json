@@ -77376,5 +77376,166 @@
     "transitSecs": 9807,
     "distKm": 126,
     "cachedAt": "2026-07-08T17:47:29.790Z"
+  },
+  "https://www.reed.co.uk/jobs/software-qa-engineer/57115544?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-engineer-jobs-in-united-kingdom": {
+    "locationStr": "Brighton, East Sussex, UK",
+    "driveSecs": 15413,
+    "transitSecs": 21578,
+    "distKm": 314,
+    "cachedAt": "2026-07-15T15:17:59.690Z"
+  },
+  "https://www.reed.co.uk/jobs/senior-qa-automation-engineer/57105153?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-engineer-jobs-in-united-kingdom": {
+    "locationStr": "Liverpool, Merseyside, UK",
+    "driveSecs": 3126,
+    "transitSecs": 5627,
+    "distKm": 40,
+    "cachedAt": "2026-07-15T15:18:00.195Z"
+  },
+  "https://www.reed.co.uk/jobs/qa-automation-engineer/57105100?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-engineer-jobs-in-united-kingdom": {
+    "locationStr": "Liverpool, Merseyside, UK",
+    "driveSecs": 3126,
+    "transitSecs": 5627,
+    "distKm": 40,
+    "cachedAt": "2026-07-15T15:18:00.580Z"
+  },
+  "https://www.reed.co.uk/jobs/test-engineer/57121118?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-engineer-jobs-in-united-kingdom%3Fpageno%3D2": {
+    "locationStr": "London, UK",
+    "driveSecs": 14508,
+    "transitSecs": 20311,
+    "distKm": 259,
+    "cachedAt": "2026-07-15T15:18:01.603Z"
+  },
+  "https://www.reed.co.uk/jobs/software-test-engineer/57101676?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-engineer-jobs-in-united-kingdom%3Fpageno%3D3": {
+    "locationStr": "Northfields Industrial Estate, Market Deeping, UK",
+    "driveSecs": 11219,
+    "transitSecs": 15707,
+    "distKm": 183,
+    "cachedAt": "2026-07-15T15:18:02.816Z"
+  },
+  "https://www.reed.co.uk/jobs/senior-qa-automation-engineer-intercontinental-exchange/57113657?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-engineer-jobs-in-united-kingdom%3Fpageno%3D13": {
+    "locationStr": "London, UK",
+    "driveSecs": 14508,
+    "transitSecs": 20311,
+    "distKm": 259,
+    "cachedAt": "2026-07-15T15:18:04.060Z"
+  },
+  "https://www.reed.co.uk/jobs/qa-automation-engineer/56978781?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-automation-engineer-jobs-in-united-kingdom": {
+    "locationStr": "Norwich, Norfolk, UK",
+    "driveSecs": 14689,
+    "transitSecs": 20565,
+    "distKm": 287,
+    "cachedAt": "2026-07-15T15:18:05.405Z"
+  },
+  "https://www.reed.co.uk/jobs/test-automation-and-release-engineer/57122596?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-automation-engineer-jobs-in-united-kingdom": {
+    "locationStr": "West Midlands (Region), UK",
+    "driveSecs": 6389,
+    "transitSecs": 8945,
+    "distKm": 97,
+    "cachedAt": "2026-07-15T15:18:06.094Z"
+  },
+  "https://www.adzuna.co.uk/jobs/land/ad/5795788323?se=LGupwF2A8RGDMNFo9qkXsw&utm_medium=api&utm_source=fec81443&v=122C5AD56A117F6BA280CFA8605F725247ECE275": {
+    "locationStr": "Hyde Park, Leeds, UK",
+    "driveSecs": 6722,
+    "transitSecs": 9411,
+    "distKm": 126,
+    "cachedAt": "2026-07-15T15:18:06.781Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5801035275?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Byker, Newcastle Upon Tyne, UK",
+    "driveSecs": 12451,
+    "transitSecs": 17431,
+    "distKm": 233,
+    "cachedAt": "2026-07-15T15:18:08.003Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5801035297?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Stratford, East London, UK",
+    "driveSecs": 13554,
+    "transitSecs": 18976,
+    "distKm": 262,
+    "cachedAt": "2026-07-15T15:18:09.154Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5801034622?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Redcliffe, Bristol, UK",
+    "driveSecs": 10669,
+    "transitSecs": 14937,
+    "distKm": 180,
+    "cachedAt": "2026-07-15T15:18:09.885Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5795430320?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Holbeck, Leeds, UK",
+    "driveSecs": 6528,
+    "transitSecs": 9139,
+    "distKm": 125,
+    "cachedAt": "2026-07-15T15:18:10.462Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5794012365?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Leavesden, Watford, UK",
+    "driveSecs": 11151,
+    "transitSecs": 15611,
+    "distKm": 231,
+    "cachedAt": "2026-07-15T15:18:11.106Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5801036294?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Ladywood, Birmingham, UK",
+    "driveSecs": 6446,
+    "transitSecs": 9024,
+    "distKm": 96,
+    "cachedAt": "2026-07-15T15:18:11.821Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5801035645?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Whiteley, Fareham, UK",
+    "driveSecs": 14191,
+    "transitSecs": 19867,
+    "distKm": 269,
+    "cachedAt": "2026-07-15T15:18:12.821Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5800140262?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Farringdon, Central London, UK",
+    "driveSecs": 15653,
+    "transitSecs": 21914,
+    "distKm": 314,
+    "cachedAt": "2026-07-15T15:18:13.774Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5801035335?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Langtoft, Peterborough, UK",
+    "driveSecs": 11250,
+    "transitSecs": 15750,
+    "distKm": 181,
+    "cachedAt": "2026-07-15T15:18:14.755Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5801035293?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Clerkenwell, Central London, UK",
+    "driveSecs": 13742,
+    "transitSecs": 19239,
+    "distKm": 258,
+    "cachedAt": "2026-07-15T15:18:15.715Z"
+  },
+  "https://www.glassdoor.co.uk/job-listing/senior-quality-assurance-engineer-ii-global-payroll-wynnstay-group-JV_IC3528127_KO0,51_KE52,66.htm?jl=1010192413232": {
+    "locationStr": "Ruddington, UK",
+    "driveSecs": 7731,
+    "transitSecs": 10823,
+    "distKm": 124,
+    "cachedAt": "2026-07-15T15:18:16.453Z"
+  },
+  "https://devitjobs.uk/jobs/Roc-Search-Europe-Limited-Automation-Test-Lead": {
+    "locationStr": "Leeds (Hybrid), UK",
+    "driveSecs": 7011,
+    "transitSecs": 9815,
+    "distKm": 126,
+    "cachedAt": "2026-07-15T15:18:17.203Z"
+  },
+  "https://devitjobs.uk/jobs/Loupe-Testware-Senior-Software-Test-Engineer": {
+    "locationStr": "Coventry (Office), UK",
+    "driveSecs": 7192,
+    "transitSecs": 10069,
+    "distKm": 122,
+    "cachedAt": "2026-07-15T15:18:17.913Z"
+  },
+  "https://devitjobs.uk/jobs/Rebel-Recruitment-Limited-QA-Lead": {
+    "locationStr": "Manchester (Office), UK",
+    "driveSecs": 4791,
+    "transitSecs": 8624,
+    "distKm": 69,
+    "cachedAt": "2026-07-15T15:18:18.810Z"
   }
 }
