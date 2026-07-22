@@ -77649,5 +77649,68 @@
     "transitSecs": 30065,
     "distKm": 231,
     "cachedAt": "2026-07-20T10:54:09.370Z"
+  },
+  "https://uk.indeed.com/rc/clk?jk=95ce1aa8cf5384b8&bb=V38RU1uoKNZ9bvGK_gBmmbEt7TJlHNRO89QSxxyEKbXD5sNOOJHqQOK8HLoICztGRgNybSuulyemEJN0VTS5RkNbbhA1Umkaptdc3NNjV18nVipqPZSFgCEREJe72mrK&xkcb=SoBp67M3gEjnpE2OIp0CbzkdCdPP&fccid=02225f7ad88d150f&vjs=3": {
+    "locationStr": "Hybrid work in Edinburgh, UK",
+    "driveSecs": 7868,
+    "transitSecs": 11015,
+    "distKm": 150,
+    "cachedAt": "2026-07-22T11:03:38.399Z"
+  },
+  "https://www.reed.co.uk/jobs/senior-qa-automation-engineer--contract--newcastle/57143466?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-engineer-jobs-in-united-kingdom": {
+    "locationStr": "Newcastle Upon Tyne, Tyne and Wear, UK",
+    "driveSecs": 12367,
+    "transitSecs": 17314,
+    "distKm": 232,
+    "cachedAt": "2026-07-22T11:03:39.390Z"
+  },
+  "https://www.reed.co.uk/jobs/application-support-test-engineer/57140469?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-engineer-jobs-in-united-kingdom%3Fpageno%3D2": {
+    "locationStr": "Bournemouth, Dorset, UK",
+    "driveSecs": 15587,
+    "transitSecs": 21822,
+    "distKm": 269,
+    "cachedAt": "2026-07-22T11:03:40.473Z"
+  },
+  "https://www.reed.co.uk/jobs/qa-test-analyst/57026129?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-engineer-jobs-in-united-kingdom%3Fpageno%3D3": {
+    "locationStr": "London, UK",
+    "driveSecs": 14469,
+    "transitSecs": 20257,
+    "distKm": 259,
+    "cachedAt": "2026-07-22T11:03:41.412Z"
+  },
+  "https://www.reed.co.uk/jobs/quality-assurance-manager/57140591?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-engineer-jobs-in-united-kingdom%3Fpageno%3D3": {
+    "locationStr": "London, UK",
+    "driveSecs": 14480,
+    "transitSecs": 20272,
+    "distKm": 259,
+    "cachedAt": "2026-07-22T11:03:42.319Z"
+  },
+  "https://www.reed.co.uk/jobs/senior-testing-and-environments-manager/57142650?source=searchResults&filter=%2Fjobs%2Fsoftware-qa-engineer-jobs-in-united-kingdom%3Fpageno%3D8": {
+    "locationStr": "Belfast, County Antrim, UK",
+    "driveSecs": 21518,
+    "transitSecs": 30125,
+    "distKm": 259,
+    "cachedAt": "2026-07-22T11:03:43.383Z"
+  },
+  "https://www.adzuna.co.uk/jobs/details/5805472741?utm_medium=api&utm_source=fec81443": {
+    "locationStr": "Leeds, West Yorkshire, UK",
+    "driveSecs": 7054,
+    "transitSecs": 9876,
+    "distKm": 126,
+    "cachedAt": "2026-07-22T11:03:44.198Z"
+  },
+  "https://www.cv-library.co.uk/job/225401395/senior-mobile-qa-engineer": {
+    "locationStr": "Liverpool, Merseyside, UK",
+    "driveSecs": 3126,
+    "transitSecs": 5627,
+    "distKm": 40,
+    "cachedAt": "2026-07-22T11:03:44.719Z"
+  },
+  "https://devitjobs.uk/jobs/mThree-QA-Automation-Lead": {
+    "locationStr": "London (Office), UK",
+    "driveSecs": 14707,
+    "transitSecs": 20590,
+    "distKm": 260,
+    "cachedAt": "2026-07-22T11:03:45.910Z"
   }
 }
